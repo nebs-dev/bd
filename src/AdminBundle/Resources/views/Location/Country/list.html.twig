@@ -1,0 +1,199 @@
+{% extends 'admin.html.twig' %}
+
+{% block stylesheets %}
+	{{ parent() }}
+	<link href="http://cdn.datatables.net/1.10.5/css/jquery.dataTables.min.css" rel="stylesheet" type="text/css" />
+
+	<link href="{{asset('bundles/admin/js/footable/css/footable.core.css?v=2-0-1')}}" rel="stylesheet" type="text/css" />
+	<link href="{{asset('bundles/admin/js/footable/css/footable.standalone.css')}}" rel="stylesheet" type="text/css" />
+	<link href="{{asset('bundles/admin/js/footable/css/footable-demos.css')}}" rel="stylesheet" type="text/css" />
+
+{% endblock %}
+
+{% block content %}
+
+	{% for flashMessage in app.session.flashbag.get('msgSuccess') %}
+	<div class="box bg-light-green">
+		<div class="box-header bg-light-green ">
+			<!-- tools box -->
+			<div class="pull-right box-tools">
+				<span class="box-btn" data-widget="remove">
+					<i class="icon-cross"></i>
+				</span>
+			</div>
+			<h3 class="box-title "><i class="text-white  icon-thumbs-up"></i>
+				<span class="text-white">SUCCESS</span>
+			</h3>
+		</div>
+		<!-- /.box-header -->
+		<div class="box-body " style="display: block;">
+			<p class="text-white"><strong>Well done!</strong> {{ flashMessage }}</p>
+		</div>
+	</div>
+	{% endfor %}
+	{% for flashMessage in app.session.flashbag.get('msgError') %}
+	<div class="box bg-red">
+		<div class="box-header bg-red ">
+			<!-- tools box -->
+			<div class="pull-right box-tools">
+				<span class="box-btn" data-widget="remove">
+					<i class="icon-cross"></i>
+				</span>
+			</div>
+			<h3 class="box-title "><i class="text-white  icon-thumbs-up"></i>
+				<span class="text-white">Error</span>
+			</h3>
+		</div>
+		<!-- /.box-header -->
+		<div class="box-body " style="display: block;">
+			<p class="text-white"><strong>Sorry!</strong> {{ flashMessage }}</p>
+		</div>
+	</div>
+	{% endfor %}
+
+<div class="row">
+	<div class="large-12 columns">
+		<a class="btn bg-blue" href="{{ path('admin_location_countries_new', {'_locale': app.request.attributes.get('_locale')}) }}">{{ 'Add new Country' | trans }}</a>
+	</div>
+</div>
+	<div class="row">
+		<div class="large-12 columns">
+			<div class="box">
+				<div class="box-header bg-transparent">
+					<!-- tools box -->
+					<div class="pull-right box-tools">
+
+						<span class="box-btn" data-widget="collapse"><i class="icon-minus"></i>
+						</span>
+						<span class="box-btn" data-widget="remove"><i class="icon-cross"></i>
+						</span>
+					</div>
+					<h3 class="box-title"><i class="fontello-th-large-outline"></i>
+						<span>COUNTRY TABLE</span>
+					</h3>
+				</div>
+				<!-- /.box-header -->
+				<div class="box-body " style="display: block;">
+				 <div class="row" style="margin-bottom:10px;">
+					<div class="large-4 columns">
+						<input class="form-control" id="filter" placeholder="Search..." type="text" />
+					</div>
+					<div class="large-6 columns">
+						<a href="#clear" style="margin-left:10px;" class="pull-right btn bg-red clear-filter" title="clear filter">clear</a>
+					</div>
+				</div>
+	<table id="footable-res2" class="demo" data-filter="#filter" data-filter-text-only="true">
+		<thead>
+		<tr>
+			<th>{{ 'hr' | trans }}</th>
+			<th>{{ 'en' | trans }}</th>
+			<th>{{ 'fr' | trans }}</th>
+			<th>{{ 'de' | trans }}</th>
+			<th>{{ 'es' | trans }}</th>
+			<th>{{ 'Delete' | trans }}</th>
+		</tr>
+		</thead>
+		<tbody>
+
+		{% for country in countries %}
+			<tr id="{{ country.id }}">
+				<td class="center">{{ country.hr }}</td>
+				<td class="center">{{ country.en }}</td>
+				<td class="center">{{ country.fr }}</td>
+				<td class="center">{{ country.de }}</td>
+				<td class="center">{{ country.es }}</td>
+				<td class="center">
+					<a href="{{ path('admin_location_countries_edit', {'_locale': app.request.attributes.get('_locale'), 'id' : country.id}) }}"
+					   class="status-metro status-active">
+						{{ 'edit' | trans }}
+					</a>
+					<a href="{{ path('admin_location_countries_delete', {'_locale': app.request.attributes.get('_locale'), 'id' : country.id}) }}"
+					   class="status-metro status-suspended"
+					   onclick="return confirm('{{ 'are_you_sure_delete' | trans }}')"
+					>
+					   {{ 'delete' | trans }}
+					</a>
+				</td>
+			</tr>
+		{% endfor %}
+		</tbody>
+	</table>
+
+			</div>
+		<!-- end .timeline -->
+		</div>
+	<!-- box -->
+	</div>
+</div>
+<div class="row">
+	<div class="large-12 columns">
+		<a class="btn bg-green" href="{{ path('admin_location', {'_locale': app.request.attributes.get('_locale')}) }}">{{ 'Back to Locations' | trans }}</a>
+	</div>
+</div>
+{% endblock %}
+
+
+{% block js %}
+	{{ parent() }}
+
+	<script src="{{asset('bundles/admin/js/datatables/jquery.dataTables.js')}}" type="text/javascript"></script>
+	<script src="{{asset('bundles/admin/js/footable/js/footable.js?v=2-0-1')}}" type="text/javascript"></script>
+	<script src="{{asset('bundles/admin/js/footable/js/footable.sort.js?v=2-0-1')}}" type="text/javascript"></script>
+	<script src="{{asset('bundles/admin/js/footable/js/footable.filter.js?v=2-0-1')}}" type="text/javascript"></script>
+	<script src="{{asset('bundles/admin/js/footable/js/footable.paginate.js?v=2-0-1')}}" type="text/javascript"></script>
+	<script src="{{asset('bundles/admin/js/footable/js/footable.paginate.js?v=2-0-1')}}" type="text/javascript"></script>
+	<!-- page script -->
+	<script type="text/javascript">
+		(function($) {
+			"use strict";
+			$('#footable-res2').dataTable({
+			     searching: false,
+			    "order": [
+			        [3, "desc"]
+			    ]
+			});
+		})(jQuery);
+
+
+
+		(function($) {
+			"use strict";
+			$('#footable-res2').footable().bind('footable_filtering', function(e) {
+				var selected = $('.filter-status').find(':selected').text();
+				if (selected && selected.length > 0) {
+					e.filter += (e.filter && e.filter.length > 0) ? ' ' + selected : selected;
+					e.clear = !e.filter;
+				}
+			});
+
+			$('.clear-filter').click(function(e) {
+				e.preventDefault();
+				$('.filter-status').val('');
+				$('table.demo').trigger('footable_clear_filter');
+			});
+
+			$('.filter-status').change(function(e) {
+				e.preventDefault();
+				$('table.demo').trigger('footable_filter', {
+					filter: $('#filter').val()
+				});
+			});
+
+			$('.filter-api').click(function(e) {
+				e.preventDefault();
+
+			//get the footable filter object
+			var footableFilter = $('table').data('footable-filter');
+
+			alert('about to filter table by "tech"');
+			//filter by 'tech'
+			footableFilter.filter('tech');
+
+			//clear the filter
+			if (confirm('clear filter now?')) {
+				footableFilter.clearFilter();
+			}
+		});
+		})(jQuery);
+	</script>
+{% endblock %}

@@ -1,0 +1,161 @@
+{% extends 'admin.html.twig' %}
+
+{% block content %}
+<div class="row no-pad">
+	<div class="large-6 columns">
+		<div class="box bg-white">
+			<div class="box-body pad-forty" style="display: block;">
+				<div class="row">
+					{% for flashMessage in app.session.flashbag.get('msgSuccess') %}
+					<div class="box bg-light-green">
+						<div class="box-header bg-light-green ">
+							<!-- tools box -->
+							<div class="pull-right box-tools">
+								<span class="box-btn" data-widget="remove">
+									<i class="icon-cross"></i>
+								</span>
+							</div>
+							<h3 class="box-title "><i class="text-white  icon-thumbs-up"></i>
+								<span class="text-white">SUCCESS</span>
+							</h3>
+						</div>
+						<!-- /.box-header -->
+						<div class="box-body " style="display: block;">
+							<p class="text-white"><strong>Well done!</strong> {{ flashMessage }}</p>
+						</div>
+					</div>
+					{% endfor %}
+					{% for flashMessage in app.session.flashbag.get('msgError') %}
+					<div class="box bg-red">
+						<div class="box-header bg-red ">
+							<!-- tools box -->
+							<div class="pull-right box-tools">
+								<span class="box-btn" data-widget="remove">
+									<i class="icon-cross"></i>
+								</span>
+							</div>
+							<h3 class="box-title "><i class="text-white  icon-thumbs-up"></i>
+								<span class="text-white">Error</span>
+							</h3>
+						</div>
+						<!-- /.box-header -->
+						<div class="box-body " style="display: block;">
+							<p class="text-white"><strong>Sorry!</strong> {{ flashMessage }}</p>
+						</div>
+					</div>
+					{% endfor %}
+
+					{{ form_start(form, {'attr': {'novalidate': 'novalidate', 'class':"form-horizontal", 'id':'registration' }}) }}
+					{{ form_errors(form) }}
+					<div class="large-6 columns">
+						<div class="form-group">
+							{{ form_label(form.username, 'username' | trans , { 'label_attr': {'class': 'col-sm-3 control-label'} }) }}
+							{{ form_errors(form.username) }}
+							<div class="col-sm-5">
+								{{ form_widget(form.username, { 'attr': {'class': 'form-control validate[required]'} }) }}
+							</div>
+						</div>
+					</div>
+					<div class="large-6 columns">
+						<div class="form-group">
+							{{ form_label(form.email, 'email' | trans, { 'label_attr': {'class': 'col-sm-3 control-label'} }) }}
+							{{ form_errors(form.email) }}
+							<div class="col-sm-5">
+								{{ form_widget(form.email, { 'attr': {'class': 'form-control validate[required]'} }) }}
+							</div>
+						</div>
+					</div>
+					<div class="large-6 columns">
+						<div class="form-group">
+							{{ form_label(form.roles, 'user_type' | trans, { 'label_attr': {'class': 'col-sm-3 control-label'} }) }}
+							{{ form_errors(form.roles) }}
+							<div class="col-sm-5">
+								{{ form_widget(form.roles, {'value':'wfwerf'}) }}
+							</div>
+						</div>
+					</div>
+					<div class="large-6 columns">
+						<div class="form-group">
+							{{ form_label(form.name, 'user_name' | trans, { 'label_attr': {'class': 'col-sm-3 control-label'} }) }}
+							{{ form_errors(form.name) }}
+							<div class="col-sm-5">
+								{{ form_widget(form.name, { 'attr': {'class': 'form-control validate[required]'} }) }}
+							</div>
+						</div>
+					</div>
+					<div class="large-6 columns">
+						<div class="form-group">
+							{{ form_label(form.surename, 'user_surename' | trans , { 'label_attr': {'class': 'col-sm-3 control-label'} }) }}
+							{{ form_errors(form.surename) }}
+							<div class="col-sm-5">
+								{{ form_widget(form.surename, { 'attr': {'class': 'form-control validate[required]'} }) }}
+							</div>
+						</div>
+					</div>
+					<div class="large-6 columns">
+						<div class="form-group">
+							{{ form_label(form.address, 'address' | trans, { 'label_attr': {'class': 'col-sm-3 control-label'} }) }}
+							{{ form_errors(form.address) }}
+							<div class="col-sm-5">
+								{{ form_widget(form.address, { 'attr': {'class': 'form-control validate[required]'} }) }}
+							</div>
+						</div>
+					</div>
+					<div class="large-6 columns">
+						<div class="form-group">
+							{{ form_label(form.phone, 'phone' | trans, { 'label_attr': {'class': 'col-sm-3 control-label'} }) }}
+							{{ form_errors(form.phone) }}
+							<div class="col-sm-5">
+								{{ form_widget(form.phone, { 'attr': {'class': 'form-control validate[required]'} }) }}
+							</div>
+						</div>
+					</div>
+
+					{% for passwordField in form.password %}
+						<div class="large-6 columns">
+							<div class="form-group">
+								{{ form_label(passwordField, null, { 'label_attr': {'class': 'col-sm-3 control-label'} }) }}
+								{{ form_errors(passwordField) }}
+								<div class="col-sm-5">
+									{{ form_widget(passwordField, { 'type':'password', 'attr': {'class': 'form-control validate[required]'} }) }}
+								</div>
+							</div>
+
+							{#<div class="form-field">#}
+							{#{{ form_label(passwordField, null, { 'attr': {'class': 'form-label'} }) }}#}
+							{#{{ form_widget(passwordField, { 'attr': {'class': 'form-input'} }) }}#}
+							{#</div>#}
+						</div>
+					{% endfor %}
+					<div class="large-6 columns">
+						<div class="form-group">
+							{{ form_label(form.isActive, 'is_active' | trans, { 'label_attr': {'class': 'col-sm-3 control-label'} }) }}
+							{{ form_errors(form.isActive) }}
+							<div class="col-sm-5">
+								{{ form_widget(form.isActive, { 'attr': {'class': 'form-control validate[required]'} }) }}
+							</div>
+						</div>
+					</div>
+					<div class="large-12 columns">
+						<div class="form-group">
+							{{ form_label(form.note, 'note' | trans, { 'label_attr': {'class': 'col-sm-3 control-label'} }) }}
+							{{ form_errors(form.note) }}
+							<div class="col-sm-5">
+								{{ form_widget(form.note, { 'attr': {'class': 'form-control validate[required]'} }) }}
+							</div>
+						</div>
+					</div>
+					{{ form_rest(form) }}
+						<div class="large-12 columns">
+								<a href="{{ path('admin_users', {'_locale': app.request.attributes.get('_locale')}) }}" class="btn bg-green" >{{ 'Back' | trans }}</a>
+								<a href="{{ path('admin_users_delete', {'_locale': app.request.attributes.get('_locale'), 'id' : user.id}) }}" class="btn bg-red" onclick="return confirm('{{ 'are_you_sure_delete' | trans }}')" >{{ 'Delete User' | trans }}</a>
+								<input type="submit" name="register" class="btn bg-blue" value="{{ 'save' | trans }}" />
+							</div>
+						</div>
+					{{ form_end(form) }}
+				</div>
+			</div>
+		</div>
+	</div>
+
+{% endblock %}

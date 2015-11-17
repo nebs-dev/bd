@@ -1,0 +1,109 @@
+.single-head-container {
+	background: #395276;
+	margin-top: 35px;
+	padding-top: 20px;
+	padding-bottom: 20px;
+}
+
+.accommodation-container {
+	margin-top: 20px;
+	margin-bottom: 50px;
+}
+
+.unit-container {
+	margin-top: 40px;
+	background: $white;
+	
+}
+
+.unit-name {
+	margin-top: 10px;
+	font-size: rem-calc(40);
+	font-family: $sans-bold;
+	color: $darkblueshape;
+}
+.unit-name.unit-main{
+	font-size: rem-calc(30);
+	font-family: $sans-bold;
+	color: $darkblueshape;
+	margin-bottom: 50px;
+}
+.unit-sub {
+	font-size: rem-calc(14);
+	font-family: $sans-bold;
+	color: $offer-head ;
+	text-transform: uppercase;
+}
+
+#tab-details, #tab-pricelist {
+	h4 {
+		font-size: rem-calc(14);
+		font-family: $sans;
+		text-transform: uppercase;
+		color: rbga($tab-nonactive, 1.5);
+	}
+	ul {
+		list-style-type: none;
+
+	}
+	li {
+		font-size: rem-calc(12);
+		font-family: $sans;
+		text-transform: uppercase;
+		color: $tab-nonactive;
+	}
+}
+.review-container {
+	margin-top: 100px;
+	margin-bottom: 40px;
+}
+.review {
+	padding-top: 20px;
+	padding-bottom: 20px;
+
+	text-align: center;
+	font-family: $sans;	
+	color: $silver-time;
+	.review-author {
+		font-size: rem-calc(12);
+	}
+	.review-comment {
+		margin-bottom: 0;
+	}
+}
+
+.review-even {
+	background: rgba($filter-divider, 0.25);
+}
+
+
+#reviewForm {
+	margin-bottom: 50px;
+	input, textarea {
+		border: 1px solid #CCC;
+	}
+	
+	label {
+		font-size: rem-calc(10);
+		color: $silver-time;
+		text-transform: uppercase;
+		font-family: $sans;
+
+	}
+
+}
+
+#checkOutForm {
+	label.required {
+		display: none;		
+	}
+
+}
+
+.submit-single-button {
+	height: 37px;
+}
+
+.tabs-content {
+	border-bottom: none;
+}

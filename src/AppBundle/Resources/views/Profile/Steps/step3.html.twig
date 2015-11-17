@@ -1,0 +1,209 @@
+{% extends 'admin.html.twig' %}
+{% block menu %}
+
+{% endblock %}
+{% block sidemenu %}
+	{% include 'steps_menu.html.twig' %}
+{% endblock %}
+{% block content %}
+	<div class="row no-pad">
+		<div class="large-12 columns">
+				<div class="box-body pad-forty" style="display: block;">
+					{% for flashMessage in app.session.flashbag.get('msgSuccess') %}
+					<div class="box bg-light-green">
+						<div class="box-header bg-light-green ">
+							<!-- tools box -->
+							<div class="pull-right box-tools">
+								<span class="box-btn" data-widget="remove">
+									<i class="icon-cross"></i>
+								</span>
+							</div>
+							<h3 class="box-title "><i class="text-white  icon-thumbs-up"></i>
+								<span class="text-white">SUCCESS</span>
+							</h3>
+						</div>
+						<!-- /.box-header -->
+						<div class="box-body " style="display: block;">
+							<p class="text-white"><strong>Well done!</strong> {{ flashMessage }}</p>
+						</div>
+					</div>
+					{% endfor %}
+					{% for flashMessage in app.session.flashbag.get('msgError') %}
+					<div class="box bg-red">
+						<div class="box-header bg-red ">
+							<!-- tools box -->
+							<div class="pull-right box-tools">
+								<span class="box-btn" data-widget="remove">
+									<i class="icon-cross"></i>
+								</span>
+							</div>
+							<h3 class="box-title "><i class="text-white  icon-thumbs-up"></i>
+								<span class="text-white">Error</span>
+							</h3>
+						</div>
+						<!-- /.box-header -->
+						<div class="box-body " style="display: block;">
+							<p class="text-white"><strong>Sorry!</strong> {{ flashMessage }}</p>
+						</div>
+					</div>
+					{% endfor %}
+					<div class="large-12 columns">
+						{# Accommodation name #}
+						<h1>{{ accommodation.name }}</h1>
+
+						{{ form_start(form, {'attr': {'novalidate': 'novalidate', 'class':"form-horizontal", 'id':'accommodationEdit' }}
+						) }}
+						{{ form_errors(form) }}
+
+						{# Free WiFi #}
+						<div class="row">
+								<div class="large-3 columns">
+									<label>{{ 'wifi' | trans }} {{ 'availability' | trans }}</label>
+									<select name="wifi" class="availabilitySelect">
+										<option value="2" {{ accommodation.wifi and accommodation.wifi == 0 ? 'selected="selected"' }}>{{ 'yes_it_is_free' | trans }}</option>
+										<option value="1" {{ accommodation.wifi and accommodation.wifi > 0 ? 'selected="selected"' }}>{{ 'yes_to_be_paid' | trans }}</option>
+										<option value="0" {{ accommodation.wifi is null ? 'selected="selected"' }}>{{ 'no' | trans }}</option>
+									</select>
+								</div>
+
+								<div class="large-2 columns priceDiv">
+									{{ form_label(form.wifi, 'wifi_price' | trans , { 'label_attr': {'class': 'col-sm-3 control-label'} }) }}
+									{{ form_errors(form.wifi) }}
+									<div class="col-sm-5">
+										{{ form_widget(form.wifi, { 'attr': {'class': 'form-control wifiInput'} }) }}
+									</div>
+								</div>
+								<div class="large-7 columns"></div>
+						</div>
+
+
+						{# Facilities checkboxes #}
+						<div class="row">
+							<fieldset>
+								<legend>{{ 'Facilities' | trans }}</legend>
+								{{ form_label(form.facilities, 'Select facilities' | trans , { 'label_attr': {'class': 'col-sm-3 control-label'} }) }}
+								{{ form_errors(form.facilities) }}
+								<div class="col-sm-5">
+									{{ form_widget(form.facilities, { 'attr': {'class': 'form-control validate[required]'} }) }}
+								</div>
+							</fieldset><br />
+						</div>
+
+						{# Additionals checkboxes #}
+						<div class="row">
+							<fieldset>
+								<legend>{{ 'Additionals' | trans }}</legend>
+								{{ form_label(form.additionals, 'Select additionals' | trans , { 'label_attr': {'class': 'col-sm-3 control-label'} }) }}
+								{{ form_errors(form.additionals) }}
+								<div class="col-sm-5">
+									{{ form_widget(form.additionals, { 'attr': {'class': 'form-control validate[required]'} }) }}
+								</div>
+							</fieldset>
+							<br />
+						</div>
+
+						{# Beaches checkboxes #}
+						<div class="row">
+							<fieldset>
+								<legend>{{ 'Beaches' | trans }}</legend>
+								{{ form_label(form.beaches, 'Select beaches' | trans , { 'label_attr': {'class': 'col-sm-3 control-label'} }) }}
+								{{ form_errors(form.beaches) }}
+								<div class="col-sm-5">
+									{{ form_widget(form.beaches, { 'attr': {'class': 'form-control validate[required]'} }) }}
+								</div>
+							</fieldset>
+							<br />
+						</div>
+
+						{# Activities checkboxes #}
+						<div class="row">
+							<fieldset>
+								<legend>{{ 'Activities' | trans }}</legend>
+								{{ form_label(form.activities, 'Select activities' | trans , { 'label_attr': {'class': 'col-sm-3 control-label'} }) }}
+								{{ form_errors(form.activities) }}
+								<div class="col-sm-5">
+									{{ form_widget(form.activities, { 'attr': {'class': 'form-control validate[required]'} }) }}
+								</div>
+							</fieldset>
+							<br />
+						</div>
+
+						{# Distances all fields #}
+						<div class="row">
+							<fieldset>
+								<legend>{{ 'Distances' | trans }}</legend>
+								{{ form_label(form.distance, 'Distances from' | trans , { 'label_attr': {'class': 'col-sm-3 control-label'} }) }}
+								{{ form_errors(form.distance) }}
+								<div class="col-sm-5">
+									{{ form_widget(form.distance, { 'attr': {'class': 'gridDescription form-control validate[required]'} }) }}
+								</div>
+							</fieldset>
+							<br />
+						</div>
+
+						{# Description #}
+						<div class="row">
+							<fieldset>
+								<legend>{{ 'Description' | trans }}</legend>
+								{{ form_label(form.description, 'Enter description' | trans , { 'label_attr': {'class': 'col-sm-3 control-label'} }) }}
+								{{ form_errors(form.description) }}
+								<div class="col-sm-5">
+									{{ form_widget(form.description, { 'attr': {'class': 'gridDescription form-control validate[required]'} }) }}
+								</div>
+							</fieldset>
+						</div>
+
+						{# Payments checkboxes #}
+						<div class="row">
+							<fieldset>
+								<legend>{{ 'Payments' | trans }}</legend>
+								{{ form_label(form.payments, 'Select payment' | trans , { 'label_attr': {'class': 'col-sm-3 control-label'} }) }}
+								{{ form_errors(form.payments) }}
+								<div class="col-sm-5">
+									{{ form_widget(form.payments, { 'attr': {'class': 'form-control validate[required]'} }) }}
+								</div>
+							</fieldset>
+							<br />
+						</div>
+
+					</div>
+
+
+					{{ form_widget(form.x, { 'attr': {'class': 'hiddenCoo'} }) }}
+					{{ form_widget(form.y, { 'attr': {'class': 'hiddenCoo'} }) }}
+
+					{# Next && save #}
+					<div class="row">
+						<div class="large-12 columns">
+							<br />
+							<ul class="button-group radius even-2 ">
+								<li>
+									<a href="{{ path('app_profile_step_1', {'_locale': app.request.attributes.get('_locale')}) }}"
+									   class="button small secondary">{{ 'back' | trans }}</a></li>
+								<li>
+									{{ form_rest(form) }}
+									<button type="submit" name="create" class="button small bg-light-green">
+										{{ 'Next' | trans }}
+									</button>
+									{{ form_end(form) }}
+
+								</li>
+							</ul>
+						</div>
+					</div>
+			</div>
+		</div>
+	</div>
+
+
+
+{% endblock %}
+{% block js %}
+	{{ parent() }}
+
+	<script type="text/javascript">
+		$(function(){
+		   $('.hiddenCoo').hide();
+		});
+	</script>
+{% endblock %}

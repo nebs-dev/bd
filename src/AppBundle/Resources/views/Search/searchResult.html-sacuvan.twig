@@ -1,0 +1,145 @@
+{% extends 'base.html.twig' %}
+{% block content %}
+  {% block foundation_header %}
+    {% include 'includes/foundation-header.html.twig'  %}
+  {% endblock %}
+  {% block foundation_filter_header %}
+    {% include 'includes/foundation_filter_header.html.twig' %}
+  {% endblock %}
+
+  {% block foundation_filter_body %}
+    {% include 'includes/foundation_filter_body.html.twig' %}
+  {% endblock %}
+    {% block foundation_item_single %}
+    {% include 'includes/foundation_item_single.html.twig' %}
+  {% endblock %}
+  {% block foundation_footer %}
+    {% include 'includes/foundation-footer.html.twig'  %}
+  {% endblock %}
+
+
+    {{ dump(mapJSON) }}
+
+   
+{#
+
+    {{ form_start(
+        searchForm, {
+            'method': 'POST',
+            'action': path('app_search_action', {'_locale': app.request.attributes.get('_locale') }),
+            'attr': {'novalidate': 'novalidate', 'class':"form-horizontal", 'id':'searchForm'}
+        }
+        ) }}
+
+        <div class="form-group">
+            {{ form_label(searchForm.location, 'location' | trans, { 'label_attr': {'class': 'col-sm-3 control-label'} }) }}
+            {{ form_errors(searchForm.location) }}
+            <div class="col-sm-5">
+                {{ form_widget(searchForm.location, { 'attr': {'class': 'form-control locationAutocomplete'} }) }}
+            </div>
+        </div>
+
+
+        <input type="hidden" name="page" id="page" value="1">
+
+        {{ form_rest(searchForm) }}
+
+        <div class="form-group">
+            <div class="col-sm-5 col-sm-offset-3">
+                <input type="submit" id="searchActionSubmit" name="searchAction" class="btn btn-default" value="{{ 'search' | trans }}" />
+            </div>
+        </div>
+
+    {{ form_end(searchForm) }}
+
+
+    {# Search results #}
+    <h1>{{ 'accommodations' | trans }}</h1>
+
+    {#{{ app.locale }}#}
+
+
+
+
+    {#&#123;&#35; PAGINATION &#35;&#125;#}
+    {#{% if currentPage is defined %}#}
+        {#<button class="pagination" id="first">{{ 'first' | trans }}</button>#}
+
+        {#{% if currentPage > 1 %}#}
+            {#<button class="pagination" id="{{ currentPage - 1 }}">{{ currentPage - 1 }}</button>#}
+        {#{% endif %}#}
+
+        {#&#123;&#35; Current Page &#35;&#125;#}
+        {#<button class="disabled pagination" id="{{ currentPage }}">{{ currentPage }}</button>#}
+
+        {#{% if numPages > currentPage %}#}
+            {#<button class="pagination" id="{{ currentPage + 1 }}">{{ currentPage + 1 }}</button>#}
+        {#{% endif %}#}
+
+        {#<button class="pagination" id="last">{{ 'last' | trans }}</button>#}
+    {#{% endif %}#}
+    {#&#123;&#35; /PAGINATION &#35;&#125;#}
+
+
+    <h2>{{ 'additionalOffers' | trans }}</h2>
+    {% if additionalOffers is defined %}
+        {% if additionalOffers is not empty %}
+            <ul>
+                {% for ao in additionalOffers %}
+                    <li>
+                        <div class="title">
+                            <a href="{{
+                            path('app_additional_offer_single',
+                            {'_locale': app.request.attributes.get('_locale'), 'id': ao.id }) }}" class="" >
+                                {{ ao.details.title }}
+                            </a>
+                        </div>
+                        <div class="ao_title">
+                            {{ ao.details.title }}
+                        </div>
+                        {% if ao.featuredImage %}
+                            <img src="{{ ao.featuredImage | imagine_filter('my_thumb') }}" >
+                        {% else %}
+                            -
+                        {% endif %}
+                    </li>
+                {% endfor %}
+            </ul>
+
+        {% else %}
+            {{ 'no_result' | trans }}
+        {% endif %}
+    {% endif %}
+
+
+    <h2>Banners</h2>
+    {% if banners is defined %}
+        {% if banners is not empty %}
+            <ul>
+                {% for banner in banners %}
+                    <li>
+                        <img src="{{ banner.webPath | imagine_filter('my_thumb') }}" >
+                    </li>
+                {% endfor %}
+            </ul>
+        {% endif %}
+    {% endif %}
+
+{% endblock %}
+
+{% block js %}
+    {{ parent() }}
+
+    <script type="text/javascript">
+        $(document).ready(function() {
+
+            // PAGINATION
+            $('.pagination').on('click', function(e) {
+                $('#page').val($(this).attr('id'));
+                $('#searchForm').submit();
+            });
+        });
+
+    </script>
+
+{% endblock %}

@@ -1,0 +1,173 @@
+<div id="preloader">
+	<div id="status">&nbsp;</div>
+</div>
+<!-- End of preloader -->
+<div class="off-canvas-wrap" data-offcanvas>
+	<!-- right sidebar wrapper -->
+	<div class="leftBg"></div>
+	<div class="rightBg"></div>
+	<div class="leftBg2"></div>
+	<div class="rightBg2"></div>
+	<div class="inner-wrap">
+		<!-- Right sidemenu -->
+		<div id="skin-select">
+			<!--      Toggle sidemenu icon button -->
+			<a id="toggle">
+				<span class="fa icon-menu"></span>
+			</a>
+			<!--      End of Toggle sidemenu icon button -->
+			<div class="skin-part">
+				<div id="tree-wrap">
+					<!-- Profile -->
+					<div class="profile">
+						<a href="{{ path('app_home') }}" class="admin-logo" title="Best Destination"></a>
+					</div>
+					<!-- End of Profile -->
+					<!-- Menu sidebar begin-->
+					<div class="side-bar">
+						<div class="bg-transparent">
+							<div class="tooltip_admin_message"><strong>{{ 'Welcome' | trans }}</strong> {{ 'to your' | trans }} <strong>{{ 'BestDestination' | trans }}</strong> {{ 'for listing your accommodations' | trans }}</div>
+							<a class="back_to_site" href="{{ path('app_home') }}"></i>{{ 'back_to_site' | trans }}</a>
+							<div class="today_is" style="display: none;">{{ 'today_is' | trans }}: <span>{{ "now"|date("d.m.Y.") }}</span></div>
+						</div>
+						<ul id="menu-showhide" class="topnav slicknav">
+							<li>
+								<a id="menu-select" class="tooltip-tip" href="{{ path('admin_home', {'_locale': app.request.attributes.get('_locale')}) }}">
+									<span>Dashboard</span>
+								</a>
+							</li>
+							<li class="{{ app.request.get('_route') == 'admin_users' ? 'current' }} {{ app.request.get('_route') == 'admin_users_new' ? 'current' }}">
+								<a class="tooltip-tip " href="#">
+									<span>{{ 'Users' | trans }}</span>
+								</a>
+								<ul>
+									<li><a href="{{ path('admin_users', {'_locale': app.request.attributes.get('_locale')}) }}"><span>{{'List' | trans }}</span></a></li>
+									<li><a href="{{ path('admin_users_new', {'_locale': app.request.attributes.get('_locale')}) }}"><span>{{'New' | trans }}</span></a></li>
+								</ul>
+							</li> 
+							<li class="{{ app.request.get('_route') == 'admin_location_cities_search' ? 'current' }}{{ app.request.get('_route') == 'admin_location_subregions_search' ? 'current' }}{{ app.request.get('_route') == 'admin_location' ? 'current' }}{{ app.request.get('_route') == 'admin_location_subregions' ? 'current' }}{{ app.request.get('_route') == 'admin_location_cities' ? 'current' }}{{ app.request.get('_route') == 'admin_location_countries' ? 'current' }} {{ app.request.get('_route') == 'admin_location_regions' ? 'current' }}">
+								<a class="tooltip-tip" href="#">
+									<span>{{ 'locations' | trans }}</span>
+								</a> 
+								<ul>
+									<li><a href="{{ path('admin_location_countries', {'_locale': app.request.attributes.get('_locale')}) }}"><span>{{'Countries' | trans }}</span></a></li>
+									<li><a href="{{ path('admin_location_regions', {'_locale': app.request.attributes.get('_locale')}) }}"><span>{{'Regions' | trans }}</span></a></li>
+									<li><a href="{{ path('admin_location_subregions_search', {'_locale': app.request.attributes.get('_locale')}) }}"><span>{{'Subregions' | trans }}</span></a></li>
+									<li><a href="{{ path('admin_location_cities_search', {'_locale': app.request.attributes.get('_locale')}) }}"><span>{{'Cities' | trans }}</span></a></li>
+								</ul>
+							</li>
+							<li class="{{ app.request.get('_route') == 'admin_accommodation' ? 'current' }}{{ app.request.get('_route') == 'admin_accommodation_category' ? 'current' }}{{ app.request.get('_route') == 'admin_accommodation_new' ? 'current' }}">
+								<a class="tooltip-tip" href="#">
+									<span>{{'accommodation' | trans }}</span>
+								</a>
+								<ul>
+									<li>
+										<a href="{{ path('admin_accommodation_new', {'_locale': app.request.attributes.get('_locale')}) }}"><span>{{ 'new' | trans }}</span></a>
+									</li>
+									<li>
+										<a href="{{ path('admin_accommodation', {'_locale': app.request.attributes.get('_locale')}) }}"><span>{{ 'list' | trans }}</span></a>
+									</li>
+									<li>
+										<a href="{{ path('admin_accommodation_category', {'_locale': app.request.attributes.get('_locale')}) }}"><span>{{ 'category' | trans }}</span></a>
+									</li>
+								</ul>
+							</li>
+							<li class="{{ app.request.get('_route') == 'admin_unit' ? 'current' }}">
+								<a href="#">
+									<span>{{'Unit' | trans }}</span>
+								</a>
+								<ul>
+									<li><a href="{{ path('admin_unit', {'_locale': app.request.attributes.get('_locale')}) }}"><span>{{'List' | trans }}</span></a></li>
+									<li><a href="{{ path('admin_unit_category', {'_locale': app.request.attributes.get('_locale')}) }}"><span>{{'category' | trans }}</span></a></li>
+								</ul>
+							</li>
+							<li class="{{ app.request.get('_route') == 'admin_reviews' ? 'current' }}">
+								<a href="{{ path('admin_reviews', {'_locale': app.request.attributes.get('_locale')}) }}">
+									<span>{{'Reviews' | trans }}</span>
+								</a>
+							</li>
+							<li class="{{ app.request.get('_route') == 'admin_bookings' ? 'current' }}{{ app.request.get('_route') == 'admin_bookings_pending' ? 'current' }}">
+								<a href="#">
+									<span>{{'Bookings' | trans }}</span>
+								</a>
+								<ul>
+									<li><a href="{{ path('admin_bookings', {'_locale': app.request.attributes.get('_locale')}) }}"><span>{{'List' | trans }}</span></a></li>
+									<li><a href="{{ path('admin_bookings_pending', {'_locale': app.request.attributes.get('_locale')}) }}"><span>{{'Pending' | trans }}</span></a></li>
+									<li><a href="{{ path('admin_bookings_commision_pending', {'_locale': app.request.attributes.get('_locale')}) }}"><span>{{'Fees pending' | trans }}</span></a></li>
+								</ul>
+							</li>
+							<li class="{{ app.request.get('_route') == 'admin_fees' ? 'current' }}{{ app.request.get('_route') == 'admin_pending_fees' ? 'current' }}">
+								<a href="#">
+									<span>{{'Fees' | trans }}</span>
+								</a>
+								<ul>
+									<li><a href="{{ path('admin_fees', {'_locale': app.request.attributes.get('_locale')}) }}"><span>{{'List' | trans }}</span></a></li>
+									<li><a href="{{ path('admin_pending_fees', {'_locale': app.request.attributes.get('_locale')}) }}"><span>{{'Pending' | trans }}</span></a></li>
+								</ul>
+							</li>
+                            <li class="{{ app.request.get('_route') == 'admin_advertising_packages' ? 'current' }}{{ app.request.get('_route') == 'admin_advertising_packages_pending' ? 'current' }} {{ app.request.get('_route') == 'admin_advertising_packages_type' ? 'current' }}">
+                                <a href="#">
+                                    <span>{{'advertising_packages' | trans }}</span>
+                                </a>
+                                <ul>
+                                    <li><a href="{{ path('admin_advertising_packages', {'_locale': app.request.attributes.get('_locale')}) }}"><span>{{'list' | trans }}</span></a></li>
+                                    <li><a href="{{ path('admin_advertising_packages_pending', {'_locale': app.request.attributes.get('_locale')}) }}"><span>{{'pending' | trans }}</span></a></li>
+                                    <li><a href="{{ path('admin_advertising_packages_type', {'_locale': app.request.attributes.get('_locale')}) }}"><span>{{'type' | trans }}</span></a></li>
+                                </ul>
+                            </li>
+
+							<li class="{{ app.request.get('_route') == 'admin_discover_new' ? 'current' }}{{ app.request.get('_route') == 'admin_discover' ? 'current' }}">
+								<a class="tooltip-tip" href="#">
+									<span>{{'Discover' | trans }}</span>
+								</a>
+								<ul>
+									<li>
+										<a href="{{ path('admin_discover_new', {'_locale': app.request.attributes.get('_locale')}) }}"><span>{{ 'new' | trans }}</span></a>
+									</li>
+									<li>
+										<a href="{{ path('admin_discover', {'_locale': app.request.attributes.get('_locale')}) }}"><span>{{ 'list' | trans }}</span></a>
+									</li>
+								</ul>
+							</li>
+
+							<li class="{{ app.request.get('_route') == 'admin_additional_offers' ? 'current' }}{{ app.request.get('_route') == 'admin_additional_offer_new' ? 'current' }}">
+								<a class="tooltip-tip" href="#">
+									<span>{{'Special_Offer' | trans }}</span>
+								</a>
+								<ul>
+									<li>
+										<a href="{{ path('admin_additional_offer_new', {'_locale': app.request.attributes.get('_locale')}) }}"><span>{{ 'new' | trans }}</span></a>
+									</li>
+									<li>
+										<a href="{{ path('admin_additional_offers', {'_locale': app.request.attributes.get('_locale')}) }}"><span>{{ 'list' | trans }}</span></a>
+									</li>
+								</ul>
+							</li>
+
+							<li class="{{ app.request.get('_route') == 'admin_banner_new' ? 'current' }}{{ app.request.get('_route') == 'admin_banners' ? 'current' }}">
+								<a class="tooltip-tip" href="#">
+									<span>{{'Banners' | trans }}</span>
+								</a>
+								<ul>
+									<li><a href="{{ path('admin_banner_new', {'_locale': app.request.attributes.get('_locale')}) }}"><span>{{ 'New' | trans }}</span></a></li>
+									<li><a href="{{ path('admin_banners', {'_locale': app.request.attributes.get('_locale')}) }}"><span>{{ 'List' | trans }}</span></a></li>
+								</ul>
+							</li>
+							<li class="{{ app.request.get('_route') == 'admin_post_new' ? 'current' }}{{ app.request.get('_route') == 'admin_posts_comments' ? 'current' }}{{ app.request.get('_route') == 'admin_posts' ? 'current' }}">
+								<a class="tooltip-tip" href="#">
+									<span>{{'Blog' | trans }}</span>
+								</a>
+								<ul>
+									<li><a href="{{ path('admin_post_new', {'_locale': app.request.attributes.get('_locale')}) }}"><span>{{ 'New' | trans }}</span></a></li>
+									<li><a href="{{ path('admin_posts', {'_locale': app.request.attributes.get('_locale')}) }}"><span>{{ 'List' | trans }}</span></a></li>
+									<li><a href="{{ path('admin_posts_comments', {'_locale': app.request.attributes.get('_locale')}) }}"><span>{{ 'Comments' | trans }}</span></a></li>
+								</ul>
+							</li>
+						</ul>
+					</div>
+					<!-- end of Menu sidebar  -->
+
+				</div>
+			</div>
+		</div>
+		<!-- end of Rightsidemenu -->

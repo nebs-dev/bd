@@ -1,0 +1,323 @@
+<section class="filter-heading row">
+    <h1 class="filter-heading__title large-12 columns">{{ 'search' | trans }}
+    <span class="filter-heading__title--dark">
+    {% if location is defined and location %}
+    {{ attribute(location, app.request.locale) ?: location.en }}
+    {% endif %}
+    </span>
+    </h1>
+</section>
+<section class="filter-head row">
+    <ul class="small-centered medium-8 large-5 large-uncentered columns filter-head__crumbs">
+        <li>
+            <a href="{{ path('app_home', {'_locale': app.request.attributes.get('_locale') }) }}">{{ 'home' | trans }}</a>
+        </li>
+        <li class="current">
+            <a href="#">
+            {% if location is defined and location %}
+            {{ attribute(location, app.request.locale) ?: location.en }}
+            {% endif %}
+            </a>
+        </li>
+    </ul>
+    <button class="showmap-button">{{ 'show_list' | trans }}</button>
+</section>
+<section id="filter-close" class="filter-divider-top row">
+    <h3 class="filter-divider-top__title">{{ 'filter_by' | trans }}</h3>
+</section>
+<section class="filter-body row">
+    <div class="large-2 large-offset-1 columns">
+        <p class="filter-body__title">{{ 'price_min' | trans }}</p>
+        <div>
+            {{ form_errors(searchForm.priceMin) }}
+            {{ form_widget(searchForm.priceMin,
+            {
+            'attr' : {
+            'class'    : 'priceMin'
+            }
+            }) }}
+        </div>
+    </div>
+    {#<dl>#}
+        {#<dt class="filter-body__title">{{ 'center' | trans }}</dt>#}
+        {#<dd>#}
+        {#{{ form_errors(searchForm.center) }}#}
+        {#{{ form_widget(searchForm.center,#}
+        {#{#}
+        {#'attr' : {#}
+        {#'class'    : 'priceMax'#}
+        {#}#}
+        {#})}}#}
+        {#</dd>#}
+    {#</dl>#}
+    {#<dl>#}
+        {#<dt class="filter-body__title">{{ 'restaurant' | trans }}</dt>#}
+        {#<dd>#}
+        {#{{ form_errors(searchForm.restaurantDistance) }}#}
+        {#{{ form_widget(searchForm.restaurantDistance,#}
+        {#{#}
+        {#'attr' : {#}
+        {#'class'    : 'priceMax'#}
+        {#}#}
+        {#})}}#}
+        {#</dd>#}
+    {#</dl>#}
+    <div class="large-2 columns">
+        <p class="filter-body__title">{{ 'price_max' | trans }}</p>
+        <div>
+            {{ form_errors(searchForm.priceMax) }}
+            {{ form_widget(searchForm.priceMax,
+            {
+            'attr' : {
+            'class'    : 'priceMax'
+            }
+            }) }}
+        </div>
+    </div>
+    <div class="large-offset-1 large-6 ratings-container columns">
+        <p class="filter-body__title">{{ 'ratings' | trans }}</p>
+        <ul class="large-block-grid-7 ">
+            <li>
+                <input id="search_categorization_0" type="checkbox">
+                <label class="advanced-search__label-cb" for="search_categorization_0">
+                    <span>1</span> {{'star' | trans }}
+                </label>
+            </li>
+            <li>
+                <input id="search_categorization_1" type="checkbox">
+                <label class="advanced-search__label-cb" for="search_categorization_1">
+                    <span>2</span> {{'star' | trans }}
+                </label>
+            </li>
+            <li>
+                <input id="search_categorization_2" type="checkbox">
+                <label class="advanced-search__label-cb" for="search_categorization_2">
+                    <span>3</span> {{'star' | trans }}
+                </label>
+            </li>
+            <li>
+                <input id="search_categorization_3" type="checkbox">
+                <label class="advanced-search__label-cb" for="search_categorization_3">
+                    <span>4</span> {{'star' | trans }}
+                </label>
+            </li>
+            <li>
+                <input id="search_categorization_4" type="checkbox">
+                <label class="advanced-search__label-cb" for="search_categorization_4">
+                    <span>5</span> {{'star' | trans }}
+                </label>
+            </li>
+            <li class="not-rated">
+                <input id="search_categorization_5" type="checkbox" name="search[categorization][]" value="6">
+                <label class="advanced-search__label-cb" for="search_categorization_5">
+                    <span>{{ 'Not' | trans }}</span> {{'rated' | trans }}
+                </label>
+            </li>
+        </ul>
+    </div>
+    {#<dl>#}
+        {#<dt class="filter-body__title">{{ 'airport' | trans }}</dt>#}
+        {#<dd>#}
+        {#{{ form_errors(searchForm.airport) }}#}
+        {#{{ form_widget(searchForm.airport,#}
+        {#{#}
+        {#'attr' : {#}
+        {#'class'    : 'priceMax'#}
+        {#}#}
+        {#})}}#}
+        {#</dd>#}
+    {#</dl>#}
+    {#<dl>#}
+        {#<dt class="filter-body__title">{{ 'shop' | trans }}</dt>#}
+        {#<dd>#}
+        {#{{ form_errors(searchForm.shoppingMall) }}#}
+        {#{{ form_widget(searchForm.shoppingMall,#}
+        {#{#}
+        {#'attr' : {#}
+        {#'class'    : 'priceMax'#}
+        {#}#}
+        {#})}}#}
+        {#</dd>#}
+    {#</dl>#}
+    {#<dl>#}
+        {#<dt class="filter-body__title">{{ 'check_in_time' | trans }}</dt>#}
+        {#<dd>#}
+        {#{{ form_errors(searchForm.checkIn) }}#}
+        {#{{ form_widget(searchForm.checkIn,#}
+        {#{#}
+        {#'attr' : {#}
+        {#'class'    : 'bedRooms'#}
+        {#}#}
+        {#})}}#}
+        {#</dd>#}
+    {#</dl>#}
+    {#<dl>#}
+        {#<dt class="filter-body__title">{{ 'sea' | trans }}</dt>#}
+        {#<dd>#}
+        {#{{ form_errors(searchForm.sea) }}#}
+        {#{{ form_widget(searchForm.sea,#}
+        {#{#}
+        {#'attr' : {#}
+        {#'class'    : 'bedRooms'#}
+        {#}#}
+        {#})}}#}
+        {#</dd>#}
+    {#</dl>#}
+    {#<dl>#}
+        {#<dt class="filter-body__title">{{ 'beach' | trans }}</dt>#}
+        {#<dd>#}
+        {#{{ form_errors(searchForm.beach) }}#}
+        {#{{ form_widget(searchForm.beach,#}
+        {#{#}
+        {#'attr' : {#}
+        {#'class'    : 'bedRooms'#}
+        {#}#}
+        {#})}}#}
+        {#</dd>#}
+    {#</dl>#}
+    {#<dl>#}
+        {#<dt class="filter-body__title">{{ 'check_out_time' | trans }}</dt>#}
+        {#<dd>#}
+        {#{{ form_errors(searchForm.checkOut) }}#}
+        {#{{ form_widget(searchForm.checkOut,#}
+        {#{#}
+        {#'attr' : {#}
+        {#'class'    : 'bedRooms'#}
+        {#}#}
+        {#})}}#}
+        {#</dd>#}
+    {#</dl>#}
+    <div class="large-5 large-offset-1 columns">
+        <dt class="bb-container filter-body__title">{{ 'no_of_bedrooms' | trans }}</dt>
+        <dd>
+        {{ form_errors(searchForm.bedroomNumber) }}
+        {{ form_widget(searchForm.bedroomNumber,
+        {
+        'attr' : {
+        'class'    : 'bedRooms'
+        }
+        }) }}
+        </dd>
+    </div>
+    <div class="large-5 end columns">
+        <dt class="bb-container filter-body__title">{{ 'no_of_bathrooms' | trans }}</dt>
+        <dd>
+        {{ form_errors(searchForm.bathroomNumber) }}
+        {{ form_widget(searchForm.bathroomNumber,
+        {
+        'attr' : {
+        'class'    : 'bathRooms'
+        }
+        }) }}
+        </dd>
+    </div>
+        
+    <div class="amenities-filter-container large-10 large-centered columns">
+        <ul class="large-block-grid-4 columns">
+            
+        <li>
+            <dl>
+                <dd>
+                {{ form_errors(searchForm.airCondition) }}
+                {{ form_widget(searchForm.airCondition) }}
+                <label class="advanced-search__label-cb" for="search_airCondition">
+                    {{ 'Air_conditioning' | trans }}
+                </label>
+                </dd>
+                <dd>
+                {{ form_errors(searchForm.animal_welcome) }}
+                {{ form_widget(searchForm.animal_welcome) }}
+                <label class="advanced-search__label-cb" for="search_animal_welcome">
+                    {{ 'Animal_welcome' | trans }}
+                </label>
+                </dd>
+                <dd>
+                {{ form_errors(searchForm.parking) }}
+                {{ form_widget(searchForm.parking) }}
+                <label class="advanced-search__label-cb" for="search_parking">
+                    {{ 'Parking' | trans }}
+                </label>
+                </dd>
+            </dl>
+            </li>
+            <li>
+                <dl>
+                <dd>
+                {{ form_errors(searchForm.internet) }}
+                {{ form_widget(searchForm.internet) }}
+                <label class="advanced-search__label-cb" for="search_internet">
+                    {{ 'Internet' | trans }}
+                </label>
+                </dd>
+                <dd>
+                {{ form_errors(searchForm.satTv) }}
+                {{ form_widget(searchForm.satTv) }}
+                <label class="advanced-search__label-cb" for="search_satTV">
+                    {{ 'SAT_TV' | trans }}
+                </label>
+                </dd>
+                <dd>
+                {{ form_errors(searchForm.heating) }}
+                {{ form_widget(searchForm.heating) }}
+                <label class="advanced-search__label-cb" for="search_heating">
+                    {{ 'Heating' | trans }}
+                </label>
+                </dd>
+            </dl>
+            </li>
+            <li>
+                <dl>
+                <dd>
+                {{ form_errors(searchForm.washingMachine) }}
+                {{ form_widget(searchForm.washingMachine) }}
+                <label class="advanced-search__label-cb"
+                    for="search_washingMachine">
+                    {{ 'Washing_Machine' | trans }}
+                </label>
+                </dd>
+                <dd>
+                {{ form_errors(searchForm.dishwasher) }}
+                {{ form_widget(searchForm.dishwasher) }}
+                <label class="advanced-search__label-cb" for="search_dishwasher">
+                    {{ 'Dishwasher' | trans }}
+                </label>
+                </dd>
+                <dd>
+                {{ form_errors(searchForm.grill) }}
+                {{ form_widget(searchForm.grill) }}
+                <label class="advanced-search__label-cb" for="search_grill">
+                    {{ 'Grill' | trans }}
+                </label>
+                </dd>
+                <dd>
+                </dl>
+            </li>
+            <li>
+                <dl>
+                <dd>
+                {{ form_errors(searchForm.pool) }}
+                {{ form_widget(searchForm.pool) }}
+                <label class="advanced-search__label-cb" for="search_pool">
+                    {{ 'Pool' | trans }}
+                </label>
+                </dd>
+                <dd>
+                {{ form_errors(searchForm.restaurant) }}
+                {{ form_widget(searchForm.restaurant) }}
+                <label class="advanced-search__label-cb" for="search_restaurant">
+                    {{ 'Restaurant' | trans }}
+                </label>
+                </dd>
+            </dl>
+        </li>
+                </ul>
+
+    </div>
+</section>
+<section class="filter-divider-down row">
+    <h3 class="filter-divider-down__title"><i class="fa fa-caret-up"></i></h3>
+</section>
+
+{{ form_rest(searchForm) }}
+<input type="hidden" name="page" id="page" value="1">
+{{ form_end(searchForm) }}

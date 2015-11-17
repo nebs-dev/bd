@@ -1,0 +1,90 @@
+{% extends 'base.html.twig' %}
+{% block content %}
+    {% block foundation_header %}
+        {% include 'includes/foundation-header.html.twig' %}
+    {% endblock %}
+    {% block foundation_filter_header %}
+        {% include 'includes/foundation_filter_header.html.twig' %}
+    {% endblock %}
+
+    {% block foundation_filter_body %}
+        {% include 'includes/foundation_filter_body.html.twig' %}
+    {% endblock %}
+
+
+
+    {#
+
+        {{ form_start(
+            searchForm, {
+                'method': 'POST',
+                'action': path('app_search_action', {'_locale': app.request.attributes.get('_locale') }),
+                'attr': {'novalidate': 'novalidate', 'class':"form-horizontal", 'id':'searchForm'}
+            }
+            ) }}
+
+            <div class="form-group">
+                {{ form_label(searchForm.location, 'location' | trans, { 'label_attr': {'class': 'col-sm-3 control-label'} }) }}
+                {{ form_errors(searchForm.location) }}
+                <div class="col-sm-5">
+                    {{ form_widget(searchForm.location, { 'attr': {'class': 'form-control locationAutocomplete'} }) }}
+                </div>
+            </div>
+
+
+            <input type="hidden" name="page" id="page" value="1">
+
+            {{ form_rest(searchForm) }}
+
+            <div class="form-group">
+                <div class="col-sm-5 col-sm-offset-3">
+                    <input type="submit" id="searchActionSubmit" name="searchAction" class="btn btn-default" value="{{ 'search' | trans }}" />
+                </div>
+            </div>
+
+        {{ form_end(searchForm) }}
+
+    #}
+
+    {% block result_map %}
+
+        <div class="row">
+            <div style="height: 500px"; id="map-canvas2"></div>
+
+        </div>
+    {% endblock %}
+
+
+
+    {% block foundation_item_single %}
+        {% include 'includes/foundation_item_single.html.twig' %}
+    {% endblock %}
+    {% block foundation_footer %}
+        {% include 'includes/foundation-footer.html.twig' %}
+    {% endblock %}
+
+{% endblock %}
+
+    {% block js %}
+        {{ parent() }}
+
+        <script>
+            $(document).ready(function () {
+                // PAGINATION
+                $('.pagination').on('click', function (e) {
+                    $('#page').val($(this).attr('id'));
+                    $('#searchForm').submit();
+                });
+
+                {% if location and location != '' %}
+                    var locationName = '{{ location.en }}';
+
+                    $('#search_location').val(locationName);
+                {% endif %}
+
+
+            });
+
+        </script>
+    {% endblock %}
+

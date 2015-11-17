@@ -1,0 +1,157 @@
+{% extends 'base.html.twig' %}
+
+{% block content %}
+	{% block foundation_header %}
+		{% include 'includes/foundation-header.html.twig'  %}
+	{% endblock %}
+
+	<div class="blog-bg-featured">
+		<div class="blogSaveMoneyAndTime">
+			<div class="row">
+				<div class="logoGreenSingle"></div>
+				<div class="text-container">
+					<h2 class="subheading">{{ 'Save money and time!' | trans }}</h2>
+					<span>{{ 'Publish Your property' | trans }}</span>
+				</div>
+			</div>
+		</div>
+	</div>
+	<div class="row" style="padding-top: 30px;"></div>
+	<div class="row">
+		<section class="search">
+			<div class="large-1 medium-1 small-1 columns marker-icon">
+				<i class="map-marker-icon fa fa-search"></i>
+			</div>
+			<div class="large-11 medium-11 small-11 columns search-moto">
+				<h1 class="search-moto-head">{{ 'search_for_special_offers' | trans }}</h1>
+			</div>
+		</section>
+		<section class="search-input1" style="padding: 0px 20px 0px 20px;">
+			<div class="large-12 columns">
+				<div class="row">
+					<div class="row" style="padding-top: 15px;"></div>
+					<div class="large-12 columns">
+						{# Search form #}
+						{{ form_start(form, {  'attr': {'novalidate': 'novalidate', 'class':"form-horizontal", 'id':'additionalOfferList' },   'method': 'POST',   'action': path('app_additional_offers', {'_locale': app.request.attributes.get('_locale') }) }) }}
+						{{ form_errors(form) }}
+
+						<div class="large-5 columns">
+							{{ form_label(form.location, 'location' | trans, { 'label_attr': {'class': 'col-sm-3 control-label'} }) }}
+							{{ form_errors(form.location) }}
+							<div class="col-sm-5">
+								{{ form_widget(form.location, { 'attr': {'class': 'form-control locationAutocomplete'} }) }}
+							</div>
+						</div>
+
+						<div class="large-5 columns">
+							{{ form_label(form.category, 'category' | trans, { 'label_attr': {'class': 'col-sm-3 control-label'} }) }}
+							{{ form_errors(form.category) }}
+							<div class="col-sm-5">
+								{{ form_widget(form.category, { 'attr': {'class': 'form-control'} }) }}
+							</div>
+						</div>
+
+						{{ form_rest(form) }}
+
+						<div class="large-2 columns">
+							<div class="col-sm-5 col-sm-offset-3">
+								<label class="col-sm-3 control-label required" for="search">{{ 'go_search' | trans }}</label>
+								<input type="submit" name="search" class="search-button pull-right" value="{{ 'save' | trans }}"/>
+							</div>
+						</div>
+					</div>
+				</div>
+			</div>
+			<div class="row"></div>
+		</section>
+
+		{{ form_end(form) }}
+	</div>
+<div class="row">
+	<div class="row" style="padding-top: 25px;"></div>
+	<h1 class="filter-heading__title large-12 columns">search
+		<span class="filter-heading__title--dark">
+			{{ 'Special Offers' | trans }}
+		</span>
+	</h1>
+
+	{% if additionalOffers is defined %}
+		{% if additionalOffers is not empty %}
+			<div class="row">
+				<div class="large-12 columns">
+					{% for ao in additionalOffers %}
+						{% if loop.index <= 4 %}
+							<section class="large-3 medium-6 columns">
+						{% elseif loop.index == 7 %}
+							<div class="row"></div>
+							<section class="large-4 medium-6 columns">
+						{% elseif loop.index <= 8 %}
+							<section class="large-3 medium-6 columns">
+						{% else %}
+							<section class="large-3 medium-6 columns">
+						{% endif %}
+							<a href="{{
+									path('app_additional_offer_single',
+									{'_locale': app.request.attributes.get('_locale'), 'id': ao.id }) }}" class="">
+								<figure class="accommodation-item" style="background-image: url('{% if ao.featuredImage %}{{ ao.featuredImage | imagine_filter('my_thumb') }}{% endif %}')">
+									<figcaption class="accommodation-item__description">
+										{{ ao.details.title }}
+										<span class="accommodation-item__description--place">
+											{% if ao.city %}
+                                                {{ attribute(ao.city, app.request.locale) ?: ao.city.en }}
+                                            {% endif %}
+										</span>
+									</figcaption>
+								</figure>
+								<span class="accommodation-price">{% if ao.country %}{{ attribute(ao.country, app.request.locale) }}{% endif %}</span>
+							</a>
+						</section>
+					{% endfor %}
+					<div class="row"></div>
+				</div>
+				<div class="row"></div>
+			</div>
+			<div class="row"></div>
+		{% else %}
+			{{ 'no_result' | trans }}
+		{% endif %}
+	{% endif %}
+</div><div class="row" style="padding-top: 50px;"></div>
+	{% block foundation_footer %}
+		{% include 'includes/foundation-footer.html.twig'  %}
+	{% endblock %}
+{% endblock %}
+
+
+{% block js %}
+	{{ parent() }}
+
+	<script type="text/javascript">
+		$(document).ready(function() {
+
+			$('.locationAutocomplete').autocomplete({
+				serviceUrl: '{{ app.request.getBaseURL() }}/search/autocomplete/location',
+				type: 'POST',
+				dataType: 'json',
+//                lookup: countriesArray,
+				lookupFilter: function(suggestion, originalQuery, queryLowerCase) {
+					console.log(suggestion);
+					var re = new RegExp('\\b' + $.Autocomplete.utils.escapeRegExChars(queryLowerCase), 'gi');
+					return re.test(suggestion.value);
+				},
+				onSelect: function(suggestion) {
+					$('#selction-ajax').html('You selected: ' + suggestion.value + ', ' + suggestion.data);
+				},
+				onHint: function (hint) {
+					$('#autocomplete-ajax-x').val(hint);
+				},
+				onInvalidateSelection: function() {
+					$('#selction-ajax').html('You selected: none');
+				}
+			});
+
+		});
+
+	</script>
+
+{% endblock %}

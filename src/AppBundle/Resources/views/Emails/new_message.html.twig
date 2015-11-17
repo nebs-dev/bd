@@ -1,0 +1,6 @@
+<h3>You have new mail from {{ message.userFrom.username }}</h3>
+
+<h3>Message text:</h3>
+<p>{{ message.text }}</p>
+
+<a href="{{ url('app_conversation', {'_locale': app.request.attributes.get('_locale'), 'id' : message.userFrom.id}) }}">{{ 'respond' | trans }}</a>

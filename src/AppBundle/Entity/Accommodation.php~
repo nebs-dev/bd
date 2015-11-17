@@ -1,0 +1,931 @@
+<?php
+
+namespace AppBundle\Entity;
+
+use Doctrine\ORM\Mapping as ORM;
+
+/**
+ * @ORM\Table(name="accommodation")
+ * @ORM\Entity(repositoryClass="AppBundle\Entity\Repository\AccommodationRepository")
+ */
+class Accommodation {
+
+    /**
+     * @ORM\Column(name="id", type="integer")
+     * @ORM\Id()
+     * @ORM\GeneratedValue(strategy="AUTO")
+     */
+    private $id;
+    /**
+     * @ORM\Column(type="string", length=30)
+     */
+    private $name;
+    /**
+     * @ORM\ManyToOne(targetEntity="AccommodationCategory", inversedBy="accommodations")
+     */
+    private $accommodationCategory;
+    /**
+     * @ORM\ManyToOne(targetEntity="UserBundle\Entity\User", inversedBy="accommodations")
+     */
+    private $user;
+    /**
+     * @ORM\OneToMany(targetEntity="Unit", mappedBy="accommodation", cascade={"persist"})
+     */
+    private $units;
+    /**
+     * @ORM\ManyToOne(targetEntity="City", inversedBy="accommodations")
+     */
+    private $city;
+    /**
+     * @ORM\Column(type="string", length=50)
+     */
+    private $address;
+    /**
+     * @ORM\Column(type="smallint", nullable=true)
+     */
+    private $prepay;
+    /**
+     * @ORM\OneToOne(targetEntity="AccommodationDistance", inversedBy="accommodation", cascade={"all"})
+     */
+    protected $distance;
+    /**
+     * @ORM\OneToOne(targetEntity="AccommodationDescription", inversedBy="accommodation", cascade={"all"})
+     */
+    private $description;
+    /**
+     * @ORM\Column(type="decimal", precision=20, scale=18)
+     */
+    private $x;
+    /**
+     * @ORM\Column(type="decimal", precision=20, scale=18)
+     */
+    private $y;
+    /**
+     * @ORM\Column(type="string", length=10, nullable=true)
+     */
+    private $checkIn;
+    /**
+     * @ORM\Column(type="string", length=10, nullable=true)
+     */
+    private $checkOut;
+    /**
+     * @ORM\Column(type="string", length=100, nullable=true)
+     */
+    private $web;
+    /**
+     * @var \Date
+     * @ORM\Column(type="date", nullable=true)
+     */
+    private $activeUntil;
+    /**
+     * @ORM\OneToMany(targetEntity="Gallery", mappedBy="accommodation", cascade={"all"})
+     */
+    private $gallery;
+    /**
+     * @ORM\OneToMany(targetEntity="Video", mappedBy="accommodation", cascade={"all"})
+     */
+    private $videos;
+    /**
+     * @ORM\OneToMany(targetEntity="AdvertisingPackage", mappedBy="accommodation", cascade={"all"})
+     */
+    private $advertisingPackage;
+    /**
+     * @ORM\ManyToMany(targetEntity="AccommodationActivity", inversedBy="accommodations")
+     */
+    private $activities;
+    /**
+     * @ORM\ManyToMany(targetEntity="AccommodationFacility", inversedBy="accommodations")
+     */
+    private $facilities;
+    /**
+     * @ORM\ManyToMany(targetEntity="AccommodationBeach", inversedBy="accommodations")
+     */
+    private $beaches;
+    /**
+     * @ORM\ManyToMany(targetEntity="AccommodationAdditional", inversedBy="accommodations")
+     */
+    private $additionals;
+    /**
+     * @ORM\ManyToMany(targetEntity="AccommodationPayment", inversedBy="accommodations")
+     */
+    private $payments;
+    /**
+     * @ORM\OneToMany(targetEntity="AccommodationFee", mappedBy="accommodation", cascade={"all"})
+     */
+    private $fees;
+    /**
+     * @ORM\OneToMany(targetEntity="Review", mappedBy="accommodation", cascade={"all"})
+     */
+    private $reviews;
+    /**
+     * @ORM\Column(type="decimal", precision=14, scale=10, nullable=true)
+     */
+    private $wifi;
+    /**
+     * @ORM\Column(type="integer")
+     */
+    private $views = 0;
+    /**
+     * @ORM\Column(type="decimal", precision=4, scale=2)
+     */
+    private $rate = 0;
+
+    /**
+     * @ORM\Column(type="string", length=100)
+     */
+    private $email;
+
+    /**
+     * @ORM\Column(type="string", length=100)
+     */
+    private $phone;
+
+
+    /**
+     * Constructor
+     */
+    public function __construct() {
+        $this->units = new \Doctrine\Common\Collections\ArrayCollection();
+    }
+
+    /**
+     * Get featured image from gallery
+     * @return mixed
+     */
+    public function getFeaturedImage() {
+        foreach ($this->getGallery() as $photo) {
+            if ($photo->getFeaturedImage()) {
+                return $photo->getWebPath();
+            }
+        }
+    }
+
+    /**
+     * @return bool
+     */
+    public function getStatus() {
+        if (count($this->getFees()) > 0) {
+            foreach ($this->getFees() as $fee) {
+                if ($fee->isValid()) return true;
+            }
+        }
+
+        return false;
+    }
+
+    /**
+     * Get all rates for accommodation
+     * @return int
+     */
+    public function getReviewRate() {
+        $total = 0;
+        $cleanliness = 0;
+        $comfort = 0;
+        $location = 0;
+        $facilities = 0;
+        $staff = 0;
+        $valueForMoney = 0;
+
+        $reviews = $this->getReviews();
+        $numReviews = 0;
+
+        # Calculate only reviews with status == 1
+        foreach ($reviews as $review) {
+            if ($review->getStatus()) {
+                $total += $review->getTotal();
+                $cleanliness += $review->getCleanliness();
+                $comfort += $review->getComfort();
+                $location += $review->getLocation();
+                $facilities += $review->getFacilities();
+                $staff += $review->getStaff();
+                $valueForMoney += $review->getValueForMoney();
+
+                $numReviews++;
+            }
+        }
+
+//        return array(
+//            'total' => $total / ($numReviews == 0) ? 1 : $numReviews,
+//            'cleanliness' => $cleanliness / ($numReviews == 0) ? 1 : $numReviews,
+//            'comfort' => $comfort / ($numReviews == 0) ? 1 : $numReviews,
+//            'location' => $location / ($numReviews == 0) ? 1 : $numReviews,
+//            'facilities' => $facilities / ($numReviews == 0) ? 1 : $numReviews,
+//            'staff' => $staff / ($numReviews == 0) ? 1 : $numReviews,
+//            'valueForMoney' => $valueForMoney / ($numReviews == 0) ? 1 : $numReviews
+//        );
+
+        return array(
+            'total' => ($total == 0) ? $total : $total / $numReviews,
+            'cleanliness' => ($cleanliness == 0) ? $cleanliness : $cleanliness / $numReviews,
+            'comfort' => ($comfort == 0) ? $comfort : $comfort / $numReviews,
+            'location' => ($location == 0) ? $location : $location / $numReviews,
+            'facilities' => ($facilities == 0) ? $facilities : $facilities / $numReviews,
+            'staff' => ($staff == 0) ? $staff : $staff / $numReviews,
+            'valueForMoney' => ($valueForMoney == 0) ? $valueForMoney : $valueForMoney / $numReviews
+        );
+
+    }
+
+    /**
+     * Get id
+     * @return integer
+     */
+    public function getId() {
+        return $this->id;
+    }
+
+    /**
+     * Set name
+     * @param string $name
+     * @return Accommodation
+     */
+    public function setName($name) {
+        $this->name = $name;
+        return $this;
+    }
+
+    /**
+     * Get name
+     * @return string
+     */
+    public function getName() {
+        return $this->name;
+    }
+
+    /**
+     * Set accommodationCategory
+     * @param \AppBundle\Entity\AccommodationCategory $accommodationCategory
+     * @return Accommodation
+     */
+    public function setAccommodationCategory(\AppBundle\Entity\AccommodationCategory $accommodationCategory = null) {
+        $this->accommodationCategory = $accommodationCategory;
+        return $this;
+    }
+
+    /**
+     * Get accommodationCategory
+     * @return \AppBundle\Entity\AccommodationCategory
+     */
+    public function getAccommodationCategory() {
+        return $this->accommodationCategory;
+    }
+
+    /**
+     * Set user
+     * @param \UserBundle\Entity\User $user
+     * @return Accommodation
+     */
+    public function setUser(\UserBundle\Entity\User $user = null) {
+        $this->user = $user;
+        return $this;
+    }
+
+    /**
+     * Get user
+     * @return \UserBundle\Entity\User
+     */
+    public function getUser() {
+        return $this->user;
+    }
+
+    /**
+     * Add units
+     * @param \AppBundle\Entity\Unit $units
+     * @return Accommodation
+     */
+    public function addUnit(\AppBundle\Entity\Unit $units) {
+        $this->units[] = $units;
+        return $this;
+    }
+
+    /**
+     * Remove units
+     * @param \AppBundle\Entity\Unit $units
+     */
+    public function removeUnit(\AppBundle\Entity\Unit $units) {
+        $this->units->removeElement($units);
+    }
+
+    /**
+     * Get units
+     * @return \Doctrine\Common\Collections\Collection
+     */
+    public function getUnits() {
+        return $this->units;
+    }
+
+    /**
+     * Set city
+     * @param \AppBundle\Entity\City $city
+     * @return Accommodation
+     */
+    public function setCity(\AppBundle\Entity\City $city = null) {
+        $this->city = $city;
+        return $this;
+    }
+
+    /**
+     * Get city
+     * @return \AppBundle\Entity\City
+     */
+    public function getCity() {
+        return $this->city;
+    }
+
+    /**
+     * Set address
+     * @param string $address
+     * @return Accommodation
+     */
+    public function setAddress($address) {
+        $this->address = $address;
+        return $this;
+    }
+
+    /**
+     * Get address
+     * @return string
+     */
+    public function getAddress() {
+        return $this->address;
+    }
+
+    /**
+     * Set x
+     * @param string $x
+     * @return Accommodation
+     */
+    public function setX($x) {
+        $this->x = $x;
+        return $this;
+    }
+
+    /**
+     * Get x
+     * @return string
+     */
+    public function getX() {
+        return $this->x;
+    }
+
+    /**
+     * Set y
+     * @param string $y
+     * @return Accommodation
+     */
+    public function setY($y) {
+        $this->y = $y;
+        return $this;
+    }
+
+    /**
+     * Get y
+     * @return string
+     */
+    public function getY() {
+        return $this->y;
+    }
+
+    /**
+     * Set checkIn
+     * @param string $checkIn
+     * @return Accommodation
+     */
+    public function setCheckIn($checkIn) {
+        $this->checkIn = $checkIn;
+        return $this;
+    }
+
+    /**
+     * Get checkIn
+     * @return string
+     */
+    public function getCheckIn() {
+        return $this->checkIn;
+    }
+
+    /**
+     * Set checkOut
+     * @param string $checkOut
+     * @return Accommodation
+     */
+    public function setCheckOut($checkOut) {
+        $this->checkOut = $checkOut;
+        return $this;
+    }
+
+    /**
+     * Get checkOut
+     * @return string
+     */
+    public function getCheckOut() {
+        return $this->checkOut;
+    }
+
+    /**
+     * Set activeUntil
+     * @param \DateTime $activeUntil
+     * @return Accommodation
+     */
+    public function setActiveUntil($activeUntil) {
+        $this->activeUntil = $activeUntil;
+        return $this;
+    }
+
+    /**
+     * Get activeUntil
+     * @return \DateTime
+     */
+    public function getActiveUntil() {
+        return $this->activeUntil;
+    }
+
+    /**
+     * Add gallery
+     * @param \AppBundle\Entity\Gallery $gallery
+     * @return Accommodation
+     */
+    public function addGallery(\AppBundle\Entity\Gallery $gallery) {
+        $this->gallery[] = $gallery;
+        return $this;
+    }
+
+    /**
+     * Remove gallery
+     * @param \AppBundle\Entity\Gallery $gallery
+     */
+    public function removeGallery(\AppBundle\Entity\Gallery $gallery) {
+        $this->gallery->removeElement($gallery);
+    }
+
+    /**
+     * Get gallery
+     * @return \Doctrine\Common\Collections\Collection
+     */
+    public function getGallery() {
+        return $this->gallery;
+    }
+
+    /**
+     * Set web
+     * @param string $web
+     * @return Accommodation
+     */
+    public function setWeb($web) {
+        $this->web = $web;
+        return $this;
+    }
+
+    /**
+     * Get web
+     * @return string
+     */
+    public function getWeb() {
+        return $this->web;
+    }
+
+    /**
+     * Set localTax
+     * @param boolean $localTax
+     * @return Accommodation
+     */
+    public function setLocalTax($localTax) {
+        $this->localTax = $localTax;
+        return $this;
+    }
+
+    /**
+     * Get localTax
+     * @return boolean
+     */
+    public function getLocalTax() {
+        return $this->localTax;
+    }
+
+    /**
+     * Set distance
+     * @param \AppBundle\Entity\AccommodationDistance $distance
+     * @return Accommodation
+     */
+    public function setDistance(\AppBundle\Entity\AccommodationDistance $distance = null) {
+        $this->distance = $distance;
+        return $this;
+    }
+
+    /**
+     * Get distance
+     * @return \AppBundle\Entity\AccommodationDistance
+     */
+    public function getDistance() {
+        return $this->distance;
+    }
+
+    /**
+     * Add activities
+     * @param \AppBundle\Entity\AccommodationActivity $activities
+     * @return Accommodation
+     */
+    public function addActivity(\AppBundle\Entity\AccommodationActivity $activities) {
+        $this->activities[] = $activities;
+        return $this;
+    }
+
+    /**
+     * Remove activities
+     * @param \AppBundle\Entity\AccommodationActivity $activities
+     */
+    public function removeActivity(\AppBundle\Entity\AccommodationActivity $activities) {
+        $this->activities->removeElement($activities);
+    }
+
+    /**
+     * Get activities
+     * @return \Doctrine\Common\Collections\Collection
+     */
+    public function getActivities() {
+        return $this->activities;
+    }
+
+    /**
+     * Add facilities
+     * @param \AppBundle\Entity\AccommodationFacility $facilities
+     * @return Accommodation
+     */
+    public function addFacility(\AppBundle\Entity\AccommodationFacility $facilities) {
+        $this->facilities[] = $facilities;
+        return $this;
+    }
+
+    /**
+     * Remove facilities
+     * @param \AppBundle\Entity\AccommodationFacility $facilities
+     */
+    public function removeFacility(\AppBundle\Entity\AccommodationFacility $facilities) {
+        $this->facilities->removeElement($facilities);
+    }
+
+    /**
+     * Get facilities
+     * @return \Doctrine\Common\Collections\Collection
+     */
+    public function getFacilities() {
+        return $this->facilities;
+    }
+
+    /**
+     * Add beaches
+     * @param \AppBundle\Entity\AccommodationBeach $beaches
+     * @return Accommodation
+     */
+    public function addBeach(\AppBundle\Entity\AccommodationBeach $beaches) {
+        $this->beaches[] = $beaches;
+        return $this;
+    }
+
+    /**
+     * Remove beaches
+     * @param \AppBundle\Entity\AccommodationBeach $beaches
+     */
+    public function removeBeach(\AppBundle\Entity\AccommodationBeach $beaches) {
+        $this->beaches->removeElement($beaches);
+    }
+
+    /**
+     * Get beaches
+     * @return \Doctrine\Common\Collections\Collection
+     */
+    public function getBeaches() {
+        return $this->beaches;
+    }
+
+    /**
+     * Add additionals
+     * @param \AppBundle\Entity\AccommodationAdditional $additionals
+     * @return Accommodation
+     */
+    public function addAdditional(\AppBundle\Entity\AccommodationAdditional $additionals) {
+        $this->additionals[] = $additionals;
+        return $this;
+    }
+
+    /**
+     * Remove additionals
+     * @param \AppBundle\Entity\AccommodationAdditional $additionals
+     */
+    public function removeAdditional(\AppBundle\Entity\AccommodationAdditional $additionals) {
+        $this->additionals->removeElement($additionals);
+    }
+
+    /**
+     * Get additionals
+     * @return \Doctrine\Common\Collections\Collection
+     */
+    public function getAdditionals() {
+        return $this->additionals;
+    }
+
+    /**
+     * Add payments
+     * @param \AppBundle\Entity\AccommodationPayment $payments
+     * @return Accommodation
+     */
+    public function addPayment(\AppBundle\Entity\AccommodationPayment $payments) {
+        $this->payments[] = $payments;
+        return $this;
+    }
+
+    /**
+     * Remove payments
+     * @param \AppBundle\Entity\AccommodationPayment $payments
+     */
+    public function removePayment(\AppBundle\Entity\AccommodationPayment $payments) {
+        $this->payments->removeElement($payments);
+    }
+
+    /**
+     * Get payments
+     * @return \Doctrine\Common\Collections\Collection
+     */
+    public function getPayments() {
+        return $this->payments;
+    }
+
+    /**
+     * Add description
+     * @param \AppBundle\Entity\AccommodationDescription $description
+     * @return Accommodation
+     */
+    public function addDescription(\AppBundle\Entity\AccommodationDescription $description) {
+        $this->description[] = $description;
+
+        return $this;
+    }
+
+    /**
+     * Remove description
+     * @param \AppBundle\Entity\AccommodationDescription $description
+     */
+    public function removeDescription(\AppBundle\Entity\AccommodationDescription $description) {
+        $this->description->removeElement($description);
+    }
+
+    /**
+     * Get description
+     * @return \Doctrine\Common\Collections\Collection
+     */
+    public function getDescription() {
+        return $this->description;
+    }
+
+    /**
+     * Set description
+     * @param \AppBundle\Entity\AccommodationDescription $description
+     * @return Accommodation
+     */
+    public function setDescription(\AppBundle\Entity\AccommodationDescription $description = null) {
+        $this->description = $description;
+
+        return $this;
+    }
+
+    /**
+     * Set prepay
+     * @param integer $prepay
+     * @return Accommodation
+     */
+    public function setPrepay($prepay) {
+        $this->prepay = $prepay;
+
+        return $this;
+    }
+
+    /**
+     * Get prepay
+     * @return integer
+     */
+    public function getPrepay() {
+        return $this->prepay;
+    }
+
+    /**
+     * Set views
+     * @param integer $views
+     * @return Accommodation
+     */
+    public function setViews($views) {
+        $this->views = $views;
+
+        return $this;
+    }
+
+    /**
+     * Get views
+     * @return integer
+     */
+    public function getViews() {
+        return $this->views;
+    }
+
+    /**
+     * Add reviews
+     * @param \AppBundle\Entity\Review $reviews
+     * @return Accommodation
+     */
+    public function addReview(\AppBundle\Entity\Review $reviews) {
+        $this->reviews[] = $reviews;
+
+        return $this;
+    }
+
+    /**
+     * Remove reviews
+     * @param \AppBundle\Entity\Review $reviews
+     */
+    public function removeReview(\AppBundle\Entity\Review $reviews) {
+        $this->reviews->removeElement($reviews);
+    }
+
+    /**
+     * Get reviews
+     * @return \Doctrine\Common\Collections\Collection
+     */
+    public function getReviews() {
+        return $this->reviews;
+    }
+
+    /**
+     * Add fees
+     * @param \AppBundle\Entity\AccommodationFee $fees
+     * @return Accommodation
+     */
+    public function addFee(\AppBundle\Entity\AccommodationFee $fees) {
+        $this->fees[] = $fees;
+        $fees->setAccommodation($this);
+
+        return $this;
+    }
+
+    /**
+     * Remove fees
+     * @param \AppBundle\Entity\AccommodationFee $fees
+     */
+    public function removeFee(\AppBundle\Entity\AccommodationFee $fees) {
+        $this->fees->removeElement($fees);
+    }
+
+    /**
+     * Get fees
+     * @return \Doctrine\Common\Collections\Collection
+     */
+    public function getFees() {
+        return $this->fees;
+    }
+
+    public function setFees(\AppBundle\Entity\AccommodationFee $fees) {
+        $this->addFee($fees);
+        $fees->setAccommodation($this);
+    }
+
+
+    /**
+     * Add advertisingPackage
+     * @param \AppBundle\Entity\AdvertisingPackage $advertisingPackage
+     * @return Accommodation
+     */
+    public function addAdvertisingPackage(\AppBundle\Entity\AdvertisingPackage $advertisingPackage) {
+        $this->advertisingPackage[] = $advertisingPackage;
+
+        return $this;
+    }
+
+    /**
+     * Remove advertisingPackage
+     * @param \AppBundle\Entity\AdvertisingPackage $advertisingPackage
+     */
+    public function removeAdvertisingPackage(\AppBundle\Entity\AdvertisingPackage $advertisingPackage) {
+        $this->advertisingPackage->removeElement($advertisingPackage);
+    }
+
+    /**
+     * Get advertisingPackage
+     * @return \Doctrine\Common\Collections\Collection
+     */
+    public function getAdvertisingPackage() {
+        return $this->advertisingPackage;
+    }
+
+    public function setAdvertisingPackage(\AppBundle\Entity\AdvertisingPackage $advertisingPackage) {
+        $this->addAdvertisingPackage($advertisingPackage);
+        $advertisingPackage->setAccommodation($this);
+    }
+
+    /**
+     * Set rate
+     * @param string $rate
+     * @return Accommodation
+     */
+    public function setRate($rate) {
+        $this->rate = $rate;
+
+        return $this;
+    }
+
+    /**
+     * Get rate
+     * @return string
+     */
+    public function getRate() {
+        return $this->rate;
+    }
+
+    /**
+     * Set wifi
+     * @param string $wifi
+     * @return Accommodation
+     */
+    public function setWifi($wifi) {
+        $this->wifi = $wifi;
+
+        return $this;
+    }
+
+    /**
+     * Get wifi
+     * @return string
+     */
+    public function getWifi() {
+        return $this->wifi;
+    }
+
+    /**
+     * Set email
+     *
+     * @param string $email
+     * @return Accommodation
+     */
+    public function setEmail($email) {
+        $this->email = $email;
+
+        return $this;
+    }
+
+    /**
+     * Get email
+     *
+     * @return string
+     */
+    public function getEmail() {
+        return $this->email;
+    }
+
+    /**
+     * Set phone
+     *
+     * @param string $phone
+     * @return Accommodation
+     */
+    public function setPhone($phone) {
+        $this->phone = $phone;
+
+        return $this;
+    }
+
+    /**
+     * Get phone
+     *
+     * @return string
+     */
+    public function getPhone() {
+        return $this->phone;
+    }
+
+    /**
+     * Add videos
+     *
+     * @param \AppBundle\Entity\Video $videos
+     * @return Accommodation
+     */
+    public function addVideo(\AppBundle\Entity\Video $videos) {
+        $this->videos[] = $videos;
+
+        return $this;
+    }
+
+    /**
+     * Remove videos
+     *
+     * @param \AppBundle\Entity\Video $videos
+     */
+    public function removeVideo(\AppBundle\Entity\Video $videos) {
+        $this->videos->removeElement($videos);
+    }
+
+    /**
+     * Get videos
+     *
+     * @return \Doctrine\Common\Collections\Collection
+     */
+    public function getVideos() {
+        return $this->videos;
+    }
+}

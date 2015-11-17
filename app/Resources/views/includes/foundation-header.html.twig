@@ -1,0 +1,83 @@
+<header class="header--home contain-to-grid fixed">
+    <nav class="top-bar" data-topbar role="navigation" sticky_on: large>
+        <ul class="title-area">
+            <li class="name">
+                <a href="{{ path('app_home', {'_locale': app.request.attributes.get('_locale') }) }}" class="main-logo"></a>
+            </li>
+            <li class="toggle-topbar menu-icon"><a href="#"><span>{{ 'menu' | trans}}</span></a></li>
+        </ul>
+        <section class="top-bar-section">
+            <!-- Right Nav Section -->
+            <ul class="menu--inline right">
+                <li data-reveal-id="myModal" class="add-divider-line has-dropdown">
+                    <a href="#">{{ 'Currency' | trans }} <span class="is-main">
+                    {{ app.session.get('currency') }}
+                    </span>
+                    </a>
+                    <ul id="myModal" class="large-4 columns large-block-grid-3 reveal-modal" data-reveal aria-labelledby="modalTitle" aria-hidden="true" role="dialog">
+                        <h2 class="modal-title">
+                        {{ 'choose_your_preferred_currency' }}
+                        </h2>
+                        {% for currency in currencyService.getCurrencies()  %}
+                        <li class="currency-code">
+                            <a href="{{ path('app_home_change_currency', {'code': currency.code} ) }}">{{ currency.code }}</a>
+                        </li>
+                        {% endfor %}
+                    </ul>
+                </li>
+                {% if app.user %}
+                <li class="add-divider-line">
+                    <ul class="menu--inline menu--icons">
+                        <li><a  href="#"><i class="list--link fa fa-list-alt">
+                            <span class="green-circle">2</span>
+                            </i>
+                            </a>
+                        </li>
+                        <li><a href="#"><i class="list--link fa fa-heart"></i></a>
+                        </li>
+                        <li><a href="#"><i class="list--link fa fa-envelope">							<span class="orange-circle">5</span>
+                            </i>
+                            <span class="grence-circle"></span></a>
+                        </li>
+                    </li>
+                    <li><a class="is-main" href="{{ path('logout', {'_locale': app.request.attributes.get('_locale')}) }}"><i class="list--link fa fa-power-off"></i></a></li>
+                    <li>
+                        {% if is_granted('ROLE_ADMIN') %}
+                        <a class="is-main" href="{{ path('admin_home', {'_locale': app.request.attributes.get('_locale')}) }}">
+                        {% else %}
+                        <a class="is-main" href="{{ path('app_profile', {'_locale': app.request.attributes.get('_locale')}) }}">
+                        {% endif %}
+                        <span class="list--link__welcome">{{ 'Welcome' | trans }} <span class="list--link__username">{{ app.user ? app.user.getUserName() : 'guest' | trans }}</span></span>
+                        </a>
+                    </li>
+                </ul>
+            </li>
+            {% else %}
+            <li class="add-divider-line">
+                <a class="is-main" href="{{ path('login', {'_locale': app.request.attributes.get('_locale')}) }}">{{ 'Log_in' | trans }} / {{ 'Sign_in' | trans }}</a>
+            </li>
+            {% endif %}
+            <li data-reveal-id="myModal2" class="has-dropdown" class="has-dropdown">
+                <a href="#">{{ 'Languages' | trans }}: <span class="is-main">{{ languageService.getLanguage(app.request.locale).name }}</span></a>
+                <ul id="myModal2" class="large-4 columns large-centered large-block-grid-3 reveal-modal" data-reveal aria-labelledby="modalTitle" aria-hidden="true" role="dialog">
+                    <h2 class="modal-title-lan">
+                    {{ 'choose_your_language' }}
+                    </h2>
+                    <p class="language-description">Because we speak your language!</p>
+                    <p class="language-description">Website and customer service in 20 languages</p>
+                    {% for lang in languageService.getLanguages()  %}
+                    <li class="language-name">
+                        <a href="{{ path('app_home_change_language', {'locale': lang.code} ) }}">
+                        <img class="grayscale-flag" src="{{ asset('bundles/app/app/images/flags/' ~ lang.code ~ '.png') }}" />
+                        <span>
+                        {{ lang.name }}
+                        </span>
+                        </a>
+                    </li>
+                    {% endfor %}
+                </ul>
+            </li>
+        </ul>
+    </section>
+</nav>
+</header>

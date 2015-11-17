@@ -1,0 +1,109 @@
+	<div class="row">
+		{# Title #}
+		<div class="large-2 columns title-field">
+			<label>{{ 'Title' | trans }}
+				{{ form_errors(form.title) }}
+				{{ form_widget(form.title) }}
+			</label>
+			<small class="error">{{ 'Please select your title' | trans }}.</small>
+		</div>
+
+		{# Name #}
+		<div class="large-5 columns name-field">
+			<label>{{ 'Your Name' | trans }}
+				<small>{{ 'required' | trans }}</small>
+				{{ form_errors(form.name) }}
+				{{ form_widget(form.name, { 'attr': {'required': '', 'pattern': '^[a-zA-Z\']+$'} }) }}
+			</label>
+			<small class="error">{{ 'Name is required and must be a string' | trans }}.</small>
+		</div>
+		{# Surename #}
+		<div class="large-5 columns surname-field">
+			<label>{{ 'Your Surename' | trans }}
+				<small>{{ 'required' | trans }}</small>
+				{{ form_errors(form.surename) }}
+				{{ form_widget(form.surename, { 'attr': {'required': '', 'pattern': '^[a-zA-Z-\']+$'} }) }}
+			</label>
+			<small class="error">{{ 'Surname is required and must be a string' | trans }}.</small>
+		</div>
+	</div>
+	<div class="row">
+		<div class="large-5 columns surname-field">
+			<label>{{ 'Your Address' | trans }}
+				<small>{{ 'required' | trans }}</small>
+				{{ form_errors(form.address) }}
+				{{ form_widget(form.address,
+				{ 'attr': {'required': '', 'pattern': '[a-zA-Z]+'} }) }}
+			</label>
+			<small class="error">{{ 'Your address is invalid' | trans }}.</small>
+		</div>
+
+		<div class="large-2 columns city-field">
+			<label>{{ 'ZIP' | trans }}
+				<small>{{ 'required' | trans }}</small>
+				{{ form_errors(form.zip) }}
+				{{ form_widget(form.zip, { 'attr': {'required': '', 'pattern': '(^\d{5}([\-]?\d{4})?$)|(^(GIR|[A-Z]\d[A-Z\d]??|[A-Z]{2}\d[A-Z\d]??)[ ]??(\d[A-Z]{2})$)|(\b((?:0[1-46-9]\d{3})|(?:[1-357-9]\d{4})|(?:[4][0-24-9]\d{3})|(?:[6][013-9]\d{3}))\b)|(^([ABCEGHJKLMNPRSTVXY]\d[ABCEGHJKLMNPRSTVWXYZ])\ {0,1}(\d[ABCEGHJKLMNPRSTVWXYZ]\d)$)|(^(F-)?((2[A|B])|[0-9]{2})[0-9]{3}$)|(^(V-|I-)?[0-9]{5}$)|(^(0[289][0-9]{2})|([1345689][0-9]{3})|(2[0-8][0-9]{2})|(290[0-9])|(291[0-4])|(7[0-4][0-9]{2})|(7[8-9][0-9]{2})$)|(^[1-9][0-9]{3}\s?([a-zA-Z]{2})?$)|(^([1-9]{2}|[0-9][1-9]|[1-9][0-9])[0-9]{3}$)|(^([D-d][K-k])?( |-)?[1-9]{1}[0-9]{3}$)|(^(s-|S-){0,1}[0-9]{3}\s?[0-9]{2}$)|(^[1-9]{1}[0-9]{3}$)|(^\d{6}$)'} }) }}
+			</label>
+			<small class="error">
+				{{ 'Your ZIP code input is invalid' | trans }}.
+			</small>
+		</div>
+		<div class="large-5 columns city-field">
+			<label>{{ 'City' | trans }}
+				<small>{{ 'required' | trans }}</small>
+				{{ form_errors(form.city) }}
+				{{ form_widget(form.city, { 'attr': {'required': '', 'pattern': '^[a-zA-Z\']+$'} }) }}
+			</label>
+			<small class="error">{{ 'Your city input is invalid' | trans }}.</small>
+		</div>
+	</div>
+	<div class="row">
+		<div class="large-5 columns country-field">
+			<label>{{ 'Country' | trans }}
+				<small>{{ 'required' | trans }}</small>
+				{{ form_errors(form.country) }}
+				{{ form_widget(form.country) }}
+			</label>
+		</div>
+	</div>
+	<div class="row">
+		<div class="large-3 columns name-field">
+
+				<label>{{ 'Email' | trans }}<small> {{'required' | trans}}</small>
+						{{ form_errors(form.email) }}
+						{{ form_widget(form.email, { 'attr': {'required': ''} }) }}
+				</label>
+				<small class="error">
+				 {{'An email address is required' | trans }}.
+		 		</small>
+ 		</div>
+		<div class="large-3 columns phone-field">
+			<label>{{ 'Phone' | trans }}
+				<small>{{ 'required' | trans }}</small>
+				{{ form_errors(form.phone) }}
+				{{ form_widget(form.phone,
+				{ 'attr': {'id': 'phone'} }) }}
+			</label>
+			<small class="error">{{ 'Your phone number is invalid' | trans }}.</small>
+		</div>
+		<div class="large-3 columns skype-field">
+			<label>{{ 'Skype' | trans }}
+				{{ form_errors(form.skype) }}
+				{{ form_widget(form.skype, { 'attr': {'pattern': '[a-zA-Z][a-zA-Z0-9\.,\-_]{5,31}'} }) }}
+			</label>
+			<small class="error">
+				{{ 'Your Skype username input is invalid' | trans }}.
+			</small>
+		</div>
+		<div class="large-3 columns name-field">
+			<label>{{ 'Google Account' | trans }}
+				{#<small> {{ 'required' | trans }}</small>#}
+				{{ form_errors(form.google) }}
+				{{ form_widget(form.google,  { 'attr': { 'pattern' : "^[a-z0-9](\.?[a-z0-9]){5,}@g(oogle)?mail\.com$" }}) }}
+				{#'required': '',#}
+			</label>
+			<small class="error">
+				{{ 'An Google Account is required' | trans }}.
+			</small>
+		</div>
+	</div>

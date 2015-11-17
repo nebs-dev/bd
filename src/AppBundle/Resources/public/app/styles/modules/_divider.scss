@@ -1,0 +1,24 @@
+.divider-offer {
+	height: 30px; 
+	background: #e1e1e1;
+	margin-bottom: 20px;
+	margin-top: 20px;
+	.divider-text {
+		font-family: $raleway;
+		font-size: rem-calc(20);
+		padding-left: 10px;
+		padding-right: 10px;
+		padding: 5px 10px 0 10px;
+	background: rgba(#3a93ea, 0.9);
+		color: #152E4D;
+		display: inline-block;
+		height: 40px;
+		span {
+		font-family: $raleway-extrabold;
+		font-size: rem-calc(20);	
+		}
+		span::after {
+		content: " ";
+		}
+	}
+}

@@ -1,0 +1,14 @@
+@import "assets/foundation.min";
+@import "assets/normalize";
+
+
+@import "assets/content"; //Main scss
+@import "assets/sidebar"; //for style of sidebar menu
+@import "assets/style"; //for style of top menu
+@import "assets/topbar"; //for main theme style
+@import "assets/theme"; //for main theme style
+@import "assets/dashboard"; //for style of dashboard
+
+@import "modules/userTheme";
+@import "modules/login"; 
+@import "assets/picker";

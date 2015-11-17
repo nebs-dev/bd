@@ -1,0 +1,432 @@
+.registrationUl {
+    padding: 0px;
+    list-style-type: none;
+    margin: 0px;
+}
+
+.registrationUl li {
+    font-size: 20px;
+    color: #fff;
+    font-weight: 300;
+    font-family: 'Open-Sans Light';
+    line-height: 30px;
+}
+
+.registrationText {
+    font-family: 'Open-Sans Light';
+    color: #fff;
+    font-size: 18px;
+    line-height: 24px;
+    margin-bottom: 20px;
+}
+
+.registrationText strong {
+    font-family: 'Open-Sans Bold';
+}
+
+#loginForm93 .forgotPasswordLink {
+    color: #fff;
+    font-family: 'Open-Sans Light';
+    line-height: 36px;
+    font-size: 16px;
+}
+
+#loginForm93 .forgotPasswordLink:hover {
+    color: #f8e017;
+}
+
+.activationWelcome {
+    color: #fff;
+    font-family: 'Open-Sans Light';
+}
+
+.bookingCheckoutPage .imageCheckout img {
+    display: block;
+    max-width: 100%;
+    height: auto;
+    margin: auto;
+    width: auto;
+    max-height: 240px;
+    margin-bottom: 10px;
+    box-sizing: border-box;
+}
+
+.titleCheckout {
+    font-family: 'Raleway Medium';
+    color: #fff;
+    line-height: 36px;
+    font-size: 30px;
+    text-align: center;
+    font-weight: bold;
+    color: #395376;
+}
+.infoCheckout {
+    font-family: 'Open-Sans Light';
+    color: #4b5053;
+    font-size: 14px;
+    text-align: center;
+    line-height: 18px;
+}
+
+.bookingCheckoutPage .titleTableCheckout {
+    color: #fff;
+    font-family: 'Open-Sans Bold';
+    font-size: 18px;
+    line-height: 24px;
+    text-align: center;
+    display: block;
+    width: 100%;
+}
+
+.bookingCheckoutPage .dataTableCheckout {
+    color: #fff;
+    font-family: 'Open-Sans Light';
+    font-size: 18px;
+    line-height: 24px;
+    text-align: center;
+}
+
+.bookingCheckoutPage .tableGridCheckout {
+    padding: 5px 0px 5px 0px;
+    border-bottom: 1px solid #196EC2;
+}
+
+.blog-bg-featured {
+    background: url("../images/featured-img-blog-single.jpg") center center;
+    max-width: 100%;
+    height: auto;
+    padding-top: 365px;
+    position: relative;
+}
+
+.blogSaveMoneyAndTime {
+    background: rgba(22, 182, 56, 0.8);
+    padding: 5px 0px 10px 0px;
+    position: absolute;
+    bottom: 0px;
+    left: 0;
+    right: 0;
+}
+
+.blogSaveMoneyAndTime .logoGreenSingle {
+    background-image: url('../images/dollar-sign.png');
+    width: 42px;
+    height: 37px;
+    display: inline-block;
+    margin-left: 15px;
+}
+
+.blogSaveMoneyAndTime .subheading {
+    font-family: 'Raleway Regular';
+    margin-bottom: 2px;
+    font-size: 1.125rem;
+    color: #FFFFFF;
+    display: inline-block;
+}
+
+.blogSaveMoneyAndTime span {
+    font-family: 'Raleway Bold';
+    font-size: 1.375rem;
+    line-height: 1.25rem;
+    color: #FFFFFF;
+    display: block;
+}
+
+.blogSaveMoneyAndTime .text-container {
+    display: inline-block;
+    margin-left: 15px;
+    margin-top: 5px;
+}
+
+.singleBlog .shape1 {
+    background-image: url('../images/weSpeak.png');
+    background-repeat: no-repeat;
+    background-position: center center;
+    width: 120px;
+    height: 100px;
+    margin-bottom: 0px;
+}
+
+.singleBlog .shape2 {
+    background-image: url('../images/lowRates.png');
+    background-repeat: no-repeat;
+    background-position: center center;
+    width: 120px;
+    height: 100px;
+    margin-bottom: 0px;
+}
+
+.singleBlog .shape3 {
+    background-image: url('../images/trackYourFav.png');
+    background-repeat: no-repeat;
+    background-position: center center;
+    width: 120px;
+    height: 100px;
+    margin-bottom: 0px;
+}
+
+.singleBlog.shapesList h4 {
+    font-size: 1.60rem;
+}
+
+.singleBlog.shapesList p {
+    margin: 0px;
+    color: #4b9ceb;
+    line-height: 20px;
+    font-size: 16px;
+    font-family: 'Open-Sans light';
+    text-align: center;
+}
+
+.saveYourTime {
+    background-image: url('../images/saveYourTime.png');
+    background-repeat: no-repeat;
+    background-position: center center;
+    width: 100%;
+    height: 276px;
+}
+
+.saveYourTime:hover {
+    opacity: 0.8;
+}
+
+.singleBlogFeatured {
+    position: relative;
+    width: 100%;
+    height: auto;
+    margin-bottom: 20px;
+}
+
+.singleBlogFeatured img {
+    display: block;
+}
+
+.singleBlogFeatured h3 {
+    position: absolute;
+    padding: 10px 20px 10px 20px;
+    background-color: rgba(22, 52, 71, 0.8);
+    color: #fff;
+    font-family: 'Open-Sans Bold';
+    font-size: 36px;
+    line-height: 48px;
+    bottom: 0px;
+    left: 0px;
+    margin: 0px;
+}
+
+.singleBlogText {
+    color: #80868a;
+    font-family: 'Open-Sans Regular';
+    font-size: 16px;
+    line-height: 24px;
+}
+
+.singleBlogText strong {
+    color: #5b5b5b;
+    font-family: 'Open-Sans Bold';
+}
+
+.shareSinglePost {
+    display: block;
+    float: right;
+    width: 130px;
+    height: 290px;
+    background-image: url('../images/shareBg.png');
+    margin-left: 20px;
+    margin-bottom: 20px;
+}
+
+.postedOn {
+    color: #80868a;
+    font-family: 'Open-Sans Regular';
+    font-size: 14px;
+    line-height: 18px;
+    text-transform: uppercase;
+    width: 100%;
+    padding: 0px 0px 10px 0px;
+}
+
+.fullDubleBorder {
+    margin: 20px 0px 20px 0px;
+    display: block;
+    height: 3px;
+    border-top: 1px solid #ddd;
+    border-bottom: 1px solid #ddd;
+    width: 100%;
+}
+
+.commentsSingleBlog {}
+
+.commentsSingleBlog h3 {
+    font-size: 24px;
+    color: #5b5b5b;
+    font-family: 'Open-Sans Regular';
+    line-height: 32px;
+}
+
+.commentSingleBlog {
+    width: 100%;
+    margin-top: 1px;
+    margin-bottom: 19px;
+}
+
+.commentSingleBlog .userPosting {
+    font-size: 18px;
+    color: #fff;
+    font-family: 'Open-Sans Regular';
+    line-height: 32px;
+    background: #196ec2;
+    padding: 10px 20px 10px 20px;
+}
+
+.commentSingleBlog .commentText {
+    font-size: 16px;
+    color: #fff;
+    font-family: 'Open-Sans Regular';
+    line-height: 24px;
+    padding: 20px;
+    background: #338ee8;
+}
+
+.commentInputUser {
+    width: 100%;
+    max-width: 100%;
+    box-sizing: border-box;
+    height: 36px;
+    padding: 8px 20px 8px 20px;
+    line-height: 20px;
+    font-size: 16px;
+    color: #5b5b5b;
+    font-family: 'Open-Sans Regular';
+}
+
+h1.blogTitle {
+    color: #152e4d;
+    font-family: 'Raleway ExtraBold';
+    font-size: 42px;
+    line-height: 48px;
+}
+
+.blogListFeaturedImage {
+    position: relative;
+    display: block;
+}
+
+.blogListFeaturedImage h3 {
+    position: absolute;
+    padding: 10px 20px 10px 20px;
+    background-color: rgba(22, 52, 71, 0.8);
+    color: #fff;
+    font-family: 'Open-Sans Bold';
+    font-size: 28px;
+    line-height: 36px;
+    bottom: 0px;
+    left: 0px;
+    margin: 0px;
+}
+
+.blogListFeaturedImage img {
+    position: relative;
+    display: block;
+    max-width: 100%;
+    width: 100%;
+}
+
+.bigPostText {
+    font-size: 16px;
+    color: #80868a;
+    line-height: 24px;
+    font-family: 'Open-Sans Regular';
+    margin: 10px 0px 0px 0px;
+}
+
+.smallBlogTitle {
+    color: #5e6365;
+    font-size: 24px;
+    line-height: 32px;
+    max-height: 64px;
+    overflow: hidden;
+    font-family: 'Open-Sans Bold';
+    margin: 10px 0px 0px 0px;
+}
+
+.postSmall .bigPostText {
+    max-height: 48px;
+    overflow: hidden;
+}
+
+.readMorePost {
+    font-size: 14px;
+    font-family: 'Open-Sans Light';
+    color: #2e2e2e;
+    text-transform: uppercase;
+}
+
+.new_comment {
+    margin-top: 20px;
+}
+
+.accommodation-info-container {
+    background: #FFF;
+}
+
+.check-out-container span{
+    float: right;
+}
+
+.checkout-container-1  {
+    background: white;
+}
+
+.search-button.submit-checkout {
+    background: #20afe7;
+    color: white;
+    &:hover {
+        background: #395376;
+    }
+}
+
+.check-in-out-container {
+   background: #FFF; 
+    padding-top: 30px;
+
+    padding-bottom: 30px;
+    font-family: 'Open-Sans Regular';
+    color: #4b5053;
+}
+
+.check-out-item-right {
+    text-align: right;
+}
+
+.check-out-item-middle {
+    text-align: center;
+}
+
+.accommodation-info-container2  {
+    background: #FFF;
+}
+
+#checkOutForm {
+    padding-top: 20px;
+    padding-bottom: 20px;
+    label {
+        color: #4b5053;
+    }
+    input {
+        border: 1px solid #ccc;
+    }
+}
+
+#checkOutForm label.required {
+    display: inline;
+}
+
+.registrationUl {
+    li {
+        font-family: 'Open-Sans Bold';
+        color: #4b5053;
+        font-size: 14px;
+        font-weight: bold;
+    }
+}

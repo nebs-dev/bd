@@ -1,0 +1,46 @@
+.site-info h4 {
+		font-family: $raleway-medium;
+		font-size: rem-calc(18);
+		text-align: center;
+		color: $darkblueshape;
+		
+	}
+
+.align-vertical {
+			margin-top: 35px;
+		}
+
+.shape {
+	display: block;
+	margin: 28px auto;
+}
+.shape1 {
+	@include background-image-retina(shape-1, png, 56px, 56px);
+	background-repeat: no-repeat;
+	width: 56px;
+	height: 56px;
+}
+
+.shape2 {
+	@include background-image-retina(shape-2, png, 74px, 57px);
+	background-repeat: no-repeat;
+	width: 74px;
+	height: 57px;
+}
+
+.shape3 {
+	@include background-image-retina(shape-3, png, 60px, 56px);
+	background-repeat: no-repeat;
+	width: 60px;
+	height: 56px;
+}
+.site-info-text {
+	padding-bottom: 45px;
+}
+.site-info p {
+	font-family: $sans;
+	font-size: rem-calc(12);
+	color: $darkblue3;
+	text-align: center;
+	margin-bottom: 0;
+}

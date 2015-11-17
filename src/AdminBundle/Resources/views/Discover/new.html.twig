@@ -1,0 +1,99 @@
+{% extends 'admin.html.twig' %}
+{% block content %}
+<div class="row no-pad">
+	<div class="large-12 columns">
+		<div class="box bg-white">
+			<div class="box-body pad-forty" style="display: block;">
+				{% for flashMessage in app.session.flashbag.get('msgSuccess') %}
+				<div class="box bg-light-green">
+					<div class="box-header bg-light-green ">
+						<!-- tools box -->
+						<div class="pull-right box-tools">
+							<span class="box-btn" data-widget="remove">
+								<i class="icon-cross"></i>
+							</span>
+						</div>
+						<h3 class="box-title "><i class="text-white  icon-thumbs-up"></i>
+							<span class="text-white">SUCCESS</span>
+						</h3>
+					</div>
+					<!-- /.box-header -->
+					<div class="box-body " style="display: block;">
+						<p class="text-white"><strong>Well done!</strong> {{ flashMessage }}</p>
+					</div>
+				</div>
+				{% endfor %}
+				{% for flashMessage in app.session.flashbag.get('msgError') %}
+				<div class="box bg-red">
+					<div class="box-header bg-red ">
+						<!-- tools box -->
+						<div class="pull-right box-tools">
+							<span class="box-btn" data-widget="remove">
+								<i class="icon-cross"></i>
+							</span>
+						</div>
+						<h3 class="box-title "><i class="text-white  icon-thumbs-up"></i>
+							<span class="text-white">Error</span>
+						</h3>
+					</div>
+					<!-- /.box-header -->
+					<div class="box-body " style="display: block;">
+						<p class="text-white"><strong>Sorry!</strong> {{ flashMessage }}</p>
+					</div>
+				</div>
+				{% endfor %}
+				{{ form_start(form, {'attr': {'novalidate': 'novalidate', 'class':"form-horizontal", 'id':'discoverNew' }}) }}
+				{{ form_errors(form) }}
+				<div class="row">
+					<div class="large-12 columns">
+						<h4>{{ 'Add new Discover' | trans }}</h4>
+						<hr>
+					</div>
+					<div class="large-6 columns">
+						{# Location #}
+						<div class="form-group">
+							{{ form_label(form.location, 'location' | trans , { 'label_attr': {'class': 'col-sm-3 control-label'} }) }}
+							{{ form_errors(form.location) }}
+							<div class="col-sm-5">
+								{{ form_widget(form.location, { 'attr': {'class': 'form-control locationAutocomplete'} }) }}
+							</div>
+						</div>
+					</div>
+					<div class="large-6 columns">
+						{# Photo #}
+						<div class="form-group">
+							{{ form_label(form.file, 'photo' | trans , { 'label_attr': {'class': 'col-sm-3 control-label'} }) }}
+							{{ form_errors(form.file) }}
+							<div class="col-sm-5">
+								{{ form_widget(form.file, { 'attr': {'class': 'form-control validate[required]'} }) }}
+							</div>
+						</div>
+					</div>
+					<div class="large-12 columns">
+						{{ form_rest(form) }}
+					</div>
+					<div class="large-12 columns">
+						<div class="form-group">
+							<div class="col-sm-5 col-sm-offset-3">
+								<input type="submit" name="create" class="btn bg-blue" value="{{ 'save' | trans }}"/>
+							</div>
+						</div>
+					</div>
+					{{ form_end(form) }}
+				</div>
+			</div>
+		</div>
+	</div>
+</div>
+<div class="row">
+	<div class="large-12 columns">
+		<a class="btn bg-green" href="{{ path('admin_discover', {'_locale': app.request.attributes.get('_locale')}) }}">{{ 'Back to Discover' | trans }}</a>
+	</div>
+</div>
+{% endblock %}
+
+{% block js %}
+	{{ parent() }}
+
+	<script src="{{asset('bundles/app/js/location_autocomplete.js')}}"></script>
+{% endblock %}

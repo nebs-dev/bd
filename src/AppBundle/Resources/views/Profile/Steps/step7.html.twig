@@ -1,0 +1,44 @@
+{% extends 'admin.html.twig' %}
+{% block menu %}
+
+{% endblock %}
+{% block sidemenu %}
+    {% include 'steps_menu.html.twig' %}
+{% endblock %}
+{% block content %}
+    <div class="box clearfix">
+
+        <div class="box-body">
+            <h1>Odabir paketa dodatnog oglašavanje</h1>
+
+            {{ form_start(form, {'attr': {'novalidate': 'novalidate', 'class':"form-horizontal", 'id':'advertiingPackages' }}) }}
+            {{ form_errors(form) }}
+            <fieldset>
+                <legend>{{ form_label(form.type, 'Advertising package', { 'label_attr': {'class': 'col-sm-3 control-label'} }) }}</legend>
+                    <div class="form-group">
+                    {{ form_errors(form.type) }}
+                    <div class="col-sm-5">
+                        {{ form_widget(form.type, { 'attr': {'class': 'form-control'} }) }}
+                    </div>
+                </div>
+            </fieldset>
+
+                <div class="form-group">
+                    <label>{{ 'home_page_advertising' | trans }} - {{ typeHome.price }}e</label>
+                    <div class="col-sm-5">
+                        <input type="checkbox" name="home" id="home">
+                    </div>
+                </div>
+
+            {{ form_rest(form) }}
+                <div class="button-group radius even-2">
+                    <div class="col-sm-5 col-sm-offset-3">
+                        <input type="submit" name="save" class="button small success" value="{{ 'finish' | trans }}" />
+                    </div>
+                </div>
+
+            {{ form_end(form) }}
+
+        </div>
+    </div>
+{% endblock %}

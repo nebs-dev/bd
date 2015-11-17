@@ -1,0 +1,54 @@
+{% extends 'admin.html.twig' %}
+{% block menu %}
+
+{% endblock %}
+{% block sidemenu %}
+	{% if is_granted('ROLE_GUEST') %}
+		{% include 'includes/sidemenu-guest.html.twig' %}
+	{% elseif is_granted('ROLE_HOST')   %}
+		{% include 'includes/sidemenu-user.html.twig' %}
+	{% endif %}
+{% endblock %}
+
+{% block stylesheets %}
+	{{ parent() }}
+	<link href="{{asset('bundles/admin/css/mail.css')}}" rel="stylesheet" type="text/css" />
+{% endblock %}
+
+{% block title %}{{ 'messages' | trans }}{% endblock %}
+
+{% block content %}
+<div class="row no-pad">
+	<div class="large-12 columns">
+		<div class="box bg-white">
+			<div class="box-body pad-forty" style="display: block;">
+				<div class="row">
+					<div class="large-12 columns">
+						<div class="inbox-header">
+							<h1>{{ 'messages' | trans }}</h1>
+						</div>
+						<div class="inbox-nest">
+							<ul>
+								{% for conversation in conversations %}
+									<li class="{{ conversation.newNum > 0 ? 'newMsg' : " " }}">
+										<a class="star bg-blue"><i class="icon-user"></i></a>
+										<b>
+											<a href="{{
+												path('app_conversation',
+												{'_locale': app.request.attributes.get('_locale'), 'id': conversation.messages.userFrom.id }) }}" class="" >
+												{{ conversation.messages.userFrom.fullName }}
+												<span class="newLabel"><i class="icon-message">&nbsp; New</i></span>
+											</a>
+										</b>
+										<p></p>
+									</li>
+								{% endfor %}
+							</ul>
+						</div>
+					</div>
+				</div>
+			</div>
+		</div>
+	</div>
+</div>
+{% endblock %}

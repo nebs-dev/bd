@@ -1,0 +1,48 @@
+{% extends 'admin.html.twig' %}
+
+{% block content %}
+<div class="row no-pad">
+	<div class="large-12 columns">
+		<div class="box bg-white">
+			<div class="box-body pad-forty" style="display: block;">
+				<div class="row">
+					<div class="large-3 columns">
+						<fieldset>
+							<legend>{{ 'Countries' | trans }}</legend>
+							<a class="btn bg-green large-5 columns" href="{{ path('admin_location_countries', {'_locale': app.request.attributes.get('_locale')}) }}">{{ 'List' | trans }}</a>
+							<a class="btn bg-blue large-5 columns" href="{{ path('admin_location_countries_new', {'_locale': app.request.attributes.get('_locale')}) }}">{{ 'New' | trans }}</a>
+						</fieldset>
+
+					</div>
+					<div class="large-3 columns">
+						<fieldset>
+							<legend>{{ 'Regions' | trans }}</legend>
+							<a class="btn bg-green large-5 columns" href="{{ path('admin_location_regions', {'_locale': app.request.attributes.get('_locale')}) }}">{{ 'List' | trans }}</a>
+							<a class="btn bg-blue large-5 columns" href="{{ path('admin_location_regions_new', {'_locale': app.request.attributes.get('_locale')}) }}">{{ 'New' | trans }}</a>
+						</fieldset>
+					</div>
+					<div class="large-3 columns">
+						<fieldset>
+							<legend>{{ 'Subegions' | trans }}</legend>
+							<a class="btn bg-green large-5 columns" href="{{ path('admin_location_subregions', {'_locale': app.request.attributes.get('_locale')}) }}">{{ 'List' | trans }}</a>
+							<a class="btn bg-blue large-5 columns" href="{{ path('admin_location_subregions_new', {'_locale': app.request.attributes.get('_locale')}) }}">{{ 'New' | trans }}</a>
+						</fieldset>
+					</div>
+					<div class="large-3 columns">
+						<fieldset>
+							<legend>{{ 'Cities' | trans }}</legend>
+							<a class="btn bg-green large-5 columns" href="{{ path('admin_location_cities', {'_locale': app.request.attributes.get('_locale')}) }}">{{ 'List' | trans }}</a>
+							<a class="btn bg-blue large-5 columns" href="{{ path('admin_location_cities_new', {'_locale': app.request.attributes.get('_locale')}) }}">{{ 'New' | trans }}</a>
+						</fieldset>
+					</div>
+				</div>
+			</div>
+		</div>
+	</div>
+</div>
+<div class="row no-pad">
+	<div class="large-12 columns">
+		<a class="btn bg-red" href="{{ path('admin_home', {'_locale': app.request.attributes.get('_locale')}) }}">{{ 'Back to Dashboard' | trans }}</a>
+	</div>
+</div>
+{% endblock %}

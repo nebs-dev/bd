@@ -1,0 +1,55 @@
+<div class="row">
+    <div class="large-3 medium-6 columns">
+        <figure class="accommodation-item" 
+        style="background-image: url('http://placehold.it/480x300');">
+        <figcaption class="accommodation-item__description">
+            Villa Adria, 
+            <span class="accommodation-item__description--place">Orebic</span>
+        </figcaption>
+    </figure>
+    <span class="accommodation-price">from $45 per night</span>
+</div>
+
+</div>  
+
+{% if accommodations is defined %}
+    {% if accommodations is not empty %}
+        <div id="accommodations">
+            <ul>
+                {% for accommodation in accommodations %}
+                    <li>
+                        <div class="title">
+                            <a href="{{
+                            path('app_accommodation_single',
+                            {'_locale': app.request.attributes.get('_locale'), 'id': accommodation.id }) }}" class="" >
+                            {{ accommodation.name }}
+                        </a>
+                    </div>
+                    <div class="a_city">
+                        {{ attribute(accommodation.city, app.request.locale) }}
+                    </div>
+                    <div class="a_description">
+                        {% if accommodation.description is defined and accommodation.description is not null %}
+                            {% if attribute(accommodation.description, app.request.locale) is not null %}
+                                {{ attribute(accommodation.description, app.request.locale)[:50] ~ '...' }}
+                                {% else %}
+                                {{ accommodation.description.en[:50] ~ '...' }}
+                            {% endif %}
+                        {% endif %}
+                    </div>
+                    <div class="lowestPrice">
+                        {{ 'from' | trans }} {{ accommodationService.getLowPrice(accommodation) }} {{ app.session.get('currency') }} {{ 'per_night' | trans }}
+                    </div>
+                    <div class="featuredImage">
+                        <img src="{{ accommodation.featuredImage | imagine_filter('my_thumb') }}" >
+                    </div>
+                </li>
+            {% endfor %}
+        </ul>
+    </div>
+
+    {% else %}
+    {{ 'no_result' | trans }}
+{% endif %}
+{% endif %}
+

@@ -1,0 +1,41 @@
+{% extends 'admin.html.twig' %}
+{% block content %}
+    <div class="row no-pad">
+        <div class="large-12 columns">
+            <div class="box bg-white">
+                <div class="box-body pad-forty" style="display: block;">
+                    {{ form_start(form, {'attr': {'novalidate': 'novalidate', 'class':"form-horizontal", 'id':'accommodationCategoryNew' }}) }}
+                    {{ form_errors(form) }}
+                    <div class="row">
+                        <div class="large-12 columns">
+                            <h4>{{ 'Create new Unit Category' | trans }}</h4>
+                            <hr>
+                        </div>
+                        <div class="large-6 columns">
+                            <div class="form-group">
+                                {{ form_label(form.name, 'name' | trans , { 'label_attr': {'class': 'col-sm-3 control-label'} }) }}
+                                {{ form_errors(form.name) }}
+                                <div class="col-sm-5">
+                                    {{ form_widget(form.name, { 'attr': {'class': 'form-control validate[required]'} }) }}
+                                </div>
+                            </div>
+                        </div>
+
+                        {{ form_rest(form) }}
+                        <div class="large-12 columns">
+                            <div class="form-group">
+                                <div class="col-sm-5 col-sm-offset-3">
+                                    <input type="submit" name="create" class="btn bg-blue" value="{{ 'create' | trans }}" />
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    {{ form_end(form) }}
+                    <hr>
+                    <a class="btn bg-blue" href="{{ path('admin_unit_category', {'_locale': app.request.attributes.get('_locale')}) }}">{{ 'Back to Unit categories' | trans }}</a>
+                </div>
+            </div>
+        </div>
+    </div>
+{% endblock %}

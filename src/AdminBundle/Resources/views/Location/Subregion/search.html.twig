@@ -1,0 +1,52 @@
+{% extends 'admin.html.twig' %}
+{% block content %}
+    <div class="row">
+        <div class="large-12 columns"> 
+            <a class="btn bg-blue" href="{{ path('admin_location_subregions_new', {'_locale': app.request.attributes.get('_locale')}) }}">{{ 'new_subregion' | trans }}</a>
+        </div>
+    </div>
+    <div class="row no-pad">
+        <div class="large-12 columns">
+            <div class="box bg-white">
+                <div class="box-body pad-forty" style="display: block;">
+                    <form method="post"
+                          action="{{ path('admin_location_subregions_search', {'_locale': app.request.attributes.get('_locale')}) }}"
+                          class="form-horizontal">
+
+                        <div class="large-6 columns">
+                            <div class="form-group regionsDiv">
+                                <label class="col-sm-3 control-label">{{ 'search_subregion' }}</label>
+
+                                <div class="col-sm-5">
+                                    <input type="text" class="subregionAutocomplete form-control" name="subregion">
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="large-12 columns">
+                            <div class="form-group">
+                                <div class="col-sm-5 col-sm-offset-3">
+                                    <button type="submit" class="btn bg-blue">{{ 'search' | trans }}</button>
+                                </div>
+                            </div>
+                        </div>
+                    </form>
+
+                </div>
+            </div>
+        </div>
+    </div>
+    </div>
+    <div class="row">
+        <div class="large-12 columns">
+            <a class="btn bg-green"
+               href="{{ path('admin_location_subregions_search', {'_locale': app.request.attributes.get('_locale')}) }}">{{ 'Back to Subregions' | trans }}</a>
+        </div>
+    </div>
+{% endblock %}
+
+{% block js %}
+    {{ parent() }}
+
+    <script src="{{ asset('bundles/app/js/location_autocomplete.js') }}"></script>
+{% endblock %}

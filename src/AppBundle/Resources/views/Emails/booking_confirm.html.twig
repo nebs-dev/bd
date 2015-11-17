@@ -1,0 +1,66 @@
+{% if role == 'host' %}
+    Dear {{ user.fullname }},
+
+    You have a request for an accommodation unit
+
+    Request number: {{ booking.id }}
+    Accommodation unit:	{{ booking.unit.accommodation.name }} / {{ booking.unit.name }}
+    Period:		{{ booking.fromDate|date('d.m.Y.') }} - {{ booking.toDate|date('d.m.Y.') }}
+    Guest Name:	{{ booking.user.fullName }}
+    Guest Country:	{{ booking.user.country ? booking.user.country.en : '-' }}
+
+    Please login with your account and under booking requests confirm or reject this reservation request.
+    You can also send a message to Guest in case you would like to communicate with the guest.
+    Guest will receive your answer with your payment information and the booking conditions.
+
+    Kind regards,
+    Your Best-destination.com Team
+{% else %}
+
+    Dear {{ user.fullname }},
+
+    Your reservation has been CONFIRMED by the host.
+
+    Reservation number:	{{ booking.id }}
+    Your requested UNIT:	{{ booking.unit.accommodation.name }} / {{ booking.unit.name }}
+    Period: 		{{ booking.fromDate|date('d.m.Y.') }} - {{ booking.toDate|date('d.m.Y.') }}
+    Total price:		€ {{ booking.price }}
+
+    {% set x = booking.unit.accommodation.prepay / 100 %}
+    {% set advance = booking.price * x %}
+    {% set left = booking.price - advance %}
+
+    Booking conditions:
+    Advance payment to be paid:	€ {{ advance }}.- 	until 01.03.2015
+    The rest amount to be paid:	€ {{ left }}.- 	until 01.04.2015
+
+    If the advance payment is not paid until 01.03.2015 the booking will be automatically canceled.
+    Please contact Host as soon as you pay advance payment.
+
+    In price included:
+    {% if booking.unit.accommodation.wifi and booking.unit.accommodation.wifi > 0 %}
+        {{ 'internet'|trans }}
+    {% endif %}
+    {% for upe in booking.unit.unitPriceExtra %}
+        {% if(upe.price == 0) %}
+            {{ upe.priceExtra.name | trans }}
+        {% endif %}
+    {% endfor %}
+
+    In price not included:
+    {% if booking.unit.accommodation.wifi and booking.unit.accommodation.wifi == 0 %}
+        {{ 'internet'|trans }}
+    {% endif %}
+    {% for upe in booking.unit.unitPriceExtra %}
+        {% if(upe.price == 0) %}
+            {{ upe.priceExtra.name | trans }}
+        {% endif %}
+    {% endfor %}
+
+    To manage your booking please login on your profile and open the menu My Bookings.
+    Attached are the terms and conditions for the booking com.
+
+    Kind regards,
+    Your Best-destination.com Team
+
+{% endif %}

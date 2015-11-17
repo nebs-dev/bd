@@ -1,0 +1,133 @@
+.partner-heading {
+	font-size: rem-calc(30);
+	font-family: raleway-extrabold;
+	color: $darkblue2;
+	margin-top: 20px;
+}
+
+.bg-screen {
+	display: block;
+	float: right;
+	background: url("../images/bd-screen.jpg") center center;
+	width: 300px;
+	height: 307px;
+}
+
+.partner-txt {
+	margin-top: 50px;
+	p {
+		font-family: $sans;
+		font-size: rem-calc(12);
+	}
+}
+
+.partner-info {
+		font-family: $sans-bold;
+		font-size: rem-calc(35);
+		color: $darkblue3 ;
+	}
+.partner-info ~ p {
+	font-size: rem-calc(20);
+	font-family: $sans;
+}
+.pricetables {
+	margin-top: 100px;
+	margin-bottom: 100px;
+}
+.booking-pricetable-1 {
+	.button-container button {
+		margin-top: 30px;
+		margin-bottom: 30px;
+	}
+	background: $white;
+	padding: 20px;
+	text-align: center;
+	list-style: none;
+	.featured-deal {
+		font-family: $sans-bold;
+		font-size: rem-calc(18);
+		color: $login-blue;
+		margin-top: 10px;
+	}
+	li {
+		font-family: $sans;
+		font-size: rem-calc(14);
+		color: #181f3d;
+		margin-bottom: 10px;
+		&:first-child {
+			text-align: left;
+		}
+	}
+	.fee-numbers {
+		font-family: $sans-bold;
+		font-size: rem-calc(56);
+		color: $login-blue;
+		span:first-child{
+			float: left;
+		}
+		span:last-child {
+			float: right;
+		}
+	}
+	.fee-description {
+		span:first-child{
+			float: left;
+		}
+		span:last-child {
+			float: right;
+		}
+	}
+}
+
+.booking-pricetable-2 {
+	.button-container button {
+		margin-top: 30px;
+		margin-bottom: 30px;
+	}
+	background: $white;
+	padding: 20px;
+	text-align: center;
+	list-style: none;
+	.featured-deal {
+		font-family: $sans-bold;
+		font-size: rem-calc(40);
+		color: #12aa40;
+		margin-top: 10px;
+	}
+	li {
+		font-family: $sans;
+		font-size: rem-calc(14);
+		color: #181f3d;
+		margin-bottom: 10px;
+		&:first-child {
+			font-size: rem-calc(20);
+			font-family: $sans-bold;
+			text-align: center;
+		}
+		p {
+			margin-bottom: 10px;
+		}
+	}
+	.fee-numbers {
+		font-family: $sans-bold;
+		font-size: rem-calc(56);
+		color: $login-blue;
+		span:first-child{
+			float: left;
+		}
+		span:last-child {
+			float: right;
+		}
+	}
+	.fee-description {
+		span:first-child{
+			float: left;
+		}
+		span:last-child {
+			float: right;
+		}
+	}
+	.login-screen-button.green {
+		background: #12aa40;
+	}
+}

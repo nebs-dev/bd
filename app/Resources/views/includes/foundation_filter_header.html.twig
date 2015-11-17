@@ -1,0 +1,119 @@
+<section class="filter-header">
+    {% if location is defined and location %}
+        {% if headerPhoto %}
+            <div class="show-for-large-up filter-header__resultImage"
+            style="background: url('{{ app.request.getSchemeAndHttpHost() }}{{ asset(headerPhoto) }}')
+            center center">
+        </div>
+        {% else %}
+        {# TODO: input default image HERE #}
+        <div class="show-for-large-up filter-header__resultImage"
+        style="background: url('{{ app.request.getSchemeAndHttpHost() }}{{ asset(headerPhoto) }}')
+        center center">
+    </div>
+{% endif %}
+{% endif %}
+<div class="filter-header__searchBar">
+    <div class="row">
+        {# Search form #}
+        {{ form_start(
+        searchForm, {
+        'method': 'POST',
+        'action': path('app_search_action',
+        {'_locale': app.request.attributes.get('_locale') }),
+        'attr': {'novalidate': 'novalidate', 'id':'searchForm'}
+    }
+    ) }}
+    <div class="large-3 medium-6 columns">
+        {{ form_label(searchForm.location,
+        'Where_do_you_want_to_go' | trans) }}
+        {{ form_errors(searchForm.location) }}
+        {{ form_widget(searchForm.location,
+        {
+        'attr': {
+        'class': 'locationAutocomplete',
+        'placeholder': 'eg, Istria, Croatia'}
+    }) }}
+</div>
+<div class="large-2  columns">
+    <div class="row collapse">
+        <label for="search_fromDate">{{ 'Check_in' | trans }}
+            <span class="label-text-lighten">{{ 'date' | trans }}</span>
+        </label>
+
+        <div class="small-10 columns">
+            {{ form_errors(searchForm.fromDate) }}
+            {{ form_widget(searchForm.fromDate,
+            {
+            'attr' : {
+            'size'     : '16',
+            'readonly' : 'true',
+            'class'    : 'datepicker'
+        }
+    }) }}
+</div>
+<div class="small-2 columns calendar-input1">
+    <span class="postfix">
+        <i class="input-calendar fa fa-calendar"></i>
+    </span>
+</div>
+</div>
+</div>
+<div class="large-2 columns">
+    <div class="row collapse">
+        <label for="search_toDate">{{ 'Check_out' | trans }}
+            <span class="label-text-lighten">{{ 'date' | trans }}</span>
+        </label>
+
+        <div class="small-10 columns">
+            {{ form_errors(searchForm.toDate) }}
+            {{ form_widget(searchForm.toDate,
+            {
+            'attr' : {
+            'size'     : '16',
+            'readonly' : 'true',
+            'class'    : 'datepicker'
+        }
+    }) }}
+</div>
+<div class="small-2 columns calendar-input1">
+    <span class="postfix">
+        <i class="input-calendar fa fa-calendar"></i>
+    </span>
+</div>
+</div>
+</div>
+<div class="large-2 columns">
+    <label>{{ 'No.' | trans }}
+        <span class="label-text-lighten">{{ 'of_guests' | trans }}</span>
+        {{ form_errors(searchForm.capacity) }}
+        {{ form_widget(searchForm.capacity, {
+        'attr' : {
+        'type' : 'number',
+        'min'  : '1',
+        'max'  : '30'
+    }
+}) }}
+</label>
+</div>
+<div class="large-2 columns">
+    <label>{{ 'Accomodation' | trans }}
+        {{ form_errors(searchForm.accommodationCategory) }}
+        {{ form_widget(searchForm.accommodationCategory,
+        {
+        'attr' : {
+        'class'    : 'styled-select'
+    }
+}) }}
+</label>
+</div>
+<div class="large-1 columns">
+    <label>&nbsp;
+        <button class="search-button-filter" type="submit">
+            <i class="fa fa-search"></i>
+        </button>
+    </label>
+</div>
+</div>
+</div>
+</section>

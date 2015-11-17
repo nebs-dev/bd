@@ -1,0 +1,143 @@
+.search {
+	height: 60px;
+	background: $skyblue-darker;
+	position: relative;
+}
+
+.marker-icon {
+	font-size: rem-calc(35);
+	position: absolute;
+	color: $white;
+	top: 3px;
+	left: 2%;
+	svg {
+		fill: $white;
+		margin-top: -5px;
+		width: 40px;
+		height: 60px;
+	}
+	@media #{$small-only} {
+		top: 3px;
+		left: 0.5%;
+
+	}
+	
+}
+.search-moto {
+	@include vertical-align;
+	.search-moto-head {
+		font-family: $raleway-medium;
+		font-size: rem-calc(25);
+		display: inline-block;
+		color: $white;
+		
+		@media #{$small-only} {
+			font-family: $raleway-medium;
+			font-size: rem-calc(20);
+			display: inline-block;
+			color: $white;
+			
+		}
+	}
+	.search-moto-nologo {
+		font-family: $raleway-medium;
+		font-size: rem-calc(25);
+		display: inline-block;
+		@media #{$small-only} {
+			font-family: $raleway-medium;
+			font-size: rem-calc(20);
+			display: inline-block;
+			color: $white;
+			
+		}
+	}
+}
+.main-logo-small {
+	@extend %logo-small;
+	margin-bottom: -5px;
+}
+.accomodation-type {
+	padding-top: 10px;
+}
+
+.form-part-1 {
+	padding: 0 30px 0 30px;
+}
+.form-part-2 {
+	background: #347FC8;
+	@extend .form-part-1;
+}
+.search-input1 {
+	padding-top: 20px;
+
+	background: $skyblue-forms;
+	
+	label {
+		padding-bottom: 2px;
+	}
+}
+
+.calendar-input1 .input-calendar{
+	display: block;
+	padding-top: 8px;
+	font-size: rem-calc(20px);
+	
+}
+
+.label-text-lighten {
+	font-family: $sans-light;
+}
+
+input[type="text"][readonly="true"] {
+	background-color: $white;
+	border-right: none;
+}
+input[type="date"][readonly="true"] {
+	background-color: $white;
+	border-right: none;
+}
+
+select {
+	background: url("../images/select-arrow.png") no-repeat 98% 56% $white;
+}
+label.blue-regular {
+	@extend %label-light;
+}
+.advanced-search {
+	@include e(label-main) {
+		position: relative;
+		background: #347FC8;
+		padding-top: 5px;
+		padding-bottom: 5px;
+
+		display: block;
+		@extend %label-light;
+	}
+	@include e(label-cb) {
+		@extend %label-cb;
+		display: inline;
+		> span {
+			font-family: $sans-bold;
+		}
+	}
+
+}
+.not-rated {
+	width: 125px !important;
+}
+
+#custom-accordion {
+	display: none;
+} 
+
+.advanced-boxes {
+	margin-bottom: 30px;
+}
+
+.border-divider {
+	border-bottom: 1px solid #286fb4;
+	position: absolute;
+	top: 15px;
+	left: 18%;
+	width: 82%;
+}

@@ -1,0 +1,68 @@
+{% extends 'admin.html.twig' %}
+{% block menu %}
+    {% include 'steps_menu.html.twig' %}
+{% endblock %}
+{% block sidemenu %}
+    {% include 'includes/sidemenu-user.html.twig' %}
+{% endblock %}
+{% block content %} 
+
+    {% for flashMessage in app.session.flashbag.get('msgSuccess') %}
+        {{ flashMessage }}
+    {% endfor %}
+
+    {{ form_start(form, {'attr': {'novalidate': 'novalidate', 'class':"form-horizontal", 'id':'unitNew' }}) }}
+    {{ form_errors(form) }}
+
+    <div class="form-group">
+        {{ form_label(form.name, 'name' | trans , { 'label_attr': {'class': 'col-sm-3 control-label'} }) }}
+        {{ form_errors(form.name) }}
+        <div class="col-sm-5">
+            {{ form_widget(form.name, { 'attr': {'class': 'form-control validate[required]'} }) }}
+        </div>
+    </div> 
+
+    <div class="row">
+        <fieldset>
+            <legend>{{ 'Price extra' | trans }}</legend>
+            <div class="row">
+                {% for priceE in priceExtra %}
+                    <div class="large-12 columns price">
+                        <fieldset>
+                            <legend>{{ priceE.name | trans }}</legend>
+                            <div class="large-3 columns {{ priceE.name | trans }}">
+                                <label>{{ 'availability' | trans }}</label>
+                                <select name="priceExtra[{{ priceE.name }}][availability]" class="availabilitySelect">
+                                    <option value="2" >{{ 'yes_it_is_free' | trans }}</option>
+                                    <option value="1" >{{ 'yes_to_be_paid' | trans }}</option>
+                                    <option value="0" selected="selected">{{ 'no' | trans }}</option>
+                                </select>
+                            </div>
+                            <div class="large-9 columns {{ priceE.name | trans }} priceDiv">
+                                <label>{{ 'Price' | trans }}</label>
+                                {{ app.session.get('currency') }}
+
+                                <input class="priceInput" type="number" name="priceExtra[{{ priceE.name }}][price]" value="0">
+                            </div>
+                            <input type="hidden" name="priceExtra[{{ priceE.name }}][priceExtraId]" value="{{ priceE.id }}">
+                        </fieldset>
+                        <br />
+                    </div>
+                {% endfor %}
+            </div>
+        </fieldset>
+    </div>
+
+    {{ form_rest(form) }}
+
+    <div class="form-group">
+        <div class="col-sm-5 col-sm-offset-3">
+            <input type="submit" name="save" class="btn btn-default" value="{{ 'save' | trans }}" />
+        </div>
+    </div>
+
+    {{ form_end(form) }}
+
+    <a href="{{ path('app_accommodation_edit', {'_locale': app.request.attributes.get('_locale'), 'id': accommodation.id }) }}">{{ 'back' | trans }}</a>
+
+{% endblock %}

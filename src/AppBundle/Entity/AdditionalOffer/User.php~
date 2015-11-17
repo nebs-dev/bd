@@ -1,0 +1,304 @@
+<?php
+
+namespace AppBundle\Entity\AdditionalOffer;
+
+use Doctrine\ORM\Mapping as ORM;
+
+/**
+ * @ORM\Table(name="additional_offer_users")
+ * @ORM\Entity()
+ */
+class User {
+
+    /**
+     * @ORM\Column(name="id", type="integer")
+     * @ORM\Id()
+     * @ORM\GeneratedValue(strategy="AUTO")
+     */
+    private $id;
+    /**
+     * @ORM\OneToOne(targetEntity="AdditionalOffer", mappedBy="user")
+     */
+    private $additionalOffer;
+    /**
+     * @ORM\Column(type="string", length=20, nullable=true)
+     */
+    private $title;
+    /**
+     * @ORM\Column(type="string", length=25)
+     */
+    private $name;
+    /**
+     * @ORM\Column(type="string", length=25)
+     */
+    private $surename;
+    /**
+     * @ORM\Column(type="string", length=50, nullable=true)
+     */
+    private $address;
+    /**
+     * @ORM\Column(type="string", length=25, nullable=true)
+     */
+    private $phone;
+    /**
+     * @ORM\Column(type="string", length=60)
+     */
+    private $email;
+    /**
+     * @ORM\Column(type="string", length=50, nullable=true)
+     */
+    private $type;
+    /**
+     * @ORM\Column(type="string", length=100, nullable=true)
+     */
+    private $companyName;
+    /**
+     * @ORM\Column(type="string", length=50, nullable=true)
+     */
+    private $companyVAT;
+    /**
+     * @ORM\Column(type="integer", length=11, nullable=true)
+     */
+    private $zip;
+    /**
+     * @ORM\ManyToOne(targetEntity="\AppBundle\Entity\Country", inversedBy="additionalOfferUsers")
+     */
+    private $country;
+
+
+    /**
+     * Get id
+     * @return integer
+     */
+    public function getId() {
+        return $this->id;
+    }
+
+    /**
+     * Set title
+     * @param string $title
+     * @return User
+     */
+    public function setTitle($title) {
+        $this->title = $title;
+
+        return $this;
+    }
+
+    /**
+     * Get title
+     * @return string
+     */
+    public function getTitle() {
+        return $this->title;
+    }
+
+    /**
+     * Set name
+     * @param string $name
+     * @return User
+     */
+    public function setName($name) {
+        $this->name = $name;
+
+        return $this;
+    }
+
+    /**
+     * Get name
+     * @return string
+     */
+    public function getName() {
+        return $this->name;
+    }
+
+    /**
+     * Set surename
+     * @param string $surename
+     * @return User
+     */
+    public function setSurename($surename) {
+        $this->surename = $surename;
+
+        return $this;
+    }
+
+    /**
+     * Get surename
+     * @return string
+     */
+    public function getSurename() {
+        return $this->surename;
+    }
+
+    /**
+     * Set address
+     * @param string $address
+     * @return User
+     */
+    public function setAddress($address) {
+        $this->address = $address;
+
+        return $this;
+    }
+
+    /**
+     * Get address
+     * @return string
+     */
+    public function getAddress() {
+        return $this->address;
+    }
+
+    /**
+     * Set phone
+     * @param string $phone
+     * @return User
+     */
+    public function setPhone($phone) {
+        $this->phone = $phone;
+
+        return $this;
+    }
+
+    /**
+     * Get phone
+     * @return string
+     */
+    public function getPhone() {
+        return $this->phone;
+    }
+
+    /**
+     * Set email
+     * @param string $email
+     * @return User
+     */
+    public function setEmail($email) {
+        $this->email = $email;
+
+        return $this;
+    }
+
+    /**
+     * Get email
+     * @return string
+     */
+    public function getEmail() {
+        return $this->email;
+    }
+
+    /**
+     * Set type
+     * @param string $type
+     * @return User
+     */
+    public function setType($type) {
+        $this->type = $type;
+
+        return $this;
+    }
+
+    /**
+     * Get type
+     * @return string
+     */
+    public function getType() {
+        return $this->type;
+    }
+
+    /**
+     * Set companyName
+     * @param string $companyName
+     * @return User
+     */
+    public function setCompanyName($companyName) {
+        $this->companyName = $companyName;
+
+        return $this;
+    }
+
+    /**
+     * Get companyName
+     * @return string
+     */
+    public function getCompanyName() {
+        return $this->companyName;
+    }
+
+    /**
+     * Set companyVAT
+     * @param string $companyVAT
+     * @return User
+     */
+    public function setCompanyVAT($companyVAT) {
+        $this->companyVAT = $companyVAT;
+
+        return $this;
+    }
+
+    /**
+     * Get companyVAT
+     * @return string
+     */
+    public function getCompanyVAT() {
+        return $this->companyVAT;
+    }
+
+    /**
+     * Set zip
+     * @param integer $zip
+     * @return User
+     */
+    public function setZip($zip) {
+        $this->zip = $zip;
+
+        return $this;
+    }
+
+    /**
+     * Get zip
+     * @return integer
+     */
+    public function getZip() {
+        return $this->zip;
+    }
+
+    /**
+     * Set additionalOffer
+     * @param \AppBundle\Entity\AdditionalOffer\AdditionalOffer $additionalOffer
+     * @return User
+     */
+    public function setAdditionalOffer(\AppBundle\Entity\AdditionalOffer\AdditionalOffer $additionalOffer = null) {
+        $this->additionalOffer = $additionalOffer;
+
+        return $this;
+    }
+
+    /**
+     * Get additionalOffer
+     * @return \AppBundle\Entity\AdditionalOffer\AdditionalOffer
+     */
+    public function getAdditionalOffer() {
+        return $this->additionalOffer;
+    }
+
+    /**
+     * Set country
+     * @param \AppBundle\Entity\Country $country
+     * @return User
+     */
+    public function setCountry(\AppBundle\Entity\Country $country = null) {
+        $this->country = $country;
+
+        return $this;
+    }
+
+    /**
+     * Get country
+     * @return \AppBundle\Entity\Country
+     */
+    public function getCountry() {
+        return $this->country;
+    }
+}

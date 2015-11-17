@@ -1,0 +1,27 @@
+@include font-face('Open-Sans Light'     , 'opensans-light-webfont'     , 'Open_Sans' , 'sans-serif');
+@include font-face('Open-Sans Bold'      , 'opensans-bold-webfont'      , 'Open_Sans' , 'sans-serif');
+@include font-face('Open-Sans Extrabold' , 'opensans-extrabold-webfont' , 'Open_Sans' , 'sans-serif');
+@include font-face('Open-Sans Semibold'  , 'opensans-semibold-webfont'  , 'Open_Sans' , 'sans-serif');
+@include font-face('Open-Sans Italic'    , 'opensans-italic-webfont'    , 'Open_Sans' , 'sans-serif');
+@include font-face('Open-Sans Regular'   , 'opensans-regular-webfont'   , 'Open_Sans' , 'sans-serif');
+@include font-face('Raleway ExtraBold'   , 'raleway-extrabold-webfont'  , 'Raleway'   , 'sans-serif');
+@include font-face('Raleway Bold'    , 'raleway-bold-webfont'    , 'Raleway' , 'sans-serif');
+@include font-face('Raleway Medium'  , 'raleway-medium-webfont'  , 'Raleway' , 'sans-serif');
+@include font-face('Raleway Regular' , 'raleway-regular-webfont' , 'Raleway' , 'sans-serif');
+@include font-face('Raleway Light'   , 'raleway-light-webfont'   , 'Raleway' , 'sans-serif');
+
+$sans-bold      : 'Open-Sans Bold';
+$sans-extrabold : 'Open-Sans Extrabold';
+$sans-semibold  : 'Open-Sans Semibold';
+$sans-italic    : 'Open-Sans Italic';
+$sans-light     : 'Open-Sans Light';
+$sans           : 'Open-Sans Regular';
+
+$raleway-bold        : 'Raleway Bold';
+$raleway-extrabold   : 'Raleway ExtraBold';
+$raleway-medium      : 'Raleway Medium';
+$raleway             : 'Raleway Regular';
+$raleway-light       : 'Raleway Light';
+
+
+

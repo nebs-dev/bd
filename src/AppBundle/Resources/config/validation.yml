@@ -1,0 +1,238 @@
+# Accommodation
+AppBundle\Entity\Accommodation:
+    properties:
+        name:
+            - NotBlank: ~
+        accommodationCategory:
+            - NotBlank: ~
+            - Type:
+                type: object
+        user:
+#            - NotBlank: ~
+            - Type:
+                type: object
+#        city:
+#            - NotBlank: ~
+#            - Type:
+#                type: object
+        address:
+            - NotBlank: ~
+        x:
+#            - NotBlank: ~
+            - Type:
+                type: float
+        y:
+#            - NotBlank: ~
+            - Type:
+                type: float
+        wifi:
+            - Type:
+                type: numeric
+
+AppBundle\Entity\Video:
+    properties:
+        link:
+            - NotBlank: ~
+            - Url: ~
+
+AppBundle\Entity\AccommodationFee:
+    properties:
+        type:
+            - NotBlank: ~
+            - Type:
+                type: object
+
+AppBundle\Entity\AccommodationDescription:
+    properties:
+        en:
+            - NotBlank: ~
+
+# Unit
+AppBundle\Entity\Unit:
+    properties:
+        name:
+            - NotBlank: ~
+        categorize:
+            - NotBlank: ~
+            - Type:
+                type: int
+        surface:
+            - NotBlank: ~
+#            - Type:
+#                type: int
+        minimumStay:
+            - NotBlank: ~
+            - Type:
+                type: int
+        position:
+            - NotBlank: ~
+        unitCategory:
+            - NotBlank: ~
+            - Type:
+                type: object
+        accommodation:
+#            - NotBlank: ~
+            - Type:
+                type: object
+        basicPrice:
+            - NotBlank: ~
+            - Type:
+                type: int
+
+AppBundle\Entity\UnitPeriod:
+    properties:
+        unit:
+            - NotBlank: ~
+        fromDate:
+            - NotBlank: ~
+            - Date: ~
+        toDate:
+            - NotBlank: ~
+            - Date: ~
+#        sign:
+#            - NotBlank: ~
+        amount:
+            - NotBlank: ~
+            - Type:
+                type: numeric
+
+AppBundle\Entity\Country:
+    properties:
+        en:
+            - NotBlank: ~
+
+AppBundle\Entity\Region:
+    properties:
+        en:
+            - NotBlank: ~
+        country:
+            - NotBlank: ~
+            - Type:
+                type: object
+
+AppBundle\Entity\Subregion:
+    properties:
+        en:
+            - NotBlank: ~
+        region:
+            - NotBlank: ~
+            - Type:
+                type: object
+
+AppBundle\Entity\City:
+    properties:
+        en:
+            - NotBlank: ~
+        region:
+            - NotBlank: ~
+            - Type:
+                type: object
+
+AppBundle\Entity\AdditionalOffer\Gallery:
+    properties:
+        file:
+            - NotBlank: ~
+        photo:
+            - NotBlank: ~
+
+AppBundle\Entity\AdditionalOffer\Detail:
+    properties:
+        title:
+            - NotBlank: ~
+
+AppBundle\Entity\Booking:
+    properties:
+        unit:
+            - NotBlank: ~
+            - Type:
+                type: object
+#        user:
+#            - NotBlank: ~
+#            - Type:
+#                type: object
+#        status:
+#            - NotBlank: ~
+#            - Type:
+#                type: int
+        price:
+            - NotBlank: ~
+            - Type:
+                type: numeric
+        fromDate:
+            - NotBlank: ~
+            - Date: ~
+        toDate:
+            - NotBlank: ~
+            - Date: ~
+
+AppBundle\Entity\Discover:
+    constraints:
+        - Symfony\Bridge\Doctrine\Validator\Constraints\UniqueEntity: location
+    properties:
+        location:
+            - NotBlank: ~
+        file:
+            - NotBlank: ~
+
+AppBundle\Entity\Post:
+    properties:
+        title:
+            - NotBlank: ~
+        text:
+            - NotBlank: ~
+        language:
+            - NotBlank: ~
+
+AppBundle\Entity\PostComment:
+    properties:
+        text:
+            - NotBlank: ~
+        post:
+            - NotBlank: ~
+
+AppBundle\Entity\Review:
+    properties:
+        text:
+            - NotBlank: ~
+        cleanliness:
+            - NotBlank: ~
+            - Type:
+                type: int
+            - Range:
+                min: 1
+                max: 10
+        comfort:
+            - NotBlank: ~
+            - Type:
+                type: int
+            - Range:
+                min: 1
+                max: 10
+        location:
+            - NotBlank: ~
+            - Type:
+                type: int
+            - Range:
+                min: 1
+                max: 10
+        facilities:
+            - NotBlank: ~
+            - Type:
+                type: int
+            - Range:
+                min: 1
+                max: 10
+        staff:
+            - NotBlank: ~
+            - Type:
+                type: int
+            - Range:
+                min: 1
+                max: 10
+        valueForMoney:
+            - NotBlank: ~
+            - Type:
+                type: int
+            - Range:
+                min: 1
+                max: 10

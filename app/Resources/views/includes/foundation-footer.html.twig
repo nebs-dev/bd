@@ -1,0 +1,133 @@
+<footer>
+	<section class="newsletter">
+		<div class="row">
+			<div class="show-for-large-up large-6 columns">
+				<span class="paper-plane-icon"></span>
+				<h2>
+					{{ 'subscribe_for_all_new_updates_on_low_rates' | trans }}
+				</h2>
+				<span class="subheading">{{ 'new_destinations_and_more' | trans }}</span>
+			</div>
+
+			<div id="mc_embed_signup">
+			<form action="//marcosoft.us11.list-manage.com/subscribe/post?u=8c81bc22f999e50dab2a3b387&amp;id=d4634b2d80" method="post" id="mc-embedded-subscribe-form" name="mc-embedded-subscribe-form" class="validate" target="_blank" novalidate>
+			    <div id="mc_embed_signup_scroll">
+
+			<div class="large-4 medium-6 columns">
+				<input type="email" value="" name="EMAIL"  placeholder="type your email address" class="required email transparent-input" id="mce-EMAIL">
+			</div>
+			<div style="position: absolute; left: -5000px;"><input type="text" name="b_8c81bc22f999e50dab2a3b387_d4634b2d80" tabindex="-1" value=""></div>
+			<div class="clear">
+				<div class="large-2 medium-5 columns">
+					<button type="submit" value="Subscribe" name="subscribe" id="mc-embedded-subscribe" class="subscribe-button">
+						{{ 'SUBSCRIBE' | trans }}
+						<i class="fa fa-caret-right"></i>
+					</button>
+				</div>
+			</div>
+			</div>
+			<div id="mce-responses" class="clear">
+				<div class="response" id="mce-error-response" style="display:none"></div>
+				<div class="response" id="mce-success-response" style="display:none"></div>
+			</div>
+			</form>
+			<script type='text/javascript' src='//s3.amazonaws.com/downloads.mailchimp.com/js/mc-validate.js'></script><script type='text/javascript'>(function($) {window.fnames = new Array(); window.ftypes = new Array();fnames[0]='EMAIL';ftypes[0]='email';}(jQuery));var $mcj = jQuery.noConflict(true);</script>
+			</div>
+
+			<!--End mc_embed_signup-->
+
+		</div>
+	</section>
+	<section class="footer-main">
+	<div class="row">
+		<div class="footer-main-logo"></div>
+	</div>
+	<div class="row">
+		<div class="large-4 large-offset-2 medium-6 small-12 columns">
+			<div class="links-row-left">
+				<span href="#">{{ 'Apartment' | trans}}</span>
+				<span href="#">{{ 'House' | trans}}</span>
+				<span href="#">{{ 'Room' | trans}}</span>
+				<span href="#">{{ 'Hotel' | trans}}</span>
+				<span href="#">{{ 'Hostel' | trans}}</span>
+				<span href="#">{{ 'Camp' | trans}}</span>
+			</div>
+			<div class="links-row-left">
+				<span href="#">{{ 'Villa' | trans}}</span>
+				<span href="#">{{ 'Lighthouse' | trans}}</span>
+				<span href="#">{{ 'Lux_Apartment' | trans}}</span>
+				<span href="#">{{ 'Bungalow' | trans}}</span>
+			</div>
+		</div>
+		<div class="large-4 large-pull-2 medium-6 small-12 columns">
+			<div class="links-row-right">
+				<a href="#">{{ 'Restaurant' | trans}}</a>
+				<a href="#">{{ 'Bar' | trans}}</a>
+				<a href="#">{{ 'Sightseeing' | trans}}</a>
+				<a href="#">{{ 'Excursions' | trans}}</a>
+			</div>
+			<div class="links-row-right">
+				<a href="#">{{ 'Night_Clubs' | trans}}</a>
+				<a href="#">{{ 'Sport_courts' | trans}}</a>
+				<a href="#">{{ 'Shopping' | trans}}</a>
+				<a href="#">{{ 'Entertaiment' | trans}}</a>
+			</div>
+		</div>
+	</div>
+	</section>
+	<section class="footer-sub">
+	<div class="row">
+		<div class="large-8 large-offset-2 columns divider">
+
+		</div>
+	</div>
+	<div class="row">
+		<h3 class="footer-msg">{{ 'we_speak_your_language' | trans}}</h3>
+	</div>
+	<div class="row">
+		<div class="links-row-center">
+			{% for lang in languageService.getLanguages()  %}
+							<a href="{{ path('app_home_change_language', {'locale': lang.code} ) }}">
+								{{ lang.name }}
+							</a>
+					{% endfor %}
+				{# <a href="#">{{ 'English' | trans}}</a>
+				<a href="#">{{ 'Deutch' | trans}}</a>
+				<a href="#">{{ 'Nederlands' | trans}}</a>
+				<a href="#">{{ 'Espanol' | trans}}</a>
+				<a href="#">{{ 'Cestina' | trans}}</a>
+				<a href="#">{{ 'Italiano' | trans}}</a>
+				<a href="#">{{ 'Portuges' | trans}}</a>
+				<a href="#">{{ 'Norsk' | trans}}</a>
+				<a href="#">{{ 'Svenska' | trans}}</a>
+				<a href="#">{{ 'Hrvatski' | trans}}</a>
+				<a href="#">{{ 'Romana' | trans}}</a>
+				<a href="#">{{ 'Pyycki' | trans}}</a>
+				<a href="#">{{ 'Slovenčina' | trans}}</a>
+				<a href="#">{{ 'Turkce' | trans}}</a> #}
+			</div>
+			<div class="links-row-center">
+				<a href="{{ path('app_about', {'_locale': app.request.attributes.get('_locale') }) }}">
+					{{ 'About_BestDestination' | trans}}
+				</a>
+				<a href="{{ path('app_private', {'_locale': app.request.attributes.get('_locale') }) }}">
+									{{ 'Privacy_policy' | trans}}
+
+				</a>
+				<a href="{{ path('app_terms', {'_locale': app.request.attributes.get('_locale') }) }}">{{ 'Terms_of_use' | trans}}</a>
+				<a href="{{ path('app_contact', {'_locale': app.request.attributes.get('_locale') }) }}">{{ 'Contact_us' | trans}}</a>
+				<a href="{{ path('app_partner', {'_locale': app.request.attributes.get('_locale') }) }}">{{ 'Publish_your_property' | trans}}</a>
+				<a href="{{ path('app_faq', {'_locale': app.request.attributes.get('_locale') }) }}">{{ 'FAQ' | trans}}</a>
+			</div>
+	</div>
+
+	</section>
+	<section class="footer-copyright">
+		<div class="row">
+
+		<p class="text-center">{{ 'Copyright_©_2015' | trans }} 
+			<span>{{'BestDestination_d.o.o.'}}</span>
+			{{'All_rights_reserved' | trans}}</p>
+		</div>
+	</section>
+</footer>

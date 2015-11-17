@@ -1,0 +1,280 @@
+{% extends 'admin.html.twig' %}
+{% block menu %}
+	{% include 'steps_menu.html.twig' %}
+{% endblock %}
+{% block sidemenu %}
+	{% if is_granted('ROLE_GUEST') %}
+		{% include 'includes/sidemenu-guest.html.twig' %}
+	{% elseif is_granted('ROLE_HOST')   %}
+		{% include 'includes/sidemenu-user.html.twig' %}
+	{% endif %}
+{% endblock %}
+{% block content %}
+<div class="row no-pad">
+	<div class="large-12 columns">
+		<h4 class="pageTitleAdmin">{{ 'Edit_profile' | trans }}</h4>
+		{% for flashMessage in app.session.flashbag.get('msgSuccess') %}
+		<div class="box bg-light-green">
+			<div class="box-header bg-light-green ">
+				<!-- tools box -->
+				<div class="pull-right box-tools">
+					<span class="box-btn" data-widget="remove">
+						<i class="icon-cross"></i>
+					</span>
+				</div>
+				<h3 class="box-title "><i class="text-white  icon-thumbs-up"></i>
+					<span class="text-white">SUCCESS</span>
+				</h3>
+			</div>
+			<!-- /.box-header -->
+			<div class="box-body " style="display: block;">
+				<p class="text-white"><strong>Well done!</strong> {{ flashMessage }}</p>
+			</div>
+		</div>
+		{% endfor %}
+		{% for flashMessage in app.session.flashbag.get('msgError') %}
+		<div class="box bg-red">
+			<div class="box-header bg-red ">
+				<!-- tools box -->
+				<div class="pull-right box-tools">
+					<span class="box-btn" data-widget="remove">
+						<i class="icon-cross"></i>
+					</span>
+				</div>
+				<h3 class="box-title "><i class="text-white  icon-thumbs-up"></i>
+					<span class="text-white">Error</span>
+				</h3>
+			</div>
+			<!-- /.box-header -->
+			<div class="box-body " style="display: block;">
+				<p class="text-white"><strong>Sorry!</strong> {{ flashMessage }}</p>
+			</div>
+		</div>
+		{% endfor %}
+
+		{{ form_start(form, {'attr': {'novalidate': 'novalidate', 'class':"form-horizontal", 'id':'registration' }}) }}
+		{{ form_errors(form) }}
+		<div class="row">
+			<div class="large-2 columns">
+				<div class="form-group">
+					{{ form_label(form.title, 'Title' | trans, { 'label_attr': {'class': 'col-sm-3 control-label'} }) }}
+					{{ form_errors(form.title) }}
+					<div class="col-sm-5">
+						{{ form_widget(form.title, { 'attr': {'class': 'form-control validate[required]'} }) }}
+					</div>
+				</div>
+			</div>
+			<div class="large-5 columns">
+				<div class="form-group">
+					{{ form_label(form.name, 'user_name' | trans, { 'label_attr': {'class': 'col-sm-3 control-label'} }) }}
+					{{ form_errors(form.name) }}
+					<div class="col-sm-5">
+						{{ form_widget(form.name, { 'attr': {'class': 'form-control validate[required]'} }) }}
+					</div>
+				</div>
+			</div>
+			<div class="large-5 columns">
+				<div class="form-group">
+					{{ form_label(form.surename, 'user_surename' | trans , { 'label_attr': {'class': 'col-sm-3 control-label'} }) }}
+					{{ form_errors(form.surename) }}
+					<div class="col-sm-5">
+						{{ form_widget(form.surename, { 'attr': {'class': 'form-control validate[required]'} }) }}
+					</div>
+				</div>
+			</div>
+			<div class="row"></div>
+			<div class="large-5 columns">
+				<div class="form-group">
+					{{ form_label(form.address, 'address' | trans, { 'label_attr': {'class': 'col-sm-3 control-label'} }) }}
+					{{ form_errors(form.address) }}
+					<div class="col-sm-5">
+						{{ form_widget(form.address, { 'attr': {'class': 'form-control validate[required]'} }) }}
+					</div>
+				</div>
+			</div>
+			<div class="large-2 columns">
+				<div class="form-group">
+					{{ form_label(form.zip, 'Zip' | trans, { 'label_attr': {'class': 'col-sm-3 control-label'} }) }}
+					{{ form_errors(form.zip) }}
+					<div class="col-sm-5">
+						{{ form_widget(form.zip, { 'attr': {'class': 'form-control validate[required]'} }) }}
+					</div>
+				</div>
+			</div>
+			<div class="large-5 columns">
+				<div class="form-group">
+					{{ form_label(form.city, 'City' | trans, { 'label_attr': {'class': 'col-sm-3 control-label'} }) }}
+					{{ form_errors(form.city) }}
+					<div class="col-sm-5">
+						{{ form_widget(form.city, { 'attr': {'class': 'form-control validate[required]'} }) }}
+					</div>
+				</div>
+			</div>
+			<div class="row"></div>
+			<div class="large-5 pull-left columns">
+				<div class="form-group">
+					{{ form_label(form.country, 'Country' | trans, { 'label_attr': {'class': 'col-sm-3 control-label'} }) }}
+					{{ form_errors(form.country) }}
+					<div class="col-sm-5">
+						{{ form_widget(form.country, { 'attr': {'class': 'form-control validate[required]'} }) }}
+					</div>
+				</div>
+			</div>
+
+			<div class="row"></div>
+
+			<div class="large-5 columns">
+				<div class="form-group">
+					{{ form_label(form.email, 'email' | trans, { 'label_attr': {'class': 'col-sm-3 control-label'} }) }}
+					{{ form_errors(form.email) }}
+					<div class="col-sm-5">
+						{{ form_widget(form.email, { 'attr': {'class': 'form-control validate[required]'} }) }}
+					</div>
+				</div>
+			</div>
+
+			<div class="large-3 columns">
+				<div class="form-group">
+					{{ form_label(form.phone, 'phone' | trans, { 'label_attr': {'class': 'col-sm-3 control-label'} }) }}
+					{{ form_errors(form.phone) }}
+					<div class="col-sm-5">
+						{{ form_widget(form.phone, { 'attr': {'class': 'form-control validate[required]'} }) }}
+					</div>
+				</div>
+			</div>
+
+			<div class="large-4 columns">
+				<div class="form-group">
+					{{ form_label(form.skype, 'Skype' | trans, { 'label_attr': {'class': 'col-sm-3 control-label'} }) }}
+					{{ form_errors(form.skype) }}
+					<div class="col-sm-5">
+						{{ form_widget(form.skype, { 'attr': {'class': 'form-control validate[required]'} }) }}
+					</div>
+				</div>
+			</div>
+			<div class="row"></div>
+				<div class="large-3 columns top20">
+					<input type="submit" name="register" href="#" class="buttomSubmitNewAdmin" value="{{ 'countinue' | trans }}" />
+				</div>
+			<div class="row"></div>
+			{% if is_granted('ROLE_GUEST') %}
+			<div style="display: none">
+			{% endif %}
+			<div class="large-6 columns">
+				<div class="form-group">
+					{{ form_label(form.type, 'Type' | trans, { 'label_attr': {'class': 'col-sm-3 control-label'} }) }}
+					{{ form_errors(form.type) }}
+					<div class="col-sm-5">
+						{{ form_widget(form.type, { 'attr': {'class': 'form-control validate[required]'} }) }}
+					</div>
+				</div>
+			</div>
+			<div class="row"></div>
+			<div class="large-6 columns">
+				<div class="form-group">
+					{{ form_label(form.companyName, 'Company Name' | trans, { 'label_attr': {'class': 'col-sm-3 control-label'} }) }}
+					{{ form_errors(form.companyName) }}
+					<div class="col-sm-5">
+						{{ form_widget(form.companyName, { 'attr': {'class': 'form-control validate[required]'} }) }}
+					</div>
+				</div>
+			</div>
+			<div class="large-6 columns">
+				<div class="form-group">
+					{{ form_label(form.companyVAT, 'Company VAT' | trans, { 'label_attr': {'class': 'col-sm-3 control-label'} }) }}
+					{{ form_errors(form.companyVAT) }}
+					<div class="col-sm-5">
+						{{ form_widget(form.companyVAT, { 'attr': {'class': 'form-control validate[required]'} }) }}
+					</div>
+				</div>
+			</div>
+
+			<div class="large-6 columns">
+				<div class="form-group">
+					{{ form_label(form.username, 'username' | trans , { 'label_attr': {'class': 'col-sm-3 control-label'} }) }}
+					{{ form_errors(form.username) }}
+					<div class="col-sm-5">
+						{{ form_widget(form.username, { 'attr': {'class': 'form-control validate[required]'} }) }}
+					</div>
+				</div>
+			</div>
+
+			<div class="large-12 columns">
+				<div class="form-group">
+					<fieldset>
+						<legend>{{ form_label(form.languages, 'languages' | trans, { 'label_attr': {'class': 'col-sm-3 control-label'} }) }}</legend>
+						<div class="form-group">
+							{{ form_errors(form.languages) }}
+							<div class="col-sm-5">
+								{{ form_widget(form.languages, { 'attr': {'class': 'form-control validate[required]'} }) }}
+							</div>
+						</div>
+					</fieldset>
+				</div>
+			</div>
+
+			<div class="large-6 columns">
+				<div class="form-group">
+					{{ form_label(form.google, 'Google' | trans, { 'label_attr': {'class': 'col-sm-3 control-label'} }) }}
+					{{ form_errors(form.google) }}
+					<div class="col-sm-5">
+						{{ form_widget(form.google, { 'attr': {'class': 'form-control validate[required]'} }) }}
+					</div>
+				</div>
+			</div>
+
+			{% if is_granted('ROLE_GUEST') %}
+			</div>
+			{% endif %}
+			<div class="row"></div>
+			<div class="row">
+				<div class="large-12 column" style="border-top: 1px solid #ddd; margin: 40px 20px 10px 20px;"></div>
+				<div class="row"></div>
+			</div>
+
+			<div class="large-12 columns resetPasswordProfile top20">
+				<span>{{ 'Security_settings ' | trans }}</span>
+				({{ 'reset your password for your Best Destination account here' | trans }})
+			</div>
+			<div class="row"></div>
+			<div class="resetPasswordProfileFields">
+				{% for passwordField in form.password %}
+				<div class="large-5 columns">
+					<div class="form-group">
+						<div style="display: none;">{{ form_label(passwordField, null, { 'label_attr': {'class': 'col-sm-3 control-label'} }) }}</div>
+						{{ form_errors(passwordField) }}
+						<div class="col-sm-5">
+							{{ form_widget(passwordField, { 'type':'password', 'attr': {'class': 'form-control validate[required]'} }) }}
+						</div>
+					</div>
+					{#<div class="form-field">#}
+					{#{{ form_label(passwordField, null, { 'attr': {'class': 'form-label'} }) }}#}
+					{#{{ form_widget(passwordField, { 'attr': {'class': 'form-input'} }) }}#}
+					{#</div>#}
+				</div>
+				<div class="row"></div>
+				{% endfor %}
+				<div class="row"></div>
+				<div class="large-3 columns top20">
+					<input type="submit" name="register" href="#" class="buttomSubmitNewAdmin" value="{{ 'countinue' | trans }}" />
+				</div>
+			</div>
+			<div class="row"></div>
+
+		{{ form_rest(form) }}
+	</div>
+</div>
+	{{ form_end(form) }}
+{% endblock %}
+
+{% block js %}
+    {{ parent() }}
+<script type="text/javascript">
+	jQuery(document).ready(function(){
+		var prvi = jQuery("label[for='user_password_first']").text();
+		jQuery('#user_password_first').attr("placeholder", prvi);
+		var drugi = jQuery("label[for='user_password_second']").text();
+		jQuery('#user_password_second').attr("placeholder", drugi);
+	});
+</script>
+{% endblock %}

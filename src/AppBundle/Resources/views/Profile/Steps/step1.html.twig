@@ -1,0 +1,95 @@
+{% extends 'admin.html.twig' %}
+{% block menu %}
+
+{% endblock %}
+{% block sidemenu %}
+	{% include 'steps_menu.html.twig' %}
+{% endblock %}
+{% block content %}
+	<div class="row no-pad">
+		<h4 class="pageTitleAdmin">{{ 'user_details' | trans }}</h4>
+		{% for flashMessage in app.session.flashbag.get('msgSuccess') %}
+		<div class="box bg-light-green">
+			<div class="box-header bg-light-green ">
+				<!-- tools box -->
+				<div class="pull-right box-tools">
+					<span class="box-btn" data-widget="remove">
+						<i class="icon-cross"></i>
+					</span>
+				</div>
+				<h3 class="box-title "><i class="text-white  icon-thumbs-up"></i>
+					<span class="text-white">SUCCESS</span>
+				</h3>
+			</div>
+			<!-- /.box-header -->
+			<div class="box-body " style="display: block;">
+				<p class="text-white"><strong>Well done!</strong> {{ flashMessage }}</p>
+			</div>
+		</div>
+		{% endfor %}
+		{% for flashMessage in app.session.flashbag.get('msgError') %}
+		<div class="box bg-red">
+			<div class="box-header bg-red ">
+				<!-- tools box -->
+				<div class="pull-right box-tools">
+					<span class="box-btn" data-widget="remove">
+						<i class="icon-cross"></i>
+					</span>
+				</div>
+				<h3 class="box-title "><i class="text-white  icon-thumbs-up"></i>
+					<span class="text-white">Error</span>
+				</h3>
+			</div>
+			<!-- /.box-header -->
+			<div class="box-body " style="display: block;">
+				<p class="text-white"><strong>Sorry!</strong> {{ flashMessage }}</p>
+			</div>
+		</div>
+		{% endfor %}
+		{{ form_start(form, {'attr': {'data-abide': '', 'novalidate': 'novalidate', 'class':"form-horizontal", 'id':'registration' }}) }}
+		{{ form_errors(form) }}
+		<div class="large-12 columns">
+			{# acc-fieldset #}
+			{% include 'includes/steps/step1/acc-fieldset.html.twig' %}
+			{# ./acc-fieldset #}
+			<br>
+			{# user-fieldset #}
+			{% include 'includes/steps/step1/user-fieldset.html.twig' %}
+			{# ./user-fieldset #}
+			<br>
+			{#  company-fieldset #}
+			{% include 'includes/steps/step1/company-fieldset.html.twig' %}
+			{# ./company-fieldset #}
+
+			{{ form_rest(form) }}
+
+			{# Save && next step #}
+
+			<div class="row"></div>
+			<div class="row top20">
+				<div class="large-3 columns">
+					<button type="submit" name="register" class="buttomSubmitNewAdmin">
+						{{ 'Continue' | trans }}
+					</button>
+				</div>
+			</div>
+		{{ form_end(form) }}
+		</div>
+	</div>
+{% endblock %}
+{% block js %}
+	{{ parent() }}
+
+	<script type="text/javascript">
+	jQuery(document).ready(function(){
+		jQuery("#user_type").on('change', function() {
+			var odabrani = jQuery(this).children('option:selected').val();
+			if(odabrani == 1){
+				jQuery(".companyRow").show();
+			} else if(odabrani == 0) {
+				jQuery(".companyRow").hide();
+			}
+		});
+	});
+	</script>
+{% endblock %}

@@ -1,0 +1,77 @@
+{% extends 'base.html.twig' %}
+
+{% block content %}
+	{% block foundation_header %}
+		{% include 'includes/foundation-header.html.twig'  %}
+	{% endblock %}
+	<div class="row" style="padding-top: 100px;"></div>
+	{% for flashMessage in app.session.flashbag.get('msgSuccess') %}
+		<div data-alert class="alert-box success radius">
+			{{ flashMessage }}
+			<a href="#" class="close">&times;</a>
+		</div>
+	{% endfor %}
+	{% for flashMessage in app.session.flashbag.get('msgError') %}
+
+		<div data-alert class="alert-box warning radius">
+			{{ flashMessage }}
+			<a href="#" class="close">&times;</a>
+		</div>
+
+	{% endfor %}
+
+<div class="row">
+	<div class="large-6 small-centered columns">
+		<section class="search">
+			<div class="large-1 medium-1 small-1 columns marker-icon">
+				<i class="map-marker-icon fa fa-unlock"></i>
+			</div>
+			<div class="large-11 medium-11 small-11 columns search-moto">
+				<h1 class="search-moto-head">{{ message }}</h1>
+			</div>
+		</section>
+		<section class="search-input1" style="padding: 0px 20px 0px 20px;">
+			<div class="large-12 columns">
+				<div class="row">
+					<div class="row" style="padding-top: 15px;"></div>
+					<div class="large-12 columns">
+						{% if user %}
+							<h3 class="activationWelcome">{{ 'Welcome' | trans }} <strong>{{ user.username }}!</strong></h3>
+						{% endif %}
+					</div>
+					<div class="row"></div>
+					<div class="row" style="padding-top: 15px;"></div>
+				</div>
+			</div>
+			<div class="row"></div>
+		</section>
+		<section class="search">
+			<div class="large-1 medium-1 small-1 columns marker-icon">
+				<i class="map-marker-icon fa fa-user"></i>
+			</div>
+			<div class="large-11 medium-11 small-11 columns search-moto">
+				<h1 class="search-moto-head">{{ 'go_to_login' | trans }}</h1>
+			</div>
+		</section>
+		<section class="search-input1" style="padding: 0px 20px 0px 20px;">
+			<div class="large-12 columns">
+				<div class="row">
+					<div class="row" style="padding-top: 20px;"></div>
+					<div class="large-12 columns">
+						<a class="search-button" href="{{ path('login',{'_locale': app.request.attributes.get('_locale')}) }}">
+							{{ 'login' | trans }}
+						</a>
+					</div>
+				</div>
+			</div>
+			<div class="row"></div>
+		</section>
+	</div>
+</div>
+
+
+	<div class="row" style="padding-top: 50px;"></div>
+	{% block foundation_footer %}
+		{% include 'includes/foundation-footer.html.twig'  %}
+	{% endblock %}
+{% endblock %}

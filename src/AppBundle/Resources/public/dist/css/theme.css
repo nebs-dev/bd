@@ -1,0 +1,23 @@
+.input-body {
+  background: #20afe7;
+}
+.checkout-page {
+  padding-top: 100px;
+}
+.checkout-container {
+  background: #395376;
+}
+.checkout-container .checkout-head {
+  text-align: center;
+  color: #FFF;
+  padding-top: 15px;
+  padding-bottom: 15px;
+}
+.checkout-registration-text {
+  background: #FFF;
+  font-size: 16px;
+  color: #4b5053;
+  text-align: center;
+  padding: 30px 40px 0px 40px;
+  margin-bottom: 0;
+}

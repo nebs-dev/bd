@@ -1,0 +1,96 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<meta charset="UTF-8" />
+	<meta name="viewport" content="width=device-width, initial-scale=1">
+	<title>{% block title %}Admin{% endblock %}</title>
+	{% block stylesheets %}
+		<link href="{{asset('bundles/admin/css/dripicon.css')}}" rel='stylesheet'>
+		<link href="{{asset('bundles/admin/css/typicons.css')}}" rel='stylesheet'>
+		<link href="{{asset('bundles/admin/css/font-awesome.css')}}" rel='stylesheet'>
+		<link href="{{asset('bundles/admin/public/assets/stylesheets/app.css')}}" rel='stylesheet'>
+		<link href='http://fonts.googleapis.com/css?family=Open+Sans:400,300,600,700,800&subset=latin,latin-ext' rel='stylesheet' type='text/css'>
+	{% endblock %}
+	<link rel="icon" type="image/x-icon" href="{{ asset('favicon.ico') }}" />
+	{% block jsloader %}
+		<script src="{{asset('bundles/admin/js/pace/pace.js')}}"></script>
+		<script src="{{asset('bundles/admin/js/vendor/modernizr.js')}}"></script>
+	{% endblock %}
+	{% block navstylesheet %}
+		<link href="{{asset('bundles/admin/js/pace/themes/orange/pace-theme-flash.css')}}" rel="stylesheet" />
+		<link rel="stylesheet" href="{{asset('bundles/admin/js/slicknav/slicknav.css')}}" />
+	{% endblock %}
+</head>
+<body>
+	<!-- End of preloader -->
+	<div class="off-canvas-wrap" data-offcanvas>
+		<!-- right sidebar wrapper -->
+		<div class="leftBg"></div>
+		<div class="rightBg"></div>
+		<div class="leftBg2"></div>
+		<div class="rightBg2"></div>
+		<div class="inner-wrap">
+			{% block sidemenu %}
+				{% include 'includes/sidemenu-admin.html.twig' %}
+			{% endblock %}
+			<div class="wrap-fluid" id="paper-bg">
+				{% block topbar %}
+					{% include 'includes/top-bar.html.twig'	%}
+				{% endblock %}
+				{% block breadcrumbs %}
+					{% include 'includes/breadcrumbs.html.twig' %}
+				{% endblock %}
+				{% block content %}
+					{# Main Content Block #}
+				{% endblock %}
+			</div>
+		</div>
+		{% block js %}
+			<script type="text/javascript">
+				if('{{ app.request.locale }}' == 'en') {
+					rootPath = '{{ app.request.getBaseURL() }}';
+				} else {
+					rootPath = '{{ app.request.getBaseURL() }}' + '/' + '{{ app.request.locale }}';
+				}
+				var appVar = {
+					rootPath: rootPath,
+					locale: '{{ app.request.locale }}'
+				};
+			</script>
+
+			<!-- main javascript library -->
+			<script src="{{asset('bundles/admin/js/jquery.js')}}"></script>
+			<script src="{{asset('bundles/admin/js/waypoints.min.js')}}"></script>
+			<!-- foundation javascript -->
+			<script src="{{asset('bundles/admin/js/foundation.min.js')}}"></script>
+			<!-- main edumix javascript -->
+			<script src="{{asset('bundles/admin/js/slimscroll/jquery.slimscroll.js')}}"></script>
+			<script src="{{asset('bundles/admin/js/sliding-menu.js')}}"></script>
+			<script src="{{asset('bundles/admin/js/slicknav/jquery.slicknav.js')}}"></script>
+			<script src="{{asset('bundles/admin/js/scriptbreaker-multiple-accordion-1.js')}}"></script>
+			<script src="{{asset('bundles/admin/js/number/jquery.counterup.min.js')}}"></script>
+			<script src="{{asset('bundles/admin/js/circle-progress/jquery.circliful.js')}}"></script>
+			<script src="{{asset('bundles/admin/js/app.js')}}"></script>
+			<!-- additional javascript -->
+			<script src="{{asset('bundles/admin/js/number-progress-bar/number-pb.js')}}"></script>
+			<script src="{{asset('bundles/admin/js/loader/loader.js')}}"></script>
+			<!-- FLOT CHARTS -->
+			<script src="{{asset('bundles/admin/js/flot/jquery.flot.js')}}"></script>
+			<!-- FLOT RESIZE PLUGIN - allows the chart to redraw when the window is resized -->
+			<script src="{{asset('bundles/admin/js/flot/jquery.flot.resize.min.js')}}"></script>
+			<!-- FLOT PIE PLUGIN - also used to draw donut charts -->
+			<script src="{{asset('bundles/admin/js/flot/jquery.flot.pie.min.js')}}"></script>
+			<!-- FLOT CATEGORIES PLUGIN - Used to draw bar charts -->
+			<script src="{{asset('bundles/admin/js/flot/jquery.flot.categories.min.js')}}"></script>
+			<script src="{{asset('bundles/admin/js/skycons/skycons.js')}}"></script>
+			<script src="{{asset('bundles/admin/public/assets/javascript/bundle.js')}}"></script>
+			{% include 'includes/inline-script.html.twig' %}
+			<script src="{{asset('bundles/admin/js/inputMask/jquery.maskedinput.js')}}"></script>
+			<script src="{{asset('bundles/admin/js/preloader-script.js')}}"></script>
+			<script src="{{ asset('bundles/app/dist/js/vendor.min.js') }}"></script>
+			<!-- custom main.js -->
+			<script src="{{ asset('bundles/app/js/main.js') }}"></script>
+		{% endblock %}
+	</div>
+</body>
+</html>

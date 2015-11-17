@@ -1,0 +1,432 @@
+admin_home:
+    path:     /admin
+    defaults: { _controller: AdminBundle:Index:index }
+
+# Users
+admin_users:
+    path:     /admin/users
+    defaults: { _controller: AdminBundle:User:index }
+
+admin_users_new:
+    path:     /admin/users/new
+    defaults: { _controller: AdminBundle:User:new }
+
+admin_users_edit:
+    path:     /admin/users/edit/{id}
+    defaults: { _controller: AdminBundle:User:edit }
+
+admin_users_delete:
+    path:     /admin/users/delete/{id}
+    defaults: { _controller: AdminBundle:User:delete }
+
+admin_users_change_status:
+    path:     /admin/users/changeStatus/{id}
+    defaults: { _controller: AdminBundle:User:changeStatus }
+
+admin_user_accommodations:
+    path:     /admin/user/accommodations/{id}
+    defaults: { _controller: AdminBundle:User:accommodations }
+
+# LOCATION
+admin_location:
+    path:     /admin/location
+    defaults: { _controller: AdminBundle:Location:index }
+
+# Countries
+admin_location_countries:
+    path:     /admin/location/countries
+    defaults: { _controller: AdminBundle:Location:countries }
+
+admin_location_countries_new:
+    path:     /admin/location/countries/new
+    defaults: { _controller: AdminBundle:Location:countriesNew }
+
+admin_location_countries_edit:
+    path:     /admin/location/countries/edit/{id}
+    defaults: { _controller: AdminBundle:Location:countriesEdit }
+
+admin_location_countries_delete:
+    path:     /admin/location/countries/delete/{id}
+    defaults: { _controller: AdminBundle:Location:countriesDelete }
+
+# Regions
+admin_location_regions:
+    path:     /admin/location/regions
+    defaults: { _controller: AdminBundle:Location:regions }
+
+admin_location_regions_new:
+    path:     /admin/location/regions/new
+    defaults: { _controller: AdminBundle:Location:regionsNew }
+
+admin_location_regions_edit:
+    path:     /admin/location/regions/edit/{id}
+    defaults: { _controller: AdminBundle:Location:regionsEdit }
+
+admin_location_regions_delete:
+    path:     /admin/location/regions/delete/{id}
+    defaults: { _controller: AdminBundle:Location:regionsDelete }
+
+# Subregions
+admin_location_subregions:
+    path:     /admin/location/subregions/region/{id}
+    defaults: { _controller: AdminBundle:Location:subregions }
+
+admin_location_subregions_search:
+    path:     /admin/location/subregion/search
+    defaults: { _controller: AdminBundle:Location:subregionsSearch }
+
+admin_location_subregions_new:
+    path:     /admin/location/subregions/new
+    defaults: { _controller: AdminBundle:Location:subregionsNew }
+
+admin_location_subregions_edit:
+    path:     /admin/location/subregions/edit/{id}
+    defaults: { _controller: AdminBundle:Location:subregionsEdit }
+
+admin_location_subregions_delete:
+    path:     /admin/location/subregions/delete/{id}
+    defaults: { _controller: AdminBundle:Location:subregionsDelete }
+
+# Cities
+admin_location_cities_search:
+    path:     /admin/location/cities/search
+    defaults: { _controller: AdminBundle:Location:citiesSearch }
+
+admin_location_cities_region:
+    path:     /admin/location/cities/region/{id}
+    defaults: { _controller: AdminBundle:Location:citiesRegion }
+
+admin_location_cities_subregion:
+    path:     /admin/location/cities/subregion/{id}
+    defaults: { _controller: AdminBundle:Location:citiesSubregion }
+
+admin_location_cities_new:
+    path:     /admin/location/cities/new
+    defaults: { _controller: AdminBundle:Location:citiesNew }
+
+admin_location_cities_edit:
+    path:     /admin/location/cities/edit/{id}
+    defaults: { _controller: AdminBundle:Location:citiesEdit }
+
+admin_location_cities_delete:
+    path:     /admin/location/cities/delete/{id}
+    defaults: { _controller: AdminBundle:Location:citiesDelete }
+
+# Accommodation Category
+admin_accommodation_category:
+    path:     /admin/accommodation-categories
+    defaults: { _controller: AdminBundle:AccommodationCategory:index }
+
+admin_accommodation_category_new:
+    path:     /admin/accommodation-categories/new
+    defaults: { _controller: AdminBundle:AccommodationCategory:new }
+
+admin_accommodation_category_delete:
+    path:     /admin/accommodation-categories/delete/{id}
+    defaults: { _controller: AdminBundle:AccommodationCategory:delete }
+
+# Accommodation
+admin_accommodation:
+    path:     /admin/accommodation
+    defaults: { _controller: AdminBundle:Accommodation:index }
+
+admin_accommodation_new:
+    path:     /admin/accommodation/new
+    defaults: { _controller: AdminBundle:Accommodation:new }
+
+admin_accommodation_edit:
+    path:     /admin/accommodation/edit/{id}
+    defaults: { _controller: AdminBundle:Accommodation:edit }
+
+admin_accommodation_delete:
+    path:     /admin/accommodation/delete/{id}
+    defaults: { _controller: AdminBundle:Accommodation:delete }
+
+# Fee
+admin_accommodation_fees:
+    path:     /admin/accommodation/fees/{id}
+    defaults: { _controller: AdminBundle:Fee:fees }
+
+admin_fee_activate:
+    path:     /admin/accommodation/fee/activate/{id}
+    defaults: { _controller: AdminBundle:Fee:feeActivate }
+
+admin_fee_delete:
+    path:     /admin/fee/delete/{id}
+    defaults: { _controller: AdminBundle:Fee:feeDelete }
+
+admin_fees:
+    path:     /admin/fees
+    defaults: { _controller: AdminBundle:Fee:allFees }
+
+admin_fee_new:
+    path:     /admin/fee/new/{id}
+    defaults: { _controller: AdminBundle:Fee:new }
+
+admin_fee_edit:
+    path:     /admin/fee/edit/{id}
+    defaults: { _controller: AdminBundle:Fee:edit }
+
+admin_pending_fees:
+    path:     /admin/fees/pending
+    defaults: { _controller: AdminBundle:Fee:pendingFees }
+
+# Advertising packages
+admin_advertising_packages:
+    path:     /admin/advertisingPackages
+    defaults: { _controller: AdminBundle:AdvertisingPackage:index }
+
+admin_accommodation_advertising_packages:
+    path:     /admin/advertisingPackages/accommodation/{id}
+    defaults: { _controller: AdminBundle:AdvertisingPackage:accommodationList }
+
+admin_accommodation_advertising_package_new:
+    path:     /admin/advertisingPackage/new/{id}
+    defaults: { _controller: AdminBundle:AdvertisingPackage:new }
+    
+admin_advertisingPackage_delete:
+    path:     /admin/advertisingPackage/delete/{id}
+    defaults: { _controller: AdminBundle:AdvertisingPackage:delete }
+
+admin_advertisingPackage_edit:
+    path:     /admin/advertisingPackage/edit/{id}
+    defaults: { _controller: AdminBundle:AdvertisingPackage:edit }
+
+admin_advertising_packages_pending:
+    path:     /admin/advertising_packages/pending
+    defaults: { _controller: AdminBundle:AdvertisingPackage:pending }
+
+admin_advertisingPackage_status_change:
+    path:     /admin/advertisingPackage/statusChange/{id}
+    defaults: { _controller: AdminBundle:AdvertisingPackage:statusChange }
+
+admin_advertising_packages_type:
+    path:     /admin/advertisingPackages/types
+    defaults: { _controller: AdminBundle:AdvertisingPackage:types }
+
+admin_accommodation_advertising_package_type_edit:
+    path:     /admin/advertisingPackages/type/{id}
+    defaults: { _controller: AdminBundle:AdvertisingPackage:typeEdit }
+
+# Unit
+admin_unit:
+    path:     /admin/unit
+    defaults: { _controller: AdminBundle:Unit:index }
+
+admin_unit_new:
+    path:     /admin/unit/new/{id}
+    defaults: { _controller: AdminBundle:Unit:new }
+
+admin_unit_edit:
+    path:     /admin/unit/edit/{id}
+    defaults: { _controller: AdminBundle:Unit:edit }
+
+admin_unit_delete:
+    path:     /admin/unit/delete/{id}
+    defaults: { _controller: AdminBundle:Unit:delete }
+
+# Unit Category
+admin_unit_category:
+    path:     /admin/unit-categories
+    defaults: { _controller: AdminBundle:Unit:unitCatList }
+
+admin_unit_category_new:
+    path:     /admin/unit-categories/new
+    defaults: { _controller: AdminBundle:Unit:unitCatNew }
+
+admin_unit_category_delete:
+    path:     /admin/unit-categories/delete/{id}
+    defaults: { _controller: AdminBundle:Unit:unitCatDelete }
+
+# Unit Period
+admin_period_new:
+    path:     /admin/period/new/{id}
+    defaults: { _controller: AdminBundle:Unit:newPeriod }
+
+admin_period_delete:
+    path:     /admin/period/delete/{id}
+    defaults: { _controller: AdminBundle:Unit:deletePeriod }
+
+# Gallery
+admin_gallery_new:
+    path:     /admin/gallery/new/{accommodationId}
+    defaults: { _controller: AdminBundle:Gallery:new }
+
+admin_gallery_delete:
+    path:     /admin/gallery/delete/{id}
+    defaults: { _controller: AdminBundle:Gallery:delete }
+
+admin_featuredImage_accommodation:
+    path:     /admin/gallery/setFeaturedImage/{id}
+    defaults: { _controller: AdminBundle:Gallery:setFeaturedImage }
+
+admin_gallery_unit_new:
+    path:     /admin/gallery/newUnit/{id}
+    defaults: { _controller: AdminBundle:Gallery:newUnit }
+
+admin_gallery_unit_delete:
+    path:     /admin/gallery/deleteUnit/{id}
+    defaults: { _controller: AdminBundle:Gallery:deleteUnit }
+
+admin_featuredImage_unit:
+    path:     /admin/gallery/setFeaturedImageUnit/{id}
+    defaults: { _controller: AdminBundle:Gallery:setFeaturedImageUnit }
+
+
+# Video
+admin_video_new:
+    path:     /admin/video/new/{id}
+    defaults: { _controller: AdminBundle:Gallery:videoNew }
+
+admin_video_delete:
+    path:     /admin/video/delete/{id}
+    defaults: { _controller: AdminBundle:Gallery:videoDelete }
+
+
+# Banners
+admin_banners:
+    path:     /admin/banners
+    defaults: { _controller: AdminBundle:Banner:index }
+
+admin_banner_new:
+    path:     /admin/banner/new
+    defaults: { _controller: AdminBundle:Banner:new }
+
+admin_banner_delete:
+    path:     /admin/banner/delete/{id}
+    defaults: { _controller: AdminBundle:Banner:delete }
+
+# Special/Additional offers
+admin_additional_offers:
+    path:     /admin/specialOffers
+    defaults: { _controller: AdminBundle:AdditionalOffer:index }
+
+admin_additional_offers_requests:
+    path:     /admin/specialOffers/requests
+    defaults: { _controller: AdminBundle:AdditionalOffer:requests }
+
+admin_additional_offer_new:
+    path:     /admin/specialOffer/new
+    defaults: { _controller: AdminBundle:AdditionalOffer:new }
+
+admin_additional_offer_edit:
+    path:     /admin/specialOffer/edit/{id}
+    defaults: { _controller: AdminBundle:AdditionalOffer:edit }
+
+admin_additional_offer_delete:
+    path:     /admin/specialOffer/delete/{id}
+    defaults: { _controller: AdminBundle:AdditionalOffer:delete }
+
+admin_additional_offer_delete_photo:
+    path:     /admin/specialOffer/delete/photo/{id}/{additionalOfferId}
+    defaults: { _controller: AdminBundle:AdditionalOffer:deletePhoto }
+
+# Discover
+admin_discover:
+    path:     /admin/discover
+    defaults: { _controller: AdminBundle:Discover:index }
+
+admin_discover_new:
+    path:     /admin/discover/new
+    defaults: { _controller: AdminBundle:Discover:new }
+
+admin_discover_edit:
+    path:     /admin/discover/edit/{id}
+    defaults: { _controller: AdminBundle:Discover:edit }
+
+admin_discover_delete:
+    path:     /admin/discover/delete/{id}
+    defaults: { _controller: AdminBundle:Discover:delete }
+
+# Posts
+admin_posts:
+    path:     /admin/posts
+    defaults: { _controller: AdminBundle:Post:index }
+
+admin_post_new:
+    path:     /admin/post/new
+    defaults: { _controller: AdminBundle:Post:new }
+
+admin_post_edit:
+    path:     /admin/post/edit/{id}
+    defaults: { _controller: AdminBundle:Post:edit }
+
+admin_post_delete:
+    path:     /admin/post/delete/{id}
+    defaults: { _controller: AdminBundle:Post:delete }
+
+admin_posts_comments:
+    path:     /admin/posts/comments
+    defaults: { _controller: AdminBundle:Post:comments }
+
+admin_posts_comment_delete:
+    path:     /admin/posts/comment/delete/{id}
+    defaults: { _controller: AdminBundle:Post:commentDelete }
+
+# Reviews
+admin_reviews:
+    path:     /admin/reviews
+    defaults: { _controller: AdminBundle:Review:index }
+
+admin_review_delete:
+    path:     /admin/review/delete/{id}
+    defaults: { _controller: AdminBundle:Review:delete }
+
+admin_review_change_status:
+    path:     /admin/review/changeStatus/{id}
+    defaults: { _controller: AdminBundle:Review:changeStatus }
+
+# Bookings
+admin_bookings:
+    path:     /admin/bookings
+    defaults: { _controller: AdminBundle:Booking:index }
+
+admin_bookings_pending:
+    path:     /admin/bookings/pending
+    defaults: { _controller: AdminBundle:Booking:pending }
+
+admin_bookings_commision_pending:
+    path:     /admin/bookings/commision/pending
+    defaults: { _controller: AdminBundle:Booking:commisionPending }
+
+admin_bookings_commision_accommodation:
+    path:     /admin/bookings/commision/accommodation/{id}
+    defaults: { _controller: AdminBundle:Booking:commisionsAccommodation }
+
+admin_bookings_commision_change_status:
+    path:     /admin/bookings/commision/changeStatus/{id}/{status}
+    defaults: { _controller: AdminBundle:Booking:bookingCommisionStatus }
+
+admin_bookings_commision_bill:
+    path:     /admin/bookings/commision/bill/{id}
+    defaults: { _controller: AdminBundle:Booking:sendBill }
+
+
+# PARSE
+app_parse_contries:
+    path:     /parse/countries
+    defaults: { _controller: AdminBundle:Parse:countries }
+
+app_parse_regions:
+    path:     /parse/regions
+    defaults: { _controller: AdminBundle:Parse:regions }
+
+app_parse_cities:
+    path:     /parse/cities
+    defaults: { _controller: AdminBundle:Parse:cities }
+
+app_parse_csv:
+    path:     /parse/csv/{from}/{to}
+    defaults: { _controller: AdminBundle:Parse:parseCSV }
+
+app_update_csv:
+    path:     /parse/update/csv
+    defaults: { _controller: AdminBundle:Parse:updateCSV }
+
+app_parse_xml:
+    path:     /parse/xml
+    defaults: { _controller: AdminBundle:Parse:parseXML }
+
+admin_raw_sql:
+    path:     /raw/sql/{from}/{to}
+    defaults: { _controller: AdminBundle:Parse:rawSql }

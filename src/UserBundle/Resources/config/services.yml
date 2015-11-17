@@ -1,0 +1,8 @@
+#services:
+#    gauss_user.example:
+#        class: Gauss\UserBundle\Example
+#        arguments: [@service_id, "plain_value", %parameter%]
+
+services:
+    user_provider:
+        class: UserBundle\Entity\User

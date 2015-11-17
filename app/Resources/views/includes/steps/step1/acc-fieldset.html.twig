@@ -1,0 +1,31 @@
+
+		<div class="row name-field">
+				<div class="large-12 columns name-field">
+						<label>
+							 {{ 'Username' | trans }}<small> {{'required' | trans}}
+					 </small>
+					 {{ form_errors(form.username) }}
+					 {{ form_widget(form.username,
+					 { 'attr': {'required': '', 'pattern': '[a-zA-Z]+', 'aria-invalid': '', 'data-invalid': ''}}) }}
+			 </label>
+			 <small class="error">
+				{{'Name is required and must be a string.' | trans }}
+		</small>
+			 <div>
+			 </div>
+			 {# Email #}
+			 <div class="row email-field">
+
+ </div>
+ {#<div class="row password-field">#}
+		{#<div class="large-12 columns password-field">#}
+				{#&#123;&#35; Passeord && Confirmation &#35;&#125;#}
+				{#{% for passwordField in form.password %}#}
+						{#{{ form_label(passwordField, null,#}
+						{#{ 'label_attr': {'class': 'col-sm-3 control-label'} }) }}#}
+						{#{{ form_errors(passwordField) }}#}
+						{#{{ form_widget(passwordField,#}
+						{#{ 'type':'password', 'attr': {'class': 'form-control validate[required]'} }) }}#}
+				{#{% endfor %}#}
+		{#</div>#}
+{#</div>#}

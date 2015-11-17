@@ -1,0 +1,23 @@
+.main-pagination {
+	margin-top: 70px;
+	margin-bottom: 65px;
+	padding: 10px 20px 10px 20px;
+	
+	background: $white;
+	#first {	
+	}
+	#last {
+		float: right;
+		color: #181f3d;
+	}
+	.disabled {
+		background: $transparent;
+		color: #338EE8;
+		font-family: $sans-bold;
+	}
+	.disabled:hover {
+		background: $transparent;
+		color: #338ee8;
+		font-family: $sans-bold;
+	}
+}

@@ -1,0 +1,230 @@
+{% extends 'admin.html.twig' %}
+{% block menu %}
+
+{% endblock %}
+{% block sidemenu %}
+	{% include 'steps_menu.html.twig' %}
+{% endblock %}
+{% block content %}
+	<div class="row no-pad">
+		<div class="row">
+			<div class="large-12 columns">
+				<fieldset>
+					<legend><h4>{{ 'Accommodation' | trans }} - {{ accommodation.name }}</h4></legend> 
+
+					{% for flashMessage in app.session.flashbag.get('msgSuccess') %}
+						<div class="box bg-light-green">
+							<div class="box-header bg-light-green ">
+								<!-- tools box -->
+								<div class="pull-right box-tools">
+								<span class="box-btn" data-widget="remove">
+									<i class="icon-cross"></i>
+								</span>
+								</div>
+								<h3 class="box-title "><i class="text-white  icon-thumbs-up"></i>
+									<span class="text-white">SUCCESS</span>
+								</h3>
+							</div>
+							<!-- /.box-header -->
+							<div class="box-body " style="display: block;">
+								<p class="text-white"><strong>Well done!</strong> {{ flashMessage }}</p>
+							</div>
+						</div>
+					{% endfor %}
+					{% for flashMessage in app.session.flashbag.get('msgError') %}
+						<div class="box bg-red">
+							<div class="box-header bg-red ">
+								<!-- tools box -->
+								<div class="pull-right box-tools">
+									<span class="box-btn" data-widget="remove">
+										<i class="icon-cross"></i>
+									</span>
+								</div>
+								<h3 class="box-title "><i class="text-white  icon-thumbs-up"></i>
+									<span class="text-white">Error</span>
+								</h3>
+							</div>
+							<!-- /.box-header -->
+							<div class="box-body " style="display: block;">
+								<p class="text-white"><strong>Sorry!</strong> {{ flashMessage }}</p>
+							</div>
+						</div>
+					{% endfor %}
+
+					{{ form_start(form, {'attr': {'novalidate': 'novalidate', 'class':"form-horizontal", 'id':'accommodationGallery' }}) }}
+					{{ form_errors(form) }}
+					<div class="row pad-forty">
+						<div class="form-group">
+							{{ form_label(form.file, 'Picture', { 'label_attr': {'class': 'col-sm-3 control-label'} }) }}
+							{{ form_errors(form.file) }}
+							<div class="col-sm-5">
+								{{ form_widget(form.file, { 'attr': {'class': 'form-control validate[required]'} }) }}
+							</div>
+						</div>
+						{{ form_rest(form) }}
+						<div class="form-group">
+							<div class="col-sm-5 col-sm-offset-3">
+								<input type="submit" name="save" class="btn bg-blue"
+									   value="{{ 'save' | trans }}"/>
+							</div>
+						</div>
+						{{ form_end(form) }}
+					</div>
+					<div class="row pad-forty">
+						{% for photo in accommodation.gallery %}
+							<div class="large-4 columns">
+								<div class="{{ photo.featuredImage ? 'featuredImageClass' }}">
+									<img src="{{ photo.webPath | imagine_filter('my_thumb') }}">
+								</div>
+								<div class="row"></div>
+								<div class="row">
+									{% if not photo.featuredImage %}
+										<a href="{{ path('app_featuredImage_steps_accommodation',
+										{'_locale': app.request.attributes.get('_locale'),
+											'id' : photo.id }) }}" class="btn bg-blue"
+												>
+											{{ 'set_featured_image' | trans }}
+										</a>
+									{% endif %}
+									<a href="{{ path('app_profile_delete_accommodation_photo',
+									{'_locale': app.request.attributes.get('_locale'),
+										'id' : photo.id }) }}"
+									   onclick="return confirm('{{ 'are_you_sure_delete' | trans }}')"
+									   class="btn bg-red">
+										{{ 'delete' | trans }}
+									</a>
+								</div>
+							</div>
+						{% endfor %}
+						<div class="row"></div>
+					</div>
+
+
+					{# Video #}
+					{{ form_start(
+					formVideo, {
+						'method': 'POST',
+						'action': path('app_video_step6_new', { 'id': accommodation.id }),
+						'attr': {'novalidate': 'novalidate', 'class':"form-horizontal", 'id':'formVideo'}
+					}
+					) }}
+					{{ form_errors(formVideo) }}
+					<div class="row pad-forty">
+						<div class="form-group">
+							{{ form_label(formVideo.link, 'Link', { 'label_attr': {'class': 'col-sm-3 control-label'} }) }}
+							{{ form_errors(formVideo.link) }}
+							<div class="col-sm-5">
+								{{ form_widget(formVideo.link, { 'attr': {'class': 'form-control validate[required]'} }) }}
+							</div>
+						</div>
+						{{ form_rest(formVideo) }}
+						<div class="form-group">
+							<div class="col-sm-5 col-sm-offset-3">
+								<input type="submit" name="save" class="btn bg-blue"
+									   value="{{ 'save_video' | trans }}"/>
+							</div>
+						</div>
+						{{ form_end(formVideo) }}
+					</div>
+
+					<div class="row pad-forty">
+						{% for video in accommodation.videos %}
+								<a href="{{ video.link }}" target="_blank">{{ video.link }}</a>
+								<a href="{{ path('app_video_step6_delete',
+										{'_locale': app.request.attributes.get('_locale'),
+										'id' : video.id }) }}"
+									class="status-metro status-suspended"
+									onclick="return confirm('{{ 'are_you_sure_delete' | trans }}')"
+									>
+									{{ 'delete'|trans }}
+								</a>
+						{% endfor %}
+					</div>
+					{# /Video #}
+
+				</fieldset>
+			</div>
+		</div>
+		<div class="row">
+			<div class="large-12 columns">
+				<fieldset>
+					{% for unit in accommodation.units %}
+						<legend><h4>{{ unit.name }}</h4></legend>
+						<div class="row">
+							{% for photo in unit.gallery %}
+							<div class="large-4 columns">
+								<div class="{{ photo.featuredImage ? 'featuredImageClass' }}">
+									<img src="{{ photo.webPath | imagine_filter('my_thumb') }}" />
+								</div>
+								{% if not photo.featuredImage %}
+									<a class="btn bg-blue" href="{{ path('app_featuredImage_steps_unit',
+									{'_locale': app.request.attributes.get('_locale'),
+										'id' : photo.id }) }}"
+											>
+										{{ 'set_featured_image' | trans }}
+									</a>
+								{% endif %}
+								<a btn class="btn bg-red" href="{{ path('app_profile_delete_unit_photo',
+								{'_locale': app.request.attributes.get('_locale'),
+									'id' : photo.id }) }}"
+								   onclick="return confirm('{{ 'are_you_sure_delete' | trans }}')">
+									{{ 'delete' | trans }}
+								</a>
+								{% endfor %}
+							</div>
+						</div>
+					{% endfor %}
+				</fieldset>
+			</div>
+		</div>
+		<div class="row">
+			<fieldset>
+				<legend><h5>{{ 'add_unit_photo' | trans }}</h5></legend>
+				{{ form_start(
+				formUnit, {
+					'method': 'POST',
+					'action': path('app_profile_step_6_unit_gallery', { 'id': accommodation.id }),
+					'attr': {'novalidate': 'novalidate', 'class':"form-horizontal", 'id':'unitGalleryForm'}
+				}
+				) }}
+				{{ form_errors(formUnit) }}
+
+				<div class="form-group">
+					{{ form_label(formUnit.unit, 'unit' | trans, { 'label_attr': {'class': 'col-sm-3 control-label'} }) }}
+					{{ form_errors(formUnit.unit) }}
+					<div class="col-sm-5">
+						{{ form_widget(formUnit.unit, { 'attr': {'class': 'form-control validate[required]'} }) }}
+					</div>
+				</div>
+
+				<div class="form-group">
+					{{ form_label(formUnit.file, 'Picture', { 'label_attr': {'class': 'col-sm-3 control-label'} }) }}
+					{{ form_errors(formUnit.file) }}
+					<div class="col-sm-5">
+						{{ form_widget(formUnit.file, { 'attr': {'class': 'form-control validate[required]'} }) }}
+					</div>
+					<div>
+						{{ form_rest(formUnit) }}
+						<button type="submit" name="newPeriod" class="button small bg-light-green">
+							{{ 'save' | trans }}
+						</button>
+						{{ form_end(formUnit) }}
+					</div>
+				</div>
+			</fieldset>
+		</div>
+
+		<div class="row">
+			<div class="large-12 columns">
+				<ul class="button-group radius even-2">
+					<li>
+						<a class="button small secondary"
+						   href="{{ path('app_profile_step_7', {'_locale': app.request.attributes.get('_locale'), 'id' : accommodation.id }) }}">{{ 'next' | trans }}</a>
+					</li>
+
+				</ul>
+			</div>
+		</div>
+	</div>
+{% endblock %}
+

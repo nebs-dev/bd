@@ -1,0 +1,89 @@
+<?php
+
+namespace AppBundle\Entity;
+
+use Doctrine\ORM\Mapping as ORM;
+
+/**
+ * @ORM\Table(name="unit_details")
+ * @ORM\Entity(repositoryClass="AppBundle\Entity\Repository\UnitDetailsRepository")
+ */
+class UnitDetails {
+
+    /**
+     * @ORM\Column(name="id", type="integer")
+     * @ORM\Id()
+     * @ORM\GeneratedValue(strategy="AUTO")
+     */
+    private $id;
+
+    /**
+     * @ORM\Column(type="string", length=30)
+     */
+    private $name;
+
+    /**
+     * @ORM\ManyToMany(targetEntity="Unit", mappedBy="details")
+     */
+    private $unit;
+
+
+    /**
+     * Constructor
+     */
+    public function __construct() {
+        $this->unit = new \Doctrine\Common\Collections\ArrayCollection();
+    }
+
+    /**
+     * Get id
+     * @return integer
+     */
+    public function getId() {
+        return $this->id;
+    }
+
+    /**
+     * Set name
+     * @param string $name
+     * @return UnitDetails
+     */
+    public function setName($name) {
+        $this->name = $name;
+        return $this;
+    }
+
+    /**
+     * Get name
+     * @return string
+     */
+    public function getName() {
+        return $this->name;
+    }
+
+    /**
+     * Add unit
+     * @param \AppBundle\Entity\Unit $unit
+     * @return UnitDetails
+     */
+    public function addUnit(\AppBundle\Entity\Unit $unit) {
+        $this->unit[] = $unit;
+        return $this;
+    }
+
+    /**
+     * Remove unit
+     * @param \AppBundle\Entity\Unit $unit
+     */
+    public function removeUnit(\AppBundle\Entity\Unit $unit) {
+        $this->unit->removeElement($unit);
+    }
+
+    /**
+     * Get unit
+     * @return \Doctrine\Common\Collections\Collection
+     */
+    public function getUnit() {
+        return $this->unit;
+    }
+}

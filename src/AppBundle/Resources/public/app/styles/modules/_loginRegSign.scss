@@ -1,0 +1,103 @@
+.login-container {
+	margin-top: 100px;
+    max-width: 380px;
+    #user_username, #user_email, #user_password_first, #user_password_second,
+	.login-all-password, .login-all-username
+     {
+        $input-font-color: #333436;
+        color: $input-font-color;
+        @include input-placeholder {
+            color: #333436;
+        }
+    }
+}
+.login-all-logo {
+@include background-image-retina(login-main-logo, png, 319px, 44px);
+  width: 319px;
+  height: 44px;
+  display: block;
+  margin-top: 30px;
+  margin-bottom: 30px;
+  text-align: center;
+}
+
+.login-heading {
+		font-family: $sans;
+		font-size: rem-calc(18);
+        color: $heading-grey;
+        text-align: center;
+        text-transform: uppercase;
+        margin-bottom: 15px;
+}
+.terms-checkbox{
+    margin-bottom: 15px;
+    span {
+        font-size: rem-calc(12);
+        font-family: $sans;
+        padding-left: rem-calc(8);
+        color: $heading-grey;
+
+    }
+}
+
+.bottom-login-links {
+	a{
+		float: left;
+		font-size: rem-calc(12);
+        font-family: $sans;
+        color: $heading-grey;
+        &:hover {
+        	color: darken($heading-grey, 20%);
+        }
+	}
+	span {
+		font-size: rem-calc(12);
+        font-family: $sans;
+        color: $heading-grey;
+		float: right;
+	}
+}
+.bottom-login-register {
+	float: right;
+	  font-size: rem-calc(12);
+    color: $heading-grey;
+    font-family: $sans;
+}
+
+.login-already {
+    float: right;
+    font-size: rem-calc(12);
+    color: $heading-grey;
+    font-family: $sans;
+}
+
+.login-publish {
+	margin-top: 25px;
+	text-align: center;
+	span {
+        font-size: rem-calc(12);
+        color: $heading-grey;
+        font-family: $sans;
+        padding-left: rem-calc(8);
+    }
+    span:last-child {
+    	display: block;
+    }
+}
+
+.login-icons {
+	h4 {
+		font-size: rem-calc(12);
+		color: #224167;
+		font-family: $sans;
+		text-align: center;
+	}
+}
+
+.login-moto {
+	margin-top: 20px;
+	font-size: rem-calc(14);
+	 color: $heading-grey;
+	font-family: $raleway-extrabold;
+	text-align: center;
+}

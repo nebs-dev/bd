@@ -1,0 +1,47 @@
+# Learn more about services, parameters and containers at
+# http://symfony.com/doc/current/book/service_container.html
+parameters:
+#    parameter_name: value
+
+#services:
+#    service_name:
+#        class: AppBundle\Directory\ClassName
+#        arguments: ["@another_service_name", "plain_value", "%parameter_name%"]
+
+
+services:
+    currencyService:
+        class: AppBundle\Extensions\CurrencyService
+        arguments: [@doctrine.orm.entity_manager, @session]
+
+    accommodationService:
+        class: AppBundle\Extensions\AccommodationService
+        arguments: [@doctrine.orm.entity_manager, @session]
+
+    permissionsService:
+        class: AppBundle\Extensions\PermissionsService
+        arguments: [@doctrine.orm.entity_manager, @session, @security.context]
+
+    locationService:
+        class: AppBundle\Extensions\LocationService
+        arguments: [@doctrine.orm.entity_manager, @session]
+
+    emailService:
+        class: AppBundle\Extensions\EmailService
+        arguments: [@doctrine.orm.entity_manager, @session, @mailer]
+
+    bookingService:
+        class: AppBundle\Extensions\BookingService
+        arguments: [@doctrine.orm.entity_manager, @session]
+
+    messageService:
+        class: AppBundle\Extensions\MessageService
+        arguments: [@doctrine.orm.entity_manager, @session]
+
+    languageService:
+        class: AppBundle\Extensions\LanguageService
+        arguments: [@doctrine.orm.entity_manager, @session]
+
+    statService:
+        class: AppBundle\Extensions\StatService
+        arguments: [@doctrine.orm.entity_manager, @session]

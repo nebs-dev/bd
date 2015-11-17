@@ -1,0 +1,93 @@
+{% extends 'admin.html.twig' %}
+{% block content %}
+<div class="row no-pad">
+	<div class="large-12 columns">
+		<div class="box bg-white">
+			<div class="box-body pad-forty" style="display: block;">
+				{{ form_start(form, {'attr': {'novalidate': 'novalidate', 'class':"form-horizontal", 'id':'new_region' }}) }}
+				{{ form_errors(form) }}
+				<div class="row">
+					<div class="large-12 columns">
+						<h4>{{ 'Add new Subregion' | trans }}</h4>
+						<hr>
+					</div>
+					<div class="large-6 columns">
+						<div class="form-group">
+							<label class="col-sm-3 control-label">{{ 'country' | trans }}</label>
+							<div class="col-sm-5">
+								<select name="country" id="country" class="countrySelect _subregion">
+									<option value="">{{ 'choose_option' | trans }}</option>
+									{% for country in countries %}
+										<option value="{{ country.id }}">{{ attribute(country, app.request.locale) }}</option>
+									{% endfor %}
+								</select>
+							</div>
+						</div>
+					</div>
+					<div class="large-6 columns">
+						<div class="form-group regionsDiv">
+							{{ form_label(form.region, 'region' | trans , { 'label_attr': {'class': 'col-sm-3 control-label'} }) }}
+							{{ form_errors(form.region) }}
+							<div class="col-sm-5">
+								{{ form_widget(form.region, { 'attr': {'class': 'regionsSelect _subregion form-control', 'disabled': 'disabled'} }) }}
+							</div>
+						</div>
+					</div>
+					<div class="large-6 columns">
+						<div class="form-group">
+							{{ form_label(form.file, 'file' | trans , { 'label_attr': {'class': 'col-sm-3 control-label'} }) }}
+							{{ form_errors(form.file) }}
+							<div class="col-sm-5">
+								{{ form_widget(form.file, { 'attr': {'class': 'form-control', 'disabled': 'disabled'} }) }}
+							</div>
+						</div>
+					</div>
+					<div class="row"></div>
+					<div class="large-6 columns">
+						<div class="form-group">
+							{{ form_label(form.hr, 'hr' | trans , { 'label_attr': {'class': 'col-sm-3 control-label'} }) }}
+							{{ form_errors(form.hr) }}
+							<div class="col-sm-5">
+								{{ form_widget(form.hr, { 'attr': {'class': 'form-control validate[required]'} }) }}
+							</div>
+						</div>
+					</div>
+					<div class="large-6 columns">
+						<div class="form-group">
+							{{ form_label(form.en, 'en' | trans , { 'label_attr': {'class': 'col-sm-3 control-label'} }) }}
+							{{ form_errors(form.en) }}
+							<div class="col-sm-5">
+								{{ form_widget(form.en, { 'attr': {'class': 'form-control validate[required]'} }) }}
+							</div>
+						</div>
+					</div>
+					<div class="large-12 columns">
+
+						{{ form_rest(form) }}
+					</div>
+					<div class="large-12 columns">
+						<div class="form-group">
+							<div class="col-sm-5 col-sm-offset-3">
+								<input type="submit" name="register" class="btn bg-blue" value="{{ 'create' | trans }}" />
+							</div>
+						</div>
+					</div>
+					{{ form_end(form) }}
+				</div>
+			</div>
+		</div>
+	</div>
+</div>
+<div class="row">
+	<div class="large-12 columns">
+		<a class="btn bg-green" href="{{ path('admin_location_subregions_search', {'_locale': app.request.attributes.get('_locale')}) }}">{{ 'Back to Subregions' | trans }}</a>
+	</div>
+</div>
+{% endblock %}
+
+{% block js %}
+	{{ parent() }}
+
+	<script src="{{asset('bundles/app/js/location_ajax.js')}}"></script>
+
+{% endblock %}

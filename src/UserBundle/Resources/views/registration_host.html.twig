@@ -1,0 +1,110 @@
+{% extends 'base.html.twig' %}
+{% block content %}
+    {% for flashMessage in app.session.flashbag.get('msgSuccess') %}
+        <div data-alert class="alert-box success radius">
+            {{ flashMessage }}
+            <a href="#" class="close">&times;</a>
+        </div>
+    {% endfor %}
+    {% for flashMessage in app.session.flashbag.get('msgError') %}
+
+        <div data-alert class="alert-box warning radius">
+            {{ flashMessage }}
+            <a href="#" class="close">&times;</a>
+        </div>
+
+    {% endfor %}
+    {{ form_start(form, {'attr': {'novalidate': 'novalidate', 'class':"form-horizontal", 'id':'registration' }}) }}
+    {{ form_errors(form) }}
+    <div class="row">
+        <div class="login-container large-centered columns">
+            <div class="large-12 columns">
+
+                <h2 class="login-heading">
+                    {{'BECOME_A_TRUSTED_PARTNER' | trans }}
+                </h2>
+                <span class="login-all-logo"></span>
+
+            </div>
+            <div class="large-12 columns username-msg-style">
+                {{ form_widget(form.username, { 'attr': {'class': 'form-control validate[required]',
+                'placeholder': "username" | trans } }) }}
+                {{ form_errors(form.username) }}
+            </div>
+            <div class="large-12 columns email-msg-style">
+
+                {{ form_widget(form.email, { 'attr': {'required':'required', 'class': 'form-control validate[required]',
+                'placeholder': "Email_Address" | trans } }) }}
+                {{ form_errors(form.email) }}
+            </div>
+            {% for passwordField in form.password %}
+                <div class="large-12 columns password-msg-style">
+
+                    {{ form_widget(passwordField, { 'required':'required',
+                    'type':'password', 'attr': {'class': 'form-control validate[required]', 
+                    'placeholder': "password" | trans }}) }}
+                    {{ form_errors(passwordField) }}
+                </div>
+                {#<div class="form-field">#}
+                {#{{ form_label(passwordField, null, { 'attr': {'class': 'form-label'} }) }}#}
+                {#{{ form_widget(passwordField, { 'attr': {'class': 'form-input'} }) }}#}
+                {#</div>#}
+            {% endfor %}
+            <div class="large-12 columns">
+
+                <label class="terms-checkbox" for="terms-checkbox">
+                    <input id="terms-checkbox" type="checkbox">
+                    <span>
+                        {{ 'I_have_read_terms_and_policies' | trans }}
+
+                    </span>
+                </label>
+
+            </div>
+            {{ form_rest(form) }}
+            <div class="large-12 columns">
+                <button class="login-screen-button" type="submit">{{ 'SIGN_UP ' | trans }}</button>
+            </div>
+            {{ form_end(form) }}
+            <section class="login-already">
+                <div class="large-12 columns">
+                    {{ 'Already have account?' | trans }}
+                    <a class="" href="{{ path('login', {'_locale': app.request.attributes.get('_locale')}) }}">{{ 'LOG_IN' | trans }}</a>
+                </div>
+            </section>
+            <section class="login-icons large-12 columns">
+                <div class="large-4 medium-4  columns">
+                    <span class="shape shape3"></span>
+                    <h4>
+                        {{ 'quick_and_easy' | trans  }}
+                    </h4>
+                    <h4>
+                        {{ 'data_edit' | trans  }}
+                    </h4>
+
+                </div>
+                <div class="large-4 medium-4  columns">
+                    <span class="shape shape2"></span>
+                     <h4>
+                        {{ 'direct_booking' | trans  }}
+                    </h4>
+                    <h4>
+                        {{ 'no_agency_fee' | trans  }}
+                    </h4>                </div>
+                <div class="large-4 medium-4 columns">
+                    <span class="shape shape1"></span>
+                      <h4>
+                        {{ 'we_speak' | trans  }}
+                    </h4>
+                    <h4>
+                        {{ 'your_language' | trans  }}
+                    </h4>
+                </div>
+            </section>
+            <div class="large-12 columns">
+                
+            <h1 class="login-moto">{{ 'GET_MAXIMUM_EXPOSURE' | trans  }}</h1>
+            </div>
+        </div>
+    </div><!-- end row -->
+{% endblock %}

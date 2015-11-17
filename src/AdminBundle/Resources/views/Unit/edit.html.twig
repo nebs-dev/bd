@@ -1,0 +1,369 @@
+{% extends 'admin.html.twig' %}
+
+{% block content %}
+
+	{% for flashMessage in app.session.flashbag.get('msgSuccess') %}
+		{{ flashMessage }}
+	{% endfor %}
+ 
+<div class="row no-pad">
+	<div class="large-12 columns">
+		<div class="box bg-white">
+			<div class="box-body pad-forty" style="display: block;">
+				<div class="row">
+					<div class="large-12 columns">
+						<div class="large-12 columns">
+							<h4>{{ 'edit_unit' | trans }}</h4>
+						</div>
+						{{ form_start(form, {'attr': {'novalidate': 'novalidate', 'class':"form-horizontal", 'id':'unitEdit' }}) }}
+						{{ form_errors(form) }}
+						<div class="large-6 columns">
+							<div class="form-group">
+								{{ form_label(form.name, 'name' | trans , { 'label_attr': {'class': 'col-sm-3 control-label'} }) }}
+								{{ form_errors(form.name) }}
+								<div class="col-sm-5">
+									{{ form_widget(form.name, { 'attr': {'class': 'form-control validate[required]'} }) }}
+								</div>
+							</div>
+						</div>
+						<div class="row">
+							<fieldset>
+								<legend>{{ 'Price extra' | trans }}</legend>
+								<div class="row">
+									{% for priceE in priceExtra %}
+										<div class="large-12 columns price">
+											<fieldset>
+												<legend>{{ priceE.name | trans }}</legend>
+												<div class="large-3 columns {{ priceE.name | trans }}">
+													<label>{{ 'availability' | trans }}</label>
+													<select name="priceExtra[{{ priceE.name }}][availability]" class="availabilitySelect">
+														<option value="2" {{ accommodationService.getUnitPriceExtra(priceE.name, unit) and accommodationService.getUnitPriceExtra(priceE.name, unit).price == 0 and accommodationService.getUnitPriceExtra(priceE.name, unit).availability ? 'selected="selected"' }}>{{ 'yes_it_is_free' | trans }}</option>
+														<option value="1" {{ accommodationService.getUnitPriceExtra(priceE.name, unit) and accommodationService.getUnitPriceExtra(priceE.name, unit).price > 0 and accommodationService.getUnitPriceExtra(priceE.name, unit).availability ? 'selected="selected"' }}>{{ 'yes_to_be_paid' | trans }}</option>
+														<option value="0" {{ accommodationService.getUnitPriceExtra(priceE.name, unit) == false or accommodationService.getUnitPriceExtra(priceE.name, unit).availability == false ? 'selected="selected"' }}>{{ 'no' | trans }}</option>
+													</select>
+												</div>
+												<div class="large-9 columns {{ priceE.name | trans }} priceDiv">
+													<label>{{ 'Price' | trans }}</label>
+													{{ app.session.get('currency') }}
+
+													<input class="priceInput" type="number" name="priceExtra[{{ priceE.name }}][price]" value="{{ accommodationService.getUnitPriceExtra(priceE.name, unit) and accommodationService.getUnitPriceExtra(priceE.name, unit).price > 0 ? accommodationService.getUnitPriceExtra(priceE.name, unit).price : 0 }}">
+												</div>
+												<input type="hidden" name="priceExtra[{{ priceE.name }}][priceExtraId]" value="{{ priceE.id }}">
+											</fieldset>
+											<br />
+										</div>
+									{% endfor %}
+								</div>
+							</fieldset>
+						</div>
+						<div class="large-6 columns">
+							<div class="form-group">
+								{{ form_label(form.categorize, 'categorize' | trans , { 'label_attr': {'class': 'col-sm-3 control-label'} }) }}
+								{{ form_errors(form.categorize) }}
+								<div class="col-sm-5">
+									{{ form_widget(form.categorize, { 'attr': {'class': 'form-control validate[required]'} }) }}
+								</div>
+							</div>
+						</div>
+						<div class="large-6 columns">
+							<div class="form-group">
+								{{ form_label(form.surface, 'surface' | trans , { 'label_attr': {'class': 'col-sm-3 control-label'} }) }}
+								{{ form_errors(form.surface) }}
+								<div class="col-sm-5">
+									{{ form_widget(form.surface, { 'attr': {'class': 'form-control validate[required]'} }) }}
+								</div>
+							</div>
+						</div>
+						<div class="large-6 columns">
+							<div class="form-group">
+								{{ form_label(form.capacity, 'capacity' | trans , { 'label_attr': {'class': 'col-sm-3 control-label'} }) }}
+								{{ form_errors(form.capacity) }}
+								<div class="col-sm-5">
+									{{ form_widget(form.capacity, { 'attr': {'class': 'form-control validate[required]'} }) }}
+								</div>
+							</div>
+						</div>
+
+						<div class="large-6 columns">
+							<div class="form-group">
+								{{ form_label(form.minimumStay, 'Minimum_stay' | trans , { 'label_attr': {'class': 'col-sm-3 control-label'} }) }}
+								{{ form_errors(form.minimumStay) }}
+								<div class="col-sm-5">
+									{{ form_widget(form.minimumStay, { 'attr': {'class': 'form-control validate[required]'} }) }}
+								</div>
+							</div>
+						</div>
+						<div class="large-6 columns">
+							<div class="form-group">
+								{{ form_label(form.position, 'position' | trans , { 'label_attr': {'class': 'col-sm-3 control-label'} }) }}
+								{{ form_errors(form.position) }}
+								<div class="col-sm-5">
+									{{ form_widget(form.position, { 'attr': {'class': 'form-control validate[required]'} }) }}
+								</div>
+							</div>
+						</div>
+
+						<div class="large-6 columns">
+							<div class="form-group">
+								{{ form_label(form.unitCategory, 'Unit Category' | trans , { 'label_attr': {'class': 'col-sm-3 control-label'} }) }}
+								{{ form_errors(form.unitCategory) }}
+								<div class="col-sm-5">
+									{{ form_widget(form.unitCategory, { 'attr': {'class': 'form-control validate[required]'} }) }}
+								</div>
+							</div>
+						</div>
+						<div class="large-6 columns">
+							<div class="form-group">
+								{{ form_label(form.basicPrice, 'Basic_price' | trans , { 'label_attr': {'class': 'col-sm-3 control-label'} }) }}
+								{{ form_errors(form.basicPrice) }}
+								<div class="col-sm-5">
+									{{ form_widget(form.basicPrice, { 'attr': {'class': 'form-control validate[required]'} }) }}
+								</div>
+							</div>
+						</div>
+
+						<div class="large-12 columns">
+							<fieldset>
+								<legend>{{ form_label(form.views, 'views' | trans , { 'label_attr': {'class': 'col-sm-3 control-label'} }) }}</legend>
+								<div class="form-group">
+									{{ form_errors(form.views) }}
+									<div class="col-sm-5">
+										{{ form_widget(form.views, { 'attr': {'class': 'form-control validate[required]'} }) }}
+									</div>
+								</div>
+							</fieldset>
+						</div>
+						<div class="large-12 columns">
+							<fieldset>
+								<legend>{{ form_label(form.bedroom, 'bedroom' | trans , { 'label_attr': {'class': 'col-sm-3 control-label'} }) }}</legend>
+								<div class="form-group">
+									{{ form_errors(form.bedroom) }}
+									<div class="col-sm-5">
+										{{ form_widget(form.bedroom, { 'attr': {'class': 'form-control validate[required]'} }) }}
+									</div>
+								</div>
+							</fieldset>
+						</div>
+						<div class="large-12 columns">
+							<fieldset>
+								<legend>{{ form_label(form.bathroom, 'bathroom' | trans , { 'label_attr': {'class': 'col-sm-3 control-label'} }) }}</legend>
+								<div class="form-group">
+									{{ form_errors(form.bathroom) }}
+									<div class="col-sm-5">
+										{{ form_widget(form.bathroom, { 'attr': {'class': 'form-control validate[required]'} }) }}
+									</div>
+								</div>
+							</fieldset>
+						</div>
+						<div class="large-12 columns">
+							<fieldset>
+								<legend>{{ form_label(form.livingroom, 'livingroom' | trans , { 'label_attr': {'class': 'col-sm-3 control-label'} }) }}</legend>
+								<div class="form-group">
+									{{ form_errors(form.livingroom) }}
+									<div class="col-sm-5">
+										{{ form_widget(form.livingroom, { 'attr': {'class': 'form-control validate[required]'} }) }}
+									</div>
+								</div>
+							</fieldset>
+						</div>
+						<div class="large-12 columns">
+							<fieldset>
+								<legend>{{ form_label(form.kitchen, 'kitchen' | trans , { 'label_attr': {'class': 'col-sm-3 control-label'} }) }}</legend>
+								<div class="form-group">
+									{{ form_errors(form.kitchen) }}
+									<div class="col-sm-5">
+										{{ form_widget(form.kitchen, { 'attr': {'class': 'form-control validate[required]'} }) }}
+									</div>
+								</div>
+							</fieldset>
+						</div>
+						<div class="large-12 columns">
+							<fieldset>
+								<legend>{{ form_label(form.details, 'details' | trans , { 'label_attr': {'class': 'col-sm-3 control-label'} }) }}</legend>
+								<div class="form-group">
+									{{ form_errors(form.details) }}
+									<div class="col-sm-5">
+										{{ form_widget(form.details, { 'attr': {'class': 'form-control validate[required]'} }) }}
+									</div>
+								</div>
+							</fieldset>
+						</div>
+
+						<div class="large-12 columns">
+							{{ form_rest(form) }}
+						</div>
+						<div class="large-12 columns">
+							<div class="form-group">
+								<div class="col-sm-5 col-sm-offset-3">
+									<input class="btn bg-blue" type="submit" name="save" class="btn btn-default" value="{{ 'save' | trans }}" />
+								</div>
+							</div>
+						</div>
+
+						{{ form_end(form) }}
+					</div>
+				</div>
+			</div>
+		</div>
+	</div>
+</div>
+
+	{# Periods #}
+	<div>
+		<h1>{{ 'periods' | trans }}</h1>
+
+		<table class="table table-striped table-bordered bootstrap-datatable datatable responsive" id="periods">
+			<thead>
+			<tr>
+				<th>{{ 'from' | trans }}</th>
+				<th>{{ 'to' | trans }}</th>
+				<th>{{ 'amount' | trans }}</th>
+				<th>&nbsp;</th>
+			</tr>
+			</thead>
+			<tbody>
+
+			{% for period in periods %}
+				<tr id="{{ period.id }}">
+					<td class="center">{{ period.fromDate | date('d.m.Y.') }}</td>
+					<td class="center">{{ period.toDate | date('d.m.Y.') }}</td>
+					<td class="center">{{ period.amount }}</td>
+					<td class="center">
+						<a href="{{ path('admin_period_delete', {'_locale': app.request.attributes.get('_locale'), 'id' : period.id}) }}"
+						   class="btn btn-inverse btn-default btn-xs delete"
+						   onclick="return confirm('{{ 'are_you_sure_delete' | trans }}')"
+								>
+							{{ 'delete' | trans }}
+						</a>
+					</td>
+				</tr>
+			{% endfor %}
+			</tbody>
+		</table>
+	</div>
+	{# /Periods #}
+
+	{# New period form #}
+	<div class="newPeriod">
+
+		<h2>New period form</h2>
+
+		{{ form_start(
+		formPeriod, {
+			'method': 'POST',
+			'action': path('admin_period_new', {'_locale': app.request.attributes.get('_locale'), 'id' : unit.id}),
+			'attr': {'novalidate': 'novalidate', 'class':"form-horizontal", 'id':'newPeriod'}
+		}
+		) }}
+
+		<div class="form-group">
+			{{ form_label(formPeriod.fromDate, 'from' | trans, { 'label_attr': {'class': 'col-sm-3 control-label'} }) }}
+			{{ form_errors(formPeriod.fromDate) }}
+			<div class="col-sm-5">
+				{{ form_widget(formPeriod.fromDate, { 'attr': {'class': 'form-control validate[required]'} }) }}
+			</div>
+		</div>
+
+		<div class="form-group">
+			{{ form_label(formPeriod.toDate, 'to' | trans, { 'label_attr': {'class': 'col-sm-3 control-label'} }) }}
+			{{ form_errors(formPeriod.toDate) }}
+			<div class="col-sm-5">
+				{{ form_widget(formPeriod.toDate, { 'attr': {'class': 'form-control validate[required]'} }) }}
+			</div>
+		</div>
+
+		<div class="form-group">
+			<label>{{ 'sign' | trans }}</label>
+			<select name="sign">
+				<option value="+">+</option>
+				<option value="-">-</option>
+			</select>
+		</div>
+
+		<div class="form-group">
+			{{ form_label(formPeriod.amount, 'amount' | trans, { 'label_attr': {'class': 'col-sm-3 control-label'} }) }}
+			{{ form_errors(formPeriod.amount) }}
+			<div class="col-sm-5">
+				{{ form_widget(formPeriod.amount, { 'attr': {'class': 'form-control validate[required] datepicker'} }) }}
+			</div>
+		</div>
+
+
+		{{ form_rest(formPeriod) }}
+
+		<div class="form-group">
+			<div class="col-sm-5 col-sm-offset-3">
+				<input type="submit" id="newPeriodSubmit" name="newPeriodSubmit" class="btn btn-default" value="{{ 'save' | trans }}" />
+			</div>
+		</div>
+
+		{{ form_end(formPeriod) }}
+	</div>
+	{# /form #}
+
+
+	{# Form Gallery #}
+
+	<h1>{{ 'gallery' | trans }}</h1>
+
+	{% for photo in unit.gallery %}
+		<div class="">
+			<div class="{{ photo.featuredImage ? 'featuredImageClass' }}">
+				<img src="{{ photo.webPath | imagine_filter('my_thumb') }}" >
+			</div>
+
+			{% if not photo.featuredImage %}
+				<a href="{{ path('admin_featuredImage_unit',
+				{'_locale': app.request.attributes.get('_locale'),
+					'id' : photo.id }) }}"
+						>
+					{{ 'set_featured_image' | trans }}
+				</a>
+			{% endif %}
+
+			<a href="{{ path('admin_gallery_unit_delete',
+			{'_locale': app.request.attributes.get('_locale'),
+				'id' : photo.id }) }}" onclick="return confirm('{{ 'are_you_sure_delete' | trans }}')">
+				{{ 'delete' | trans }}
+			</a>
+
+		</div>
+	{% endfor %}
+
+	{{ form_start(
+	formGallery, {
+		'method': 'POST',
+		'action': path('admin_gallery_unit_new', {'_locale': app.request.attributes.get('_locale'), 'id' : unit.id}),
+		'attr': {'novalidate': 'novalidate', 'class':"form-horizontal", 'id':'newGallery'}
+	}
+	) }}
+
+	<div class="form-group">
+		{{ form_label(formGallery.file, 'file' | trans, { 'label_attr': {'class': 'col-sm-3 control-label'} }) }}
+		{{ form_errors(formGallery.file) }}
+		<div class="col-sm-5">
+			{{ form_widget(formGallery.file, { 'attr': {'class': 'form-control', 'multiple': 'multiple', 'name': 'files' ~ '[]'} }) }}
+		</div>
+	</div>
+
+	{{ form_rest(formGallery) }}
+
+	<div class="form-group">
+		<div class="col-sm-5 col-sm-offset-3">
+			<input type="submit" id="newPeriod" name="newGallery" class="btn btn-default" value="{{ 'save' | trans }}" />
+		</div>
+	</div>
+
+	{{ form_end(formGallery) }}
+	{# /form #}
+
+<div class="row">
+	<div class="large-12 columns">
+		<a class="btn bg-green" href="{{ path('admin_accommodation_edit', {'_locale': app.request.attributes.get('_locale'), 'id': unit.accommodation.id}) }}">
+			{{ 'back' | trans }}
+		</a>
+	</div>
+</div>
+
+
+{% endblock %}

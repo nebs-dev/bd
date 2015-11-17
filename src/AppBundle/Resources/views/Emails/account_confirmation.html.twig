@@ -1,0 +1,28 @@
+{% if is_granted('ROLE_HOST') %}
+    <p>Your confirmation link -</p>
+    <p>
+        <a href="{{ url('user_validate_account', {'_locale': app.request.attributes.get('_locale'), 'username' : user.username, 'hash': user.hash}) }}">{{ 'confirmation_link' | trans }}</a>
+    </p>
+    Dear {{ user.fullName }},
+
+    Welcome to Best-destination.com and thank you for your registration.
+    To activate your user account please click <a href="{{ url('user_validate_account', {'_locale': app.request.attributes.get('_locale'), 'username' : user.username, 'hash': user.hash}) }}">{{ 'here' | trans }}</a> to open your user profile and to start publishing your accommodation.
+    After activation of the user account at best-destination.com you can any time login with your user name {{ user.username }} and the password
+    We look forward to working with you.
+
+    Kind regards
+    Your Best-Destination.com Team.
+{% else %}
+
+    Dear {{ user.fullname }},
+
+    Welcome to Best-destination.com and thank you for your registration.
+    To activate your user account please click here to open your user profile and to start booking best destination.
+    <a href="{{ url('user_validate_account', {'_locale': app.request.attributes.get('_locale'), 'username' : user.username, 'hash': user.hash}) }}">{{ 'here' | trans }}</a>
+    After activation of the user account at best-destination.com you can any time login with your user name {{ user.username }} and the your defined password
+
+
+    Kind regards
+    Your Best-Destination.com Team.
+
+{% endif %}

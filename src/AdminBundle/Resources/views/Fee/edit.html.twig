@@ -1,0 +1,100 @@
+{% extends 'admin.html.twig' %}
+{% block stylesheets %}
+	{{ parent() }}
+	<link href="http://cdn.datatables.net/1.10.5/css/jquery.dataTables.min.css" rel="stylesheet" type="text/css" />
+	<link href="{{asset('bundles/admin/js/footable/css/footable.core.css?v=2-0-1')}}" rel="stylesheet" type="text/css" />
+	<link href="{{asset('bundles/admin/js/footable/css/footable.standalone.css')}}" rel="stylesheet" type="text/css" />
+	<link href="{{asset('bundles/admin/js/footable/css/footable-demos.css')}}" rel="stylesheet" type="text/css" />
+{% endblock %}
+{% block content %}
+
+	{% for flashMessage in app.session.flashbag.get('msgSuccess') %}
+	<div class="box bg-light-green">
+		<div class="box-header bg-light-green ">
+			<!-- tools box -->
+			<div class="pull-right box-tools">
+				<span class="box-btn" data-widget="remove">
+					<i class="icon-cross"></i>
+				</span>
+			</div>
+			<h3 class="box-title "><i class="text-white  icon-thumbs-up"></i>
+				<span class="text-white">SUCCESS</span>
+			</h3>
+		</div>
+		<!-- /.box-header -->
+		<div class="box-body " style="display: block;">
+			<p class="text-white"><strong>Well done!</strong> {{ flashMessage }}</p>
+		</div>
+	</div>
+	{% endfor %}
+	{% for flashMessage in app.session.flashbag.get('msgError') %}
+	<div class="box bg-red">
+		<div class="box-header bg-red ">
+			<!-- tools box -->
+			<div class="pull-right box-tools">
+				<span class="box-btn" data-widget="remove">
+					<i class="icon-cross"></i>
+				</span>
+			</div>
+			<h3 class="box-title "><i class="text-white  icon-thumbs-up"></i>
+				<span class="text-white">Error</span>
+			</h3>
+		</div>
+		<!-- /.box-header -->
+		<div class="box-body " style="display: block;">
+			<p class="text-white"><strong>Sorry!</strong> {{ flashMessage }}</p>
+		</div>
+	</div>
+	{% endfor %}
+
+	{# New fee form #}
+	<div class="box">
+		{{ form_start(
+			form, {
+				'method': 'POST',
+				'attr': {'novalidate': 'novalidate', 'class':"form-horizontal", 'id':'editFee'}
+			}
+		) }}
+
+
+		{{ form_start(form, {'attr': {'novalidate': 'novalidate', 'class':"form-horizontal", 'id':'editFeeForm' }}) }}
+		{{ form_errors(form) }}
+
+		<div class="form-group">
+			{{ form_label(form.type, 'type' | trans , { 'label_attr': {'class': 'col-sm-3 control-label'} }) }}
+			{{ form_errors(form.type) }}
+			<div class="col-sm-5">
+				{{ form_widget(form.type, { 'attr': {'class': 'form-control validate[required]'} }) }}
+			</div>
+		</div>
+
+		<div class="form-group">
+			{{ form_label(form.status, 'status' | trans , { 'label_attr': {'class': 'col-sm-3 control-label'} }) }}
+			{{ form_errors(form.status) }}
+			<div class="col-sm-5">
+				{{ form_widget(form.status, { 'attr': {'class': 'form-control validate[required]'} }) }}
+			</div>
+		</div>
+
+		<div class="form-group">
+			{{ form_label(form.validUntil, 'validUntil' | trans , { 'label_attr': {'class': 'col-sm-3 control-label'} }) }}
+			{{ form_errors(form.validUntil) }}
+			<div class="col-sm-5">
+				{{ form_widget(form.validUntil, { 'type': 'text', 'attr': {'class': 'form-control validate[required]'} }) }}
+			</div>
+		</div>
+
+		{{ form_rest(form) }}
+
+		<div class="form-group">
+			<div class="col-sm-5 col-sm-offset-3">
+				<button type="submit" id="editFeeSubmit" name="editFeeSubmit" class="btn btn-default" value="Spremi">{{ 'save' | trans }}</button>
+			</div>
+		</div>
+
+		{{ form_end(form) }}
+	</div>
+
+	<a href="{{ path('admin_accommodation_fees', {'_locale': app.request.attributes.get('_locale'), 'id': fee.accommodation.id}) }}">{{ 'back' | trans }}</a>
+
+{% endblock %}

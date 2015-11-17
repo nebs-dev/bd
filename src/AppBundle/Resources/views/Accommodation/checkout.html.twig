@@ -1,0 +1,220 @@
+{% extends 'base.html.twig' %}
+
+{% block content %}
+	<body class="input-body">
+		{% for flashMessage in app.session.flashbag.get('msgSuccess') %}
+			<div class="box bg-light-green">
+				<div class="box-header bg-light-green ">
+					<!-- tools box -->
+					<div class="pull-right box-tools">
+						<span class="box-btn" data-widget="remove">
+							<i class="icon-cross"></i>
+						</span>
+					</div>
+					<h3 class="box-title "><i class="text-white  icon-thumbs-up"></i>
+						<span class="text-white">SUCCESS</span>
+					</h3>
+				</div>
+				<!-- /.box-header -->
+				<div class="box-body ">
+					<p class="text-white"><strong>Well done!</strong> {{ flashMessage }}</p>
+				</div>
+			</div>
+		{% endfor %}
+		{% for flashMessage in app.session.flashbag.get('msgError') %}
+			<div class="box bg-red">
+				<div class="box-header bg-red ">
+					<!-- tools box -->
+					<div class="pull-right box-tools">
+						<span class="box-btn" data-widget="remove">
+							<i class="icon-cross"></i>
+						</span>
+					</div>
+					<h3 class="box-title "><i class="text-white  icon-thumbs-up"></i>
+						<span class="text-white">Error</span>
+					</h3>
+				</div>
+				<!-- /.box-header -->
+				<div class="box-body ">
+					<p class="text-white"><strong>Sorry!</strong> {{ flashMessage }}</p>
+				</div>
+			</div>
+		{% endfor %}
+
+		{% block currency %}
+			{# namjerno jer se ne smije refreshat stranica #}
+		{% endblock %}
+
+		<div class="checkout-page row">
+			<div class="large-6 small-centered columns">
+				<section class="checkout-container">
+					<h1 class="checkout-head">
+						{{ 'Your' | trans }}
+						<strong style="text-transform: uppercase;">{{ 'Booking' | trans }}</strong>
+						{{ 'details' | trans }}
+					</h1>
+					<p class="checkout-registration-text">
+						{{ 'Please, review your booking information! If you have any changes for your choice, exit this step and adjust your search.' | trans }}
+					</p>
+				</section>
+				<div class="accommodation-info-container">
+					<div class="imageCheckout">
+						<img src="{{ app.request.getSchemeAndHttpHost() }}{{ asset(accommodation.featuredImage) }}" />
+					</div>
+					<div class="titleCheckout">
+						{{ accommodation.name }}
+					</div>
+					<div class="infoCheckout">
+						{{ accommodation.address }}, {{ attribute(accommodation.city, app.request.locale) ?: accommodation.city.en }}<br />
+						{{ attribute(accommodation.city.subregion.region, app.request.locale) }},{{ attribute(accommodation.city.region.country, app.request.locale) ?: accommodation.city.region.country.en }}
+						{{ attribute(accommodation.city.region, app.request.locale) ?: accommodation.city.region.en }}
+					</div>
+					{% for flashMessage in app.session.flashbag.get('formErrors') %}
+						<p>{{ flashMessage }}</p>
+					{% endfor %}
+
+					<div class="check-in-out-container large-12 columns">
+					<div class="large-5 columns">
+						<span>Check In: {{ data.checkIn | date('d.m.Y.') }} </span>
+					</div>
+					<div class="large-2 check-out-item-middle columns">
+						to
+					</div>
+					<div class="large-5 check-out-item-right columns">
+						<span>Check Out: {{ data.checkOut | date('d.m.Y.') }}</span>
+					</div>
+						
+					</div>
+
+					<div class="accommodation-info-container2 large-12 columns">
+
+						<ul class="registrationUl large-12 columns">
+							{% for upe in data.unit.unitPriceExtra %}
+								{% if upe.availability  %}
+									<li>
+										<div class="large-6 columns ">
+											{{ upe.priceExtra.name }}:
+										</div>
+										<div class="large-6 columns check-out-item-right">
+											{{ upe.price == 0 ? 'FREE' : currencyService.fromEuro(upe.price) ~' '~ app.session.get('currency')~' / '~'per_day' | trans }}
+										</div>
+									</li>
+								{% endif %}
+							{% endfor %}
+						</ul>
+						<ul class="registrationUl">
+							<li>
+								<div class="large-6 columns ">
+									<strong>{{ 'Nights' | trans }}:</strong>
+								</div>
+								<div class="large-6 columns check-out-item-right">
+									{{ data.nights }}
+								</div>
+							</li>
+							<li>
+								<div class="large-6 columns ">
+									<strong>{{ 'Total price' | trans }}:</strong>
+								</div>
+								<div class="large-6 columns check-out-item-right">
+									{{ currencyService.fromEuro( data.fullPrice, app.session.get('currency') ) }}
+									{{ app.session.get('currency') }}
+								</div>
+							</li>
+						</ul>
+
+					</div>
+
+
+
+
+
+
+
+
+
+					<section class="checkout-container-1 large-12 columns">
+
+						{{ form_start(
+						checkOutForm, {
+						'method': 'POST',
+						'action': path('app_accommodation_booking', { 'id': accommodation.id }),
+						'attr': {'novalidate': 'novalidate', 'class':"form-horizontal", 'id':'checkOutForm'}
+					}
+					) }}
+
+					{{ form_errors(checkOutForm) }}
+
+					{% if app.user == false %}
+						<div class="large-6 columns">
+							{{ form_label(checkOutForm.username, 'username' | trans, { 'label_attr': {'class': 'col-sm-3 control-label'} }) }}
+							{{ form_errors(checkOutForm.username) }}
+							<div class="col-sm-5">
+								{{ form_widget(checkOutForm.username, { 'attr': {'type':'hidden', 'class': 'form-control', 'required': 'required'} }) }}
+							</div>
+						</div>
+
+						<div class="large-6 columns">
+							{{ form_label(checkOutForm.email, 'email' | trans, { 'label_attr': {'class': 'col-sm-3 control-label'} }) }}
+							{{ form_errors(checkOutForm.email) }}
+							<div class="col-sm-5">
+								{{ form_widget(checkOutForm.email, { 'attr': {'type':'hidden', 'class': 'form-control', 'required': 'required'} }) }}
+							</div>
+						</div>
+						<div class="large-6 columns">
+							{{ form_label(checkOutForm.name, 'name' | trans, { 'label_attr': {'class': 'col-sm-3 control-label'} }) }}
+							{{ form_errors(checkOutForm.name) }}
+							<div class="col-sm-5">
+								{{ form_widget(checkOutForm.name, { 'attr': {'type':'hidden', 'class': 'form-control', 'required': 'required'} }) }}
+							</div>
+						</div>
+						<div class="large-6 columns">
+							{{ form_label(checkOutForm.surename, 'Surename' | trans, { 'label_attr': {'class': 'col-sm-3 control-label'} }) }}
+							{{ form_errors(checkOutForm.surename) }}
+							<div class="col-sm-5">
+								{{ form_widget(checkOutForm.surename, { 'attr': {'type':'hidden', 'class': 'form-control', 'required': 'required'} }) }}
+							</div>
+						</div>
+
+						<div class="large-6 columns">
+							{{ form_label(checkOutForm.password.first, 'password' | trans, { 'label_attr': {'class': 'col-sm-3 control-label'} }) }}
+							{{ form_errors(checkOutForm.password.first) }}
+							<div class="col-sm-5">
+								{{ form_widget(checkOutForm.password.first, { 'attr': {'type':'hidden', 'class': 'form-control', 'required': 'required'} }) }}
+							</div>
+						</div>
+
+						<div class="large-6 columns">
+							{{ form_label(checkOutForm.password.second, 'Repeat password' | trans, { 'label_attr': {'class': 'col-sm-3 control-label'} }) }}
+							{{ form_errors(checkOutForm.password.second) }}
+							<div class="col-sm-5">
+								{{ form_widget(checkOutForm.password.second, { 'attr': {'type':'hidden', 'class': 'form-control', 'required': 'required'} }) }}
+							</div>
+						</div>
+
+					{% endif %}
+
+					<input type="hidden" name="unit" value="{{ data.unit.id }}"/>
+					<input type="hidden" name="checkIn" value="{{ data.checkIn | date('Y-m-d') }}"/>
+					<input type="hidden" name="checkOut" value="{{ data.checkOut | date('Y-m-d') }}"/>
+					<input type="hidden" name="price" value="{{ data.fullPrice }}"/>
+
+
+					{{ form_rest(checkOutForm) }}
+					<div class="large-12 columns">
+						<div class="col-sm-5 col-sm-offset-3">
+							<button type="submit" onclick="return confirm('{{ 'are_you_sure_reserve' | trans }}')" id="bookingAction" name="bookingAction" class="search-button submit-checkout">
+								{{ 'confirm_and_book' | trans }}
+							</button>
+						</div>
+					</div>
+					{{ form_end(checkOutForm) }}
+
+				</section>
+			</div>
+		</div>
+
+
+
+	</body>
+
+{% endblock %}

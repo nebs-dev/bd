@@ -1,0 +1,122 @@
+{% extends 'guest.html.twig' %}
+{% block menu %}
+
+{% endblock %}
+{% block sidemenu %}
+	{% if is_granted('ROLE_GUEST') %}
+		{% include 'includes/sidemenu-guest.html.twig' %}
+	{% elseif is_granted('ROLE_HOST')   %}
+		{% include 'includes/sidemenu-user.html.twig' %}
+	{% endif %}
+{% endblock %}
+
+{% block stylesheets %}
+    {{ parent() }}
+    <link href="{{asset('bundles/admin/css/mail.css')}}" rel="stylesheet" type="text/css" />
+{% endblock %}
+{% block title %}{{ 'messages' | trans }}{% endblock %}
+{% block content %}
+<div class="row no-pad">
+	<div class="large-12 columns">
+		<div class="box bg-white">
+			<div class="box-body pad-forty" style="display: block;">
+				<div class="row">
+					<div class="large-12 columns">
+						<div class="inbox-header ">
+							<h1>{{ 'conversation_with' | trans }} : <strong> {{ sender.username }} ({{ sender.fullName }})</strong></h1>
+							<hr>
+						</div>
+						{% for flashMessage in app.session.flashbag.get('msgSuccess') %}
+						<div class="box bg-light-green">
+							<div class="box-header bg-light-green ">
+								<!-- tools box -->
+								<div class="pull-right box-tools">
+									<span class="box-btn" data-widget="remove">
+										<i class="icon-cross"></i>
+									</span>
+								</div>
+								<h3 class="box-title "><i class="text-white  icon-thumbs-up"></i>
+									<span class="text-white">SUCCESS</span>
+								</h3>
+							</div>
+							<!-- /.box-header -->
+							<div class="box-body " style="display: block;">
+								<p class="text-white"><strong>Well done!</strong> {{ flashMessage }}</p>
+							</div>
+						</div>
+						{% endfor %}
+						{% for flashMessage in app.session.flashbag.get('msgError') %}
+						<div class="box bg-red">
+							<div class="box-header bg-red ">
+								<!-- tools box -->
+								<div class="pull-right box-tools">
+									<span class="box-btn" data-widget="remove">
+										<i class="icon-cross"></i>
+									</span>
+								</div>
+								<h3 class="box-title "><i class="text-white  icon-thumbs-up"></i>
+									<span class="text-white">Error</span>
+								</h3>
+							</div>
+							<!-- /.box-header -->
+							<div class="box-body " style="display: block;">
+								<p class="text-white"><strong>Sorry!</strong> {{ flashMessage }}</p>
+							</div>
+						</div>
+						{% endfor %}
+						<div class="inbox-nest">
+							<ul>
+								{% for message in messages %}
+									<li>
+										<a class="star bg-blue"><i class="icon-message"></i></a>
+										<b>{{ message.userFrom.fullName }}</b><small>{{ 'sended' | trans }} {{ message.created | date('d.m.Y.') }}</small>
+										<p>{{ message.text }}</p>
+									</li>
+								{% endfor %}
+							</ul>
+						</div>
+					</div>
+					<div class="large-12 columns">
+						{# Send message form #}
+						{{ form_start(
+							form, {
+								'method': 'POST',
+								'action': path('app_message_send', {'_locale': app.request.attributes.get('_locale'), 'id': sender.id }),
+								'attr': {'novalidate': 'novalidate', 'class':"form-horizontal", 'id':'searchHome'}
+							}
+						) }}
+
+							<div class="form-group">
+								<div class="labelTitle">{{ form_label(form.text, 'message_text' | trans, { 'label_attr': {'class': 'col-sm-3 control-label'} }) }}</div>
+								{{ form_errors(form.text) }}
+								<div class="col-sm-5">
+									{{ form_widget(form.text, { 'attr': {'class': 'form-control'} }) }}
+								</div>
+							</div>
+					</div>
+					<div class="large-12 columns">
+						{{ form_rest(form) }}
+					</div>
+					<div class="large-12 columns">
+						<div class="form-group">
+							<div class="col-sm-5 col-sm-offset-3">
+								<br >
+								<button type="submit" id="newMessage" name="sendMessage" class="button btn pull-right">{{ 'send' | trans }}</button>
+							</div>
+						</div>
+					</div>
+					<div class="large-12 columns">
+						{{ form_end(form) }}
+					</div>
+				</div>
+			</div>
+		</div>
+	</div>
+</div>
+
+{% endblock %}
+
+
+{% block js %}
+	{{ parent() }}
+{% endblock %}

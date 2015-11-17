@@ -1,0 +1,145 @@
+{% extends 'base.html.twig' %}
+
+{% block content %}
+	{% block foundation_header %}
+		{% include 'includes/foundation-header.html.twig'  %}
+	{% endblock %}
+	<div class="blog-bg-featured">
+		<div class="blogSaveMoneyAndTime">
+			<div class="row">
+				<div class="logoGreenSingle"></div>
+				<div class="text-container">
+					<h2 class="subheading">{{ 'Save money and time!' | trans }}</h2>
+					<span>{{ 'Publish Your property' | trans }}</span>
+				</div>
+			</div>
+		</div>
+	</div>
+	<div class="row" style="padding-top: 50px;"></div>
+	{% for flashMessage in app.session.flashbag.get('msgSuccess') %}
+		<div class="box bg-light-green">
+			<div class="box-header bg-light-green ">
+				<!-- tools box -->
+				<div class="pull-right box-tools">
+					<span class="box-btn" data-widget="remove">
+						<i class="icon-cross"></i>
+					</span>
+				</div>
+				<h3 class="box-title "><i class="text-white  icon-thumbs-up"></i>
+					<span class="text-white">SUCCESS</span>
+				</h3>
+			</div>
+			<!-- /.box-header -->
+			<div class="box-body " style="display: block;">
+				<p class="text-white"><strong>Well done!</strong> {{ flashMessage }}</p>
+			</div>
+		</div>
+	{% endfor %}
+	{% for flashMessage in app.session.flashbag.get('msgError') %}
+		<div class="box bg-red">
+			<div class="box-header bg-red ">
+				<!-- tools box -->
+				<div class="pull-right box-tools">
+					<span class="box-btn" data-widget="remove">
+						<i class="icon-cross"></i>
+					</span>
+				</div>
+				<h3 class="box-title "><i class="text-white  icon-thumbs-up"></i>
+					<span class="text-white">Error</span>
+				</h3>
+			</div>
+			<!-- /.box-header -->
+			<div class="box-body " style="display: block;">
+				<p class="text-white"><strong>Sorry!</strong> {{ flashMessage }}</p>
+			</div>
+		</div>
+	{% endfor %}
+
+	<div class="row">
+		<div class="large-12 columns">
+			<h1 class="blogTitle">{% block title %}{{ 'Read_our_news' | trans }}{% endblock %}</h1>
+		</div>
+		<div class="row"></div>
+		<div class="row" style="padding-top: 25px;"></div>
+		{% set count = 0 %}
+			{% for post in posts %}
+				{% if count < 2 %}
+					<div class="large-6 columns">
+						<div id="post{{ post.id }}" class="post">
+							<a href="{{ path('app_blog_single', {'_locale': app.request.attributes.get('_locale'), 'id': post.id }) }}" class="blogListFeaturedImage">
+								{% if post.webPath %}
+									<img src="{{ app.request.getSchemeAndHttpHost() }}{{ asset(post.webPath) }}" />
+									{% elseif post.parent.webPath %}
+									<img src="{{ app.request.getSchemeAndHttpHost() }}{{ asset(post.parent.webPath) }}" />
+								{% endif %}
+								<h3>{{ post.title }}</h3>
+							</a>
+							<p class="bigPostText">{{ post.text[:250] ~ '...' }}</p>
+							<a href="{{ path('app_blog_single', {'_locale': app.request.attributes.get('_locale'), 'id': post.id }) }}" class="readMorePost">{{ 'Read_article' | trans }}</a>
+						</div>
+					</div>
+					{% elseif count == 2 %}
+					<div class="row"></div>{% set count = count + 1 %}
+					<div class="large-3 columns">
+						<div id="post{{ post.id }}" class="post postSmall">
+							<a href="{{ path('app_blog_single', {'_locale': app.request.attributes.get('_locale'), 'id': post.id }) }}">
+								{% if post.webPath %}
+									<img class="blog-thumb" src="{{ app.request.getSchemeAndHttpHost() }}{{ asset(post.webPath) }}" />
+									{% elseif post.parent.webPath %}
+									<img class="blog-thumb" src="{{ app.request.getSchemeAndHttpHost() }}{{ asset(post.parent.webPath) }}" />
+								{% endif %}
+							</a>
+							<a href="{{ path('app_blog_single', {'_locale': app.request.attributes.get('_locale'), 'id': post.id }) }}"><h3 class="smallBlogTitle">{{ post.title }}</h3></a>
+							<p class="bigPostText">{{ post.text[:75] ~ '...' }}</p>
+							<a href="{{ path('app_blog_single', {'_locale': app.request.attributes.get('_locale'), 'id': post.id }) }}" class="readMorePost">{{ 'Read_article' | trans }}</a>
+						</div>
+					</div>
+					{% else %}
+					<div class="large-3 columns">
+						<div id="post{{ post.id }}" class="post postSmall">
+							<a href="{{ path('app_blog_single', {'_locale': app.request.attributes.get('_locale'), 'id': post.id }) }}">
+								{% if post.webPath %}
+									<img class="blog-thumb" src="{{ app.request.getSchemeAndHttpHost() }}{{ asset(post.webPath) }}" />
+									{% elseif post.parent.webPath %}
+									<img class="blog-thumb" src="{{ app.request.getSchemeAndHttpHost() }}{{ asset(post.parent.webPath) }}" />
+								{% endif %}
+							</a>
+							<h3 class="smallBlogTitle">{{ post.title }}</h3>
+							<p class="bigPostText">{{ post.text[:75] ~ '...' }}</p>
+							<a href="{{ path('app_blog_single', {'_locale': app.request.attributes.get('_locale'), 'id': post.id }) }}" class="readMorePost">{{ 'Read_article' | trans }}</a>
+						</div>
+					</div>
+				{% endif %}
+				{% set count = count + 1 %}
+				{% endfor %}
+			</div>
+
+
+
+			<div class="row">
+				<div class="large-12 columns">
+					<div class="fullDubleBorder"></div>
+				</div>
+			</div>
+			<div class="row discover-container">
+				{% for discoverItem in discover|slice(0, 4) %}
+					<a href="{{ path('app_home_discover_search',
+					{'_locale': app.request.attributes.get('_locale'), 'location': discoverItem.location }) }}">
+					<section id="accommodation" class="large-3 medium-6 columns">
+						<figure class="discover-item"
+						style="background: url('{{ discoverItem.webPath | imagine_filter('my_thumb') }}')">
+						<figcaption class="discover-item__description">
+							{{ discoverItem.location }}
+						</figcaption>
+					</figure>
+				</section>
+			</a>
+		{% endfor %}
+	</div>
+
+
+	<div class="row" style="padding-top: 50px;"></div>
+	{% block foundation_footer %}
+		{% include 'includes/foundation-footer.html.twig'  %}
+	{% endblock %}
+{% endblock %}

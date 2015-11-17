@@ -1,0 +1,117 @@
+{% extends 'admin.html.twig' %}
+
+{% block stylesheets %}
+{{ parent() }}
+<link href="{{asset('bundles/admin/js/text-editor/dist/ui/trumbowyg.min.css')}}" rel="stylesheet" type="text/css" />
+{% endblock %}
+
+
+{% block content %}
+<div class="row no-pad">
+	<div class="large-12 columns">
+		<div class="box bg-white">
+			<div class="box-body pad-forty" style="display: block;">
+				<div class="row">
+					<div class="large-12 columns">
+						{{ form_start(form, {'attr': {'novalidate': 'novalidate', 'class':"form-horizontal", 'id':'new_post' }}) }}
+						{{ form_errors(form) }}
+					</div>
+				</div>
+				<div class="row">
+					<div class="large-12 columns">
+						<div class="large-12 columns">
+							<div class="form-group">
+								{{ form_label(form.title, 'title' | trans , { 'label_attr': {'class': 'col-sm-3 control-label'} }) }}
+								{{ form_errors(form.title) }}
+								<div class="col-sm-5">
+									{{ form_widget(form.title, { 'attr': {'class': 'form-control validate[required]'} }) }}
+								</div>
+							</div>
+						</div>
+						<div class="large-6 columns">
+							<div class="form-group">
+								{{ form_label(form.parent, 'parent' | trans , { 'label_attr': {'class': 'col-sm-3 control-label'} }) }}
+								{{ form_errors(form.parent) }}
+								<div class="col-sm-5">
+									{{ form_widget(form.parent, { 'attr': {'class': 'form-control parentField' }} ) }}
+								</div>
+							</div>
+						</div>
+						<div class="large-6 columns">
+							<div class="form-group">
+								{{ form_label(form.language, 'language' | trans , { 'label_attr': {'class': 'col-sm-3 control-label'} }) }}
+								{{ form_errors(form.language) }}
+								<div class="col-sm-5">
+									{{ form_widget(form.language, { 'attr': {'class': 'form-control languageField' }} ) }}
+								</div>
+							</div>
+						</div>
+						<div class="large-6 columns">
+							<div class="form-group">
+								{{ form_label(form.file, 'featured_image' | trans , { 'label_attr': {'class': 'col-sm-3 control-label'} }) }}
+								{{ form_errors(form.file) }}
+								<div class="col-sm-5">
+									{{ form_widget(form.file, { 'attr': {'class': 'form-control' }} ) }}
+								</div>
+							</div>
+						</div>
+						<div class="large-12 columns">
+							<div class="form-group">
+								{{ form_label(form.text, 'text' | trans , { 'label_attr': {'class': 'col-sm-3 control-label'} }) }}
+								{{ form_errors(form.text) }}
+								<div class="col-sm-5">
+									{{ form_widget(form.text, { 'attr': {'class': 'form-control' }} ) }}
+								</div>
+							</div>
+						</div>
+						<div class="large-6 columns">
+							{{ form_rest(form) }}
+						</div>
+						<div class="large-12 columns">
+							<div class="form-group">
+								<div class="col-sm-5 col-sm-offset-3">
+									<button class="btn bg-blue" type="submit" name="createBanner" class="btn btn-default" >{{ 'create' | trans }}</button>
+								</div>
+							</div>
+						</div>
+						{{ form_end(form) }}
+					</div>
+				</div>
+			</div>
+		</div>
+	</div>
+</div>
+<div class="row">
+	<div class="large-12 columns">
+		<a class="bg-green btn" href="{{ path('admin_posts', {'_locale': app.request.attributes.get('_locale')}) }}">{{ 'posts' | trans }}</a>
+	</div>
+</div>
+{% endblock %}
+
+{% block js %}
+	{{ parent() }}
+	<script type="text/javascript"></script>
+	<script type="text/javascript">
+		$(document).ready(function() {
+
+			var langSelect = $('.languageField option[value=1]');
+
+			$('.parentField').on('change', function(){
+				if($(this).val() != '') {
+					langSelect.attr("disabled","disabled").next('option').attr('selected', 'selected');;
+					langSelect.hide();
+				} else {
+					langSelect.removeAttr('disabled');
+					langSelect.show();
+				}
+			});
+
+		});
+	</script>
+	<script src="{{asset('bundles/app/js/trumbowyg.min.js')}}"></script>
+	<script type="text/javascript">
+	$(document).ready(function(){
+		$('#adminbundle_post_text').trumbowyg(); 
+	});
+	</script>
+{% endblock %}

@@ -1,0 +1,61 @@
+
+		<!-- Right sidemenu -->
+		<div id="skin-select">
+			<!--      Toggle sidemenu icon button -->
+			<a id="toggle">
+				<span class="fa icon-menu"></span>
+			</a>
+			<!--      End of Toggle sidemenu icon button -->
+			<div class="skin-part">
+				<div id="tree-wrap">
+					<!-- Profile -->
+					<div class="profile">
+						<a href="{{ path('app_home') }}" class="admin-logo" title="Best Destination"></a>
+					</div>
+					<!-- End of Profile -->
+					<!-- Menu sidebar begin-->
+					<div class="side-bar">
+						<div class="bg-transparent">
+							<div class="tooltip_admin_message"><strong>{{ 'Welcome' | trans }}</strong> {{ 'to your' | trans }} <strong>{{ 'BestDestination' | trans }}</strong> {{ 'for listing your accommodations' | trans }}</div>
+							<a class="back_to_site" href="{{ path('app_home') }}"></i>{{ 'back_to_site' | trans }}</a>
+							<div class="today_is" style="display: none;">{{ 'today_is' | trans }}: <span>{{ "now"|date("d.m.Y.") }}</span></div>
+						</div>
+						<ul id="menu-showhide" class="topnav slicknav">
+							<li class="{{ app.request.get('_route') == 'app_profile' ? 'current' }}">
+								<a id="menu-select" class="tooltip-tip" href="{{ path('app_profile', {'_locale': app.request.attributes.get('_locale')}) }}">
+									<span>My profile</span>
+								</a>
+							</li>
+							<li class="{{ app.request.get('_route') == 'app_bookings' ? 'current' }}{{ app.request.get('_route') == 'app_bookings_pending' ? 'current' }}">
+								<a href="#">
+									<span>{{'Bookings' | trans }}</span>
+								</a>
+								<ul>
+									<li class="{{ app.request.get('_route') == 'app_bookings' ? 'current' }}"><a href="{{ path('app_bookings', {'_locale': app.request.attributes.get('_locale')}) }}"><span>{{'List' | trans }}</span></a></li>
+									<li class="{{ app.request.get('_route') == 'app_bookings_pending' ? 'current' }}"><a href="{{ path('app_bookings_pending', {'_locale': app.request.attributes.get('_locale')}) }}"><span>{{'Pending' | trans }}</span></a></li>
+									<li class="{{ app.request.get('_route') == 'app_bookings_old' ? 'current' }}"><a href="{{ path('app_bookings_old', {'_locale': app.request.attributes.get('_locale')}) }}"><span>{{'Old' | trans }}</span></a></li>
+								</ul>
+							</li>
+							<li class="{{ app.request.get('_route') == 'app_profile_wishlist' ? 'current' }}">
+								<a class="tooltip-tip" href="{{ path('app_profile_wishlist', {'_locale': app.request.attributes.get('_locale')}) }}">
+									<span>{{'wishlist' | trans }}</span>
+								</a>
+							</li>
+							<li class="{{ app.request.get('_route') == 'app_messages' ? 'current' }}">
+								<a class="tooltip-tip" href="{{ path('app_messages', {'_locale': app.request.attributes.get('_locale')}) }}">
+									<span>{{'messages' | trans }}</span>
+								</a>
+							</li>
+						</ul>
+					</div>
+					<!-- end of Menu sidebar  -->
+					<a href="#" class="bannerOfferAdmin"></a>
+
+					<a href="#" class="contactBestDestinationAdmin">
+						<span>{{'Contact' | trans }}</span>
+						{{'Best Destination' | trans }}
+					</a>
+				</div>
+			</div>
+		</div>
+		<!-- end of Rightsidemenu -->

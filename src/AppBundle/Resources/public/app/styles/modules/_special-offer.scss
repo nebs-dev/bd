@@ -1,0 +1,25 @@
+.offer-container {
+	margin-top: 40px;
+	background: $white;
+	.accommodation-item.accommodation-item-special-offer {
+		background: #ccc;
+	}
+	h3 {
+		padding-top: 25px;
+		padding-bottom: 25px;
+		text-align: center;
+		font-family: $sans-bold;
+		color: $offer-head;
+		text-transform: uppercase;
+		font-size: rem-calc(25);
+		span {
+			font-size: rem-calc(23);
+			font-family: $sans;
+		}
+	}
+}
+
+.accommodation-item.accommodation-banner {
+	background: red;
+}
+

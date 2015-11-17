@@ -1,0 +1,795 @@
+{% extends 'base.html.twig' %}
+{% block content %}
+    <div class="sticky-single">
+
+        {% block foundation_header %}
+            {% include 'includes/foundation-header.html.twig' %}
+        {% endblock %}
+
+        <div class="single-head-container">
+            {# Booking form #}
+            {{ form_start(
+            checkOutForm, {
+            'method': 'POST',
+            'action': path('app_accommodation_checkout',
+            {'_locale': app.request.attributes.get('_locale'), 'id': accommodation.id }),
+            'attr': {'novalidate': 'novalidate', 'class':"form-horizontal", 'id':'checkOutForm'}
+        }
+        ) }}
+        <div class="row">
+            <div class="large-3 columns">
+                {{ form_errors(checkOutForm.unit) }}
+                <div class="test">
+                    <label for="">{{'Select_Unit' | trans }}</label>
+                    {{ form_widget(checkOutForm.unit,
+                    { 'attr': {'class': 'form-control'} }) }}
+                </div>
+            </div>
+            <div class="large-3 columns">
+                <div class="row collapse">
+                    <label for="search_fromDate">{{ 'Check_in' | trans }}
+                        <span class="label-text-lighten">{{ 'date' | trans }}</span>
+                    </label>
+                    <div class="small-10 columns">
+                        {{ form_errors(checkOutForm.checkIn) }}
+                        {{ form_widget(checkOutForm.checkIn,
+                        {
+                        'attr' : {
+                        'size'     : '16',
+                        'readonly' : 'true',
+                        'class'    : 'datepicker'
+                    }
+                }) }}
+            </div>
+            <div class="small-2 columns calendar-input1">
+                <span class="postfix">
+                    <i class="input-calendar fa fa-calendar"></i>
+                </span>
+            </div>
+        </div>
+    </div>
+    <div class="large-3 columns">
+        <div class="row collapse">
+            <label for="search_fromDate">{{ 'Check_in' | trans }}
+                <span class="label-text-lighten">{{ 'date' | trans }}</span>
+            </label>
+            <div class="small-10 columns">
+                {{ form_errors(checkOutForm.checkOut) }}
+                {{ form_widget(checkOutForm.checkOut,
+                {
+                'attr' : {
+                'size'     : '16',
+                'readonly' : 'true',
+                'class'    : 'datepicker'
+            }
+        }) }}
+    </div>
+    <div class="small-2 columns calendar-input1">
+        <span class="postfix">
+            <i class="input-calendar fa fa-calendar"></i>
+        </span>
+    </div>
+</div>
+</div>
+{{ form_rest(checkOutForm) }}
+<div class="large-3 columns">
+    <label for="">&nbsp;</label>
+    <button type="submit" id="bookingAction" name="bookingAction"
+    class="submit-single-button ">{{ 'RESERVE' | trans }}</button>
+</div>
+{{ form_end(checkOutForm) }}
+</div>
+</div>
+
+{# /Booking form #}
+</div>
+<div class="row accommodation-container pad-for-sticky">
+    {% for flashMessage in app.session.flashbag.get('formErrors') %}
+        <p>{{ flashMessage }}</p>
+    {% endfor %}
+    <div class="large-12 columns">
+        <h1 class="unit-name unit-main">{{ accommodation.name }}</h1>
+        
+    </div>
+    
+
+
+    <div class="large-6 columns">
+        <div id="slider" class="flexslider">
+            <ul class="slides">
+                {% for photo in accommodation.gallery %}
+                    <li>
+                        <img  src="{{ asset(photo.webPath) | imagine_filter('my_thumb_slider-single-big') }}">
+                    </li>
+                {% endfor %}
+            </ul>
+    </div>
+            <div id="carousel" class="flexslider">
+               <ul class="slides">
+                {% for photo in accommodation.gallery %}
+                    <li class="flex-padding">
+                        <img  src="{{ asset(photo.webPath) | imagine_filter('my_thumb_slider-single-small') }}">
+                    </li>
+                {% endfor %}
+            </ul>
+        </div>
+</div>
+<div class="large-6 columns">
+    <h3 class="unit-sub">{{ "about_this_property" | trans }}</h1>
+        {% if accommodation.description is defined and accommodation.description is not null %}
+            {% if attribute(accommodation.description, app.request.locale) is not null %}
+                <p>{{ attribute(accommodation.description, app.request.locale) }}</p>
+                {% else %}
+                <p>{{ accommodation.description.en }}</p>
+            {% endif %}
+        {% endif %}
+    </h3>
+</div>
+</div>
+<div class="large-6 columns">
+    <h3>WIFI</h3>
+    {% if accommodation.wifi is not null %}
+        {% if accommodation.wifi != 0 %}
+            {{ accommodation.wifi }}e
+            {% else %}
+            FREE WIFI
+        {% endif %}
+        {% else %}
+        no wifi
+    {% endif %}
+</div>
+{# Accommodation gallery #}
+</div>
+<div class="single-info-container">
+    <div class="row">
+        <div class="single-info">
+            {# beaches #}
+            <div class="large-2 columns">
+                <div class="beach-info-container">
+                    <span class="beach-icon"></span>
+                    <span class="silver-txt">{{ 'beach' | trans }}</span>
+                    <div>
+                        {% for beach in accommodation.beaches %}
+                            <span class="beach-item">{{ beach.name }}</span>
+                        {% endfor %}
+                    </div>
+                </div>
+            </div>
+            <div class="large-8 medium-8 columns">
+                <ul class="tabs" data-tab>
+                    <li class="tab-title active">
+                        <a href="#panel1">
+                            {{ 'distances' | trans }} <span>(m)</span>
+                        </a>
+                    </li>
+                    <li class="tab-title">
+                        <a href="#panel2">
+                            {{ 'facilities' | trans }}
+                        </a>
+                    </li>
+                    <li class="tab-title">
+                        <a href="#panel3">
+                            {{ 'activities' | trans }}
+                        </a>
+                    </li>
+                    <li class="tab-title"><a href="#panel4">
+                        {{ 'additionals' | trans }}
+                    </a>
+                </li>
+            </ul>
+            <div class="tabs-content">
+                <div class="content active" id="panel1">
+                    {# Distances #}
+                    <ul class="single-info-items large-block-grid-3">
+                        {% if accommodation.distance is not null %}
+                            {% if accommodation.distance.restaurant is not null %}
+                                <li>
+                                    <ul class="large-block-grid-2">
+                                        <li>{{ 'restaurant' | trans }}:</li>
+                                        <li>{{ accommodation.distance.restaurant }}</li>
+                                    </ul>
+                                </li>
+                            {% endif %}
+                            {% if accommodation.distance.farmacy is not null %}
+                                <li>
+                                    <ul class="large-block-grid-2">
+                                        <li>{{ 'farmacy' | trans }}:</li>
+                                        <li>{{ accommodation.distance.farmacy }}</li>
+                                    </ul>
+                                </li>
+                            {% endif %}
+                            {% if accommodation.distance.nightClub is not null %}
+                                <li>
+                                    <ul class="large-block-grid-2">
+                                        <li>{{ 'nightClub' | trans }}:</li>
+                                        <li>{{ accommodation.distance.nightClub }}</li>
+                                    </ul>
+                                </li>
+                            {% endif %}
+                            {% if accommodation.distance.shoppingMall is not null %}
+                                <li>
+                                    <ul class="large-block-grid-2">
+                                        <li>{{ 'shoppingMall' | trans }}:</li>
+                                        <li>{{ accommodation.distance.shoppingMall }}</li>
+                                    </ul>
+                                </li>
+                            {% endif %}
+                            {% if accommodation.distance.postOffice is not null %}
+                                <li>
+                                    <ul class="large-block-grid-2">
+                                        <li>{{ 'postOffice' | trans }}:</li>
+                                        <li>{{ accommodation.distance.postOffice }}</li>
+                                    </ul>
+                                </li>
+                            {% endif %}
+                            {% if accommodation.distance.bus is not null %}
+                                <li>
+                                    <ul class="large-block-grid-2">
+                                        <li>{{ 'bus' | trans }}:</li>
+                                        <li>{{ accommodation.distance.bus }}</li>
+                                    </ul>
+                                </li>
+                            {% endif %}
+                            {% if accommodation.distance.train is not null %}
+                                <li>
+                                    <ul class="large-block-grid-2">
+                                        <li>{{ 'train' | trans }}:</li>
+                                        <li>{{ accommodation.distance.train }}</li>
+                                    </ul>
+                                </li>
+                            {% endif %}
+                            {% if accommodation.distance.wellness is not null %}
+                                <li>
+                                    <ul class="large-block-grid-2">
+                                        <li>{{ 'wellness' | trans }}:</li>
+                                        <li>{{ accommodation.distance.wellness }}</li>
+                                    </ul>
+                                </li>
+                            {% endif %}
+                            {% if accommodation.distance.airport is not null %}
+                                <li>
+                                    <ul class="large-block-grid-2">
+                                        <li>{{ 'airport' | trans }}:</li>
+                                        <li>{{ accommodation.distance.airport }}</li>
+                                    </ul>
+                                </li>
+                            {% endif %}
+                            {% if accommodation.distance.museum is not null %}
+                                <li>
+                                    <ul class="large-block-grid-2">
+                                        <li>{{ 'museum' | trans }}:</li>
+                                        <li>{{ accommodation.distance.museum }}</li>
+                                    </ul>
+                                </li>
+                            {% endif %}
+                            {% if accommodation.distance.sportsCenter is not null %}
+                                <li>
+                                    <ul class="large-block-grid-2">
+                                        <li>{{ 'sportsCenter' | trans }}:</li>
+                                        <li>{{ accommodation.distance.sportsCenter }}</li>
+                                    </ul>
+                                </li>
+                            {% endif %}
+                            {% if accommodation.distance.casino is not null %}
+                                <li>
+                                    <ul class="large-block-grid-2">
+                                        <li>{{ 'casino' | trans }}:</li>
+                                        <li>{{ accommodation.distance.casino }}</li>
+                                    </ul>
+                                </li>
+                            {% endif %}
+                            {% if accommodation.distance.store is not null %}
+                                <li>
+                                    <ul class="large-block-grid-2">
+                                        <li>{{ 'store' | trans }}:</li>
+                                        <li>{{ accommodation.distance.store }}</li>
+                                    </ul>
+                                </li>
+                            {% endif %}
+                            {% if accommodation.distance.golf is not null %}
+                                <li>
+                                    <ul class="large-block-grid-2">
+                                        <li>{{ 'golf' | trans }}:</li>
+                                        <li>{{ accommodation.distance.golf }}</li>
+                                    </ul>
+                                </li>
+                            {% endif %}
+                            {% if accommodation.distance.doctor is not null %}
+                                <li>
+                                    <ul class="large-block-grid-2">
+                                        <li>{{ 'doctor' | trans }}:</li>
+                                        <li>{{ accommodation.distance.doctor }}</li>
+                                    </ul>
+                                </li>
+                            {% endif %}
+                            {% if accommodation.distance.cinema is not null %}
+                                <li>
+                                    <ul class="large-block-grid-2">
+                                        <li>{{ 'cinema' | trans }}:</li>
+                                        <li>{{ accommodation.distance.cinema }}</li>
+                                    </ul>
+                                </li>
+                            {% endif %}
+                            {% if accommodation.distance.bank is not null %}
+                                <li>
+                                    <ul class="large-block-grid-2">
+                                        <li>{{ 'bank' | trans }}:</li>
+                                        <li>{{ accommodation.distance.bank }}</li>
+                                    </ul>
+                                </li>
+                            {% endif %}
+                            {% if accommodation.distance.atm is not null %}
+                                <li>
+                                    <ul class="large-block-grid-2">
+                                        <li>{{ 'atm' | trans }}:</li>
+                                        <li>{{ accommodation.distance.atm }}</li>
+                                    </ul>
+                                </li>
+                            {% endif %}
+                            {% if accommodation.distance.gasStation is not null %}
+                                <li>
+                                    <ul class="large-block-grid-2">
+                                        <li>{{ 'gasStation' | trans }}:</li>
+                                        <li>{{ accommodation.distance.gasStation }}</li>
+                                    </ul>
+                                </li>
+                            {% endif %}
+                            {% if accommodation.distance.park is not null %}
+                                <li>
+                                    <ul class="large-block-grid-2">
+                                        <li>{{ 'park' | trans }}:</li>
+                                        <li>{{ accommodation.distance.park }}</li>
+                                    </ul>
+                                </li>
+                            {% endif %}
+                            {% if accommodation.distance.library is not null %}
+                                <li>
+                                    <ul class="large-block-grid-2">
+                                        <li>{{ 'library' | trans }}:</li>
+                                        <li>{{ accommodation.distance.library }}</li>
+                                    </ul>
+                                </li>
+                            {% endif %}
+                            {% if accommodation.distance.fitness is not null %}
+                                <li>
+                                    <ul class="large-block-grid-2">
+                                        <li>{{ 'fitness' | trans }}:</li>
+                                        <li>{{ accommodation.distance.fitness }}</li>
+                                    </ul>
+                                </li>
+                            {% endif %}
+                            {% if accommodation.distance.nationalPark is not null %}
+                                <li>
+                                    <ul class="large-block-grid-2">
+                                        <li>{{ 'nationalPark' | trans }}:</li>
+                                        <li>{{ accommodation.distance.nationalPark }}</li>
+                                    </ul>
+                                </li>
+                            {% endif %}
+                            {% if accommodation.distance.amusementPark is not null %}
+                                <li>
+                                    <ul class="large-block-grid-2">
+                                        <li>{{ 'amusementPark' | trans }}:</li>
+                                        <li>{{ accommodation.distance.amusementPark }}</li>
+                                    </ul>
+                                </li>
+                            {% endif %}
+                        {% endif %}
+                    </ul>
+                </div>
+                <div class="content" id="panel2">
+                    {# Facilities #}
+                    <ul class="single-info-items large-block-grid-4">
+                        {% for facility in accommodation.facilities %}
+                            <li>{{ facility.name }}</li>
+                        {% endfor %}
+                    </ul>
+                </div>
+                <div class="content" id="panel3">
+                    {# Activities #}
+                    <ul class="single-info-items large-block-grid-4">
+                        {% for activity in accommodation.activities %}
+                            <li>{{ activity.name }}</li>
+                        {% endfor %}
+                    </ul>
+                </div>
+                <div class="content" id="panel4">
+                    {# Aditionals #}
+                    <ul class="single-info-items large-block-grid-4">
+                        {% for additional in accommodation.additionals %}
+                            <li>{{ additional.name }}</li>
+                        {% endfor %}
+                    </ul>
+                </div>
+                {# ./panel4 #}
+            </div>
+            {# ./tabs-content #}
+        </div>
+        <div class="door-time large-2 columns">
+            <div class="door-icon-container">
+                <span class="l-door"></span>
+                <span class="r-door"></span>
+            </div>
+            <span class="silver-txt">{{ 'check_in' | trans }}:</span>
+            <span class="silver-txt">{{ 'check_out' | trans }}:</span>
+            <div class="time-container">
+                <span>
+                    {{ accommodation.checkIn }}
+                </span>
+                <span class="time-divider">/</span>
+                <span>
+                    {{ accommodation.checkOut }}
+                </span>
+            </div>
+        </div>
+    </div>
+</div>
+<div class="row">
+    <h2 class="title-units">{{ 'accommodation_units' | trans }}</h2>
+</div>
+</div>
+{# Payments
+<h3>{{ 'payments' | trans }}</h3>
+<ul>
+    {% for payment in accommodation.payments %}
+    <li>{{ payment.name }}</li>
+    {% endfor %}
+</ul>
+#}
+<div class="unit-container row">
+    {# Units #}
+    {% for unit in accommodation.units %}
+        {# Unit gallery #}
+        <div class="owl-carousel2">
+            {% for photo in unit.gallery %}
+                <div class="item">
+                    <img class="lazyOwl" src="{{ app.request.getSchemeAndHttpHost() }}{{ asset(photo.webPath) }}">
+                </div>
+            {% endfor %}
+        </div>
+        <div class="large-12 columns">
+            <h3 class="unit-name">{{ unit.name }}</h3>
+        </div>
+        {# TODO: Ubaciti ove datume u kalendar #}
+        {#{{ dump(bookingService.getAllBookingDatesUnit(unit) | json_encode) }}#}
+    {#                 <img src="{{ photo.webPath | imagine_filter('my_thumb') }}" >
+    #}
+    {# Details #}
+    <ul class="tabs large-6 large-centered columns" data-tab>
+        <li class="tab-title">
+            <a href="#tab-calendar">
+                {{ 'calendar' | trans }}</a>
+            </li>
+            <li class="tab-title active"><a href="#tab-details">{{ 'unit details' | trans }}</a></li>
+            <li class="tab-title"><a href="#tab-pricelist">{{ 'pricelist' | trans }}</a></li>
+        </ul>
+        <div class="tabs-content">
+            <div class="content" id="tab-calendar">
+                <div class="large-3 columns">
+                    <input class="inlinecalendar-1"/>
+                </div>
+                <div class="large-3 columns">
+                    <input class="inlinecalendar-1"/>
+                </div>
+                <div class="large-3 columns">
+                    <input class="inlinecalendar-1"/>
+                </div>
+                <div class="large-3  columns">
+                    <input class="inlinecalendar-1"/>
+                </div>
+            </div>
+            <div class="content active" id="tab-details">
+                <div class="large-2 columns">
+                    {% if unit.details is not null %}
+                        <ul class="list-inline">
+                            <h4>{{ 'important details' | trans }}</h4>
+                            {% if unit.details.doubleBed is not null %}
+                                <li>{{ 'doubleBed' | trans }}: {{ unit.details.doubleBed }}</li>
+                            {% endif %}
+                            {% if unit.details.singleBed is not null %}
+                                <li>{{ 'singleBed' | trans }}: {{ unit.details.singleBed }}</li>
+                            {% endif %}
+                            {% if unit.details.sofaBed is not null %}
+                                <li>{{ 'sofaBed' | trans }}: {{ unit.details.sofaBed }}</li>
+                            {% endif %}
+                            {% if unit.details.extraBed is not null %}
+                                <li>{{ 'extraBed' | trans }}: {{ unit.details.extraBed }}</li>
+                            {% endif %}
+                            {% if unit.details.cot is not null %}
+                                <li>{{ 'cot' | trans }}: {{ unit.details.cot }}</li>
+                            {% endif %}
+                            <li>{{ 'privateEntrance' | trans }}
+                                : {{ unit.details.privateEntrance ? 'yes' | trans : 'no' | trans }}</li>
+                                <li>{{ 'accessDisabled' | trans }}
+                                    : {{ unit.details.accessDisabled ? 'yes' | trans : 'no' | trans }}</li>
+                                    <li>{{ 'smokingAllowed' | trans }}
+                                        : {{ unit.details.smokingAllowed ? 'yes' | trans : 'no' | trans }}</li>
+                                    </ul>
+                                {% endif %}
+                            </div>
+                            <div class="large-2 columns">
+                                {# Appliances #}
+                                {% if unit.appliances is not null %}
+                                    <ul>
+                                        <h4>{{ 'appliances' | trans }}</h4>
+                                        {% if unit.appliances.airCondition %}
+                                            <li>{{ 'airCondition' | trans }}</li>{% endif %}
+                                            {% if unit.appliances.fan %}
+                                                <li>{{ 'fan' | trans }}</li>{% endif %}
+                                                {% if unit.appliances.iron %}
+                                                    <li>{{ 'iron' | trans }}</li>{% endif %}
+                                                    {% if unit.appliances.tv %}
+                                                        <li>{{ 'tv' | trans }}</li>{% endif %}
+                                                        {% if unit.appliances.flatscreenTv %}
+                                                            <li>{{ 'flatscreenTv' | trans }}</li>{% endif %}
+                                                            {% if unit.appliances.satTv %}
+                                                                <li>{{ 'satTv' | trans }}</li>{% endif %}
+                                                                {% if unit.appliances.dvd %}
+                                                                    <li>{{ 'dvd' | trans }}</li>{% endif %}
+                                                                    {% if unit.appliances.phone %}
+                                                                        <li>{{ 'v' | trans }}</li>{% endif %}
+                                                                        {% if unit.appliances.radio %}
+                                                                            <li>{{ 'radio' | trans }}</li>{% endif %}
+                                                                            {% if unit.appliances.pc %}
+                                                                                <li>{{ 'pc' | trans }}</li>{% endif %}
+                                                                                {% if unit.appliances.gameConsole %}
+                                                                                    <li>{{ 'gameConsole' | trans }}</li>{% endif %}
+                                                                                    {% if unit.appliances.heating %}
+                                                                                        <li>{{ 'heating' | trans }}</li>{% endif %}
+                                                                                        {% if unit.appliances.safe %}
+                                                                                            <li>{{ 'safe' | trans }}</li>{% endif %}
+                                                                                            {% if unit.appliances.miniBar %}
+                                                                                                <li>{{ 'miniBar' | trans }}</li>{% endif %}
+                                                                                            </ul>
+                                                                                        {% endif %}
+                                                                                    </div>
+                                                                                    <div class="large-2 columns">
+                                                                                        {# Kitchen #}
+                                                                                        {% if unit.kitchen is not null %}
+                                                                                            <ul>
+                                                                                                <h4>{{ 'kitchen' | trans }}</h4>
+                                                                                                {% if unit.kitchen.dishes %}
+                                                                                                    <li>{{ 'dishes' | trans }}</li>{% endif %}
+                                                                                                    {% if unit.kitchen.cutlery %}
+                                                                                                        <li>{{ 'cutlery' | trans }}</li>{% endif %}
+                                                                                                        {% if unit.kitchen.fridge %}
+                                                                                                            <li>{{ 'fridge' | trans }}</li>{% endif %}
+                                                                                                            {% if unit.kitchen.rings %}
+                                                                                                                <li>{{ 'rings' | trans }}</li>{% endif %}
+                                                                                                                {% if unit.kitchen.electricKettle %}
+                                                                                                                    <li>{{ 'electricKettle' | trans }}</li>{% endif %}
+                                                                                                                    {% if unit.kitchen.coffeeMachine %}
+                                                                                                                        <li>{{ 'coffeeMachine' | trans }}</li>{% endif %}
+                                                                                                                        {% if unit.kitchen.diningroom %}
+                                                                                                                            <li>{{ 'diningroom' | trans }}</li>{% endif %}
+                                                                                                                            {% if unit.kitchen.microwave %}
+                                                                                                                                <li>{{ 'microwave' | trans }}</li>{% endif %}
+                                                                                                                                {% if unit.kitchen.toaster %}
+                                                                                                                                    <li>{{ 'toaster' | trans }}</li>{% endif %}
+                                                                                                                                    {% if unit.kitchen.childrenChair %}
+                                                                                                                                        <li>{{ 'childrenChair' | trans }}</li>{% endif %}
+                                                                                                                                        {% if unit.kitchen.tableChairs %}
+                                                                                                                                            <li>{{ 'tableChairs' | trans }}</li>{% endif %}
+                                                                                                                                            {% if unit.kitchen.oven %}
+                                                                                                                                                <li>{{ 'oven' | trans }}</li>{% endif %}
+                                                                                                                                                {% if unit.kitchen.dishwasher %}
+                                                                                                                                                    <li>{{ 'dishwasher' | trans }}</li>{% endif %}
+                                                                                                                                                    {% if unit.kitchen.type %}
+                                                                                                                                                        <li>{{ 'type' | trans }}</li>{% endif %}
+                                                                                                                                                    </ul>
+                                                                                                                                                {% endif %}
+                                                                                                                                            </div>
+                                                                                                                                            <div class="large-2 columns">
+                                                                                                                                                {# Living room #}
+                                                                                                                                                {% if unit.livingroom is not null %}
+                                                                                                                                                    <ul>
+                                                                                                                                                        <h4>{{ 'livingroom' | trans }}</h4>
+                                                                                                                                                        {% if unit.livingroom.modernFurniture %}
+                                                                                                                                                            <li>{{ 'modernFurniture' | trans }}</li>{% endif %}
+                                                                                                                                                            {% if unit.livingroom.rusticFurniture %}
+                                                                                                                                                                <li>{{ 'rusticFurniture' | trans }}</li>{% endif %}
+                                                                                                                                                                {% if unit.livingroom.sofas %}
+                                                                                                                                                                    <li>{{ 'sofas' | trans }}</li>{% endif %}
+                                                                                                                                                                    {% if unit.livingroom.balconyAccess %}
+                                                                                                                                                                        <li>{{ 'balconyAccess' | trans }}</li>{% endif %}
+                                                                                                                                                                        {% if unit.livingroom.terraceAccess %}
+                                                                                                                                                                            <li>{{ 'terraceAccess' | trans }}</li>{% endif %}
+                                                                                                                                                                        </ul>
+                                                                                                                                                                    {% endif %}
+                                                                                                                                                                </div>
+                                                                                                                                                                <div class="large-2 columns">
+                                                                                                                                                                    {# Bedroom #}
+                                                                                                                                                                    {% if unit.bedroom is not null %}
+                                                                                                                                                                        <ul>
+                                                                                                                                                                            <h4>{{ 'bedroom' | trans }}</h4>
+                                                                                                                                                                            <li>{{ 'number' | trans }}: {{ unit.bedroom.number }}</li>
+                                                                                                                                                                            {% if unit.bedroom.sheets %}
+                                                                                                                                                                                <li>{{ 'sheets' | trans }}</li>{% endif %}
+                                                                                                                                                                                {% if unit.bedroom.wardrobe %}
+                                                                                                                                                                                    <li>{{ 'wardrobe' | trans }}</li>{% endif %}
+                                                                                                                                                                                    {% if unit.bedroom.mosquitoNet %}
+                                                                                                                                                                                        <li>{{ 'mosquitoNet' | trans }}</li>{% endif %}
+                                                                                                                                                                                        {% if unit.bedroom.soundproofing %}
+                                                                                                                                                                                            <li>{{ 'soundproofing' | trans }}</li>{% endif %}
+                                                                                                                                                                                            {% if unit.bedroom.worktable %}
+                                                                                                                                                                                                <li>{{ 'worktable' | trans }}</li>{% endif %}
+                                                                                                                                                                                                {% if unit.bedroom.terraceAccess %}
+                                                                                                                                                                                                    <li>{{ 'terraceAccess' | trans }}</li>{% endif %}
+                                                                                                                                                                                                    {% if unit.bedroom.balconyAccess %}
+                                                                                                                                                                                                        <li>{{ 'balconyAccess' | trans }}</li>{% endif %}
+                                                                                                                                                                                                    </ul>
+                                                                                                                                                                                                {% endif %}
+                                                                                                                                                                                            </div>
+                                                                                                                                                                                            <div class="large-2 columns">
+                                                                                                                                                                                                {# Bathroom #}
+                                                                                                                                                                                                {% if unit.bathroom is not null %}
+                                                                                                                                                                                                    <ul>
+                                                                                                                                                                                                        <h4>{{ 'bathroom' | trans }}</h4>
+                                                                                                                                                                                                        <li>{{ 'number' | trans }}: {{ unit.bathroom.number }}</li>
+                                                                                                                                                                                                        {% if unit.bathroom.bathtub %}
+                                                                                                                                                                                                            <li>{{ 'bathtub' | trans }}</li>{% endif %}
+                                                                                                                                                                                                            {% if unit.bathroom.bidet %}
+                                                                                                                                                                                                                <li>{{ 'bidet' | trans }}</li>{% endif %}
+                                                                                                                                                                                                                {% if unit.bathroom.shower %}
+                                                                                                                                                                                                                    <li>{{ 'shower' | trans }}</li>{% endif %}
+                                                                                                                                                                                                                    {% if unit.bathroom.jacuzzi %}
+                                                                                                                                                                                                                        <li>{{ 'jacuzzi' | trans }}</li>{% endif %}
+                                                                                                                                                                                                                        {% if unit.bathroom.sauna %}
+                                                                                                                                                                                                                            <li>{{ 'sauna' | trans }}</li>{% endif %}
+                                                                                                                                                                                                                            {% if unit.bathroom.bathrobe %}
+                                                                                                                                                                                                                                <li>{{ 'bathrobe' | trans }}</li>{% endif %}
+                                                                                                                                                                                                                                {% if unit.bathroom.slippers %}
+                                                                                                                                                                                                                                    <li>{{ 'slippers' | trans }}</li>{% endif %}
+                                                                                                                                                                                                                                    {% if unit.bathroom.toiletries %}
+                                                                                                                                                                                                                                        <li>{{ 'toiletries' | trans }}</li>{% endif %}
+                                                                                                                                                                                                                                        {% if unit.bathroom.hairDryer %}
+                                                                                                                                                                                                                                            <li>{{ 'hairDryer' | trans }}</li>{% endif %}
+                                                                                                                                                                                                                                            {% if unit.bathroom.sharedToilet %}
+                                                                                                                                                                                                                                                <li>{{ 'sharedToilet' | trans }}</li>{% endif %}
+                                                                                                                                                                                                                                                {% if unit.bathroom.separateToilet %}
+                                                                                                                                                                                                                                                    <li>{{ 'separateToilet' | trans }}</li>{% endif %}
+                                                                                                                                                                                                                                                    {% if unit.bathroom.washingMachine %}
+                                                                                                                                                                                                                                                        <li>{{ 'washingMachine' | trans }}</li>{% endif %}
+                                                                                                                                                                                                                                                        {% if unit.bathroom.clothesDryer %}
+                                                                                                                                                                                                                                                            <li>{{ 'clothesDryer' | trans }}</li>{% endif %}
+                                                                                                                                                                                                                                                        </ul>
+                                                                                                                                                                                                                                                    {% endif %}
+                                                                                                                                                                                                                                                </div>
+                                                                                                                                                                                                                                                <div class="large-2 columns">
+                                                                                                                                                                                                                                                    {# Views #}
+                                                                                                                                                                                                                                                    {% if unit.views is not null %}
+                                                                                                                                                                                                                                                        <ul>
+                                                                                                                                                                                                                                                            <h4>{{ 'views' | trans }}</h4>
+                                                                                                                                                                                                                                                            {% for view in unit.views %}
+                                                                                                                                                                                                                                                                <li>{{ view.name | trans }}</li>
+                                                                                                                                                                                                                                                            {% endfor %}
+                                                                                                                                                                                                                                                        </ul>
+                                                                                                                                                                                                                                                    {% endif %}
+                                                                                                                                                                                                                                                </div>
+                                                                                                                                                                                                                                            </div>
+                                                                                                                                                                                                                                            <div class="content" id="tab-pricelist">
+                                                                                                                                                                                                                                                {# Price extra #}
+                                                                                                                                                                                                                                                <div class="large-push-1 columns">
+                                                                                                                                                                                                                                                    {% if unit.unitPriceExtra is not null %}
+                                                                                                                                                                                                                                                        <h4>{{ 'price_extra' | trans }}</h4>
+                                                                                                                                                                                                                                                        <ul class="inline-list">
+                                                                                                                                                                                                                                                            {% for priceExtra in unit.unitPriceExtra %}
+                                                                                                                                                                                                                                                                {% if priceExtra.availability %}
+                                                                                                                                                                                                                                                                    <li>{{ priceExtra.priceExtra.name | trans }}:
+                                                                                                                                                                                                                                                                        {% if priceExtra.price == 0 %}
+                                                                                                                                                                                                                                                                            {{ 'free' | trans }}
+                                                                                                                                                                                                                                                                            {% else %}
+                                                                                                                                                                                                                                                                            {{ currencyService.fromEuro(priceExtra.price) | number_format(2) }} {{ app.session.get('currency') }}
+                                                                                                                                                                                                                                                                        {% endif %}
+                                                                                                                                                                                                                                                                    </li>
+                                                                                                                                                                                                                                                                    {% else %}
+                                                                                                                                                                                                                                                                    <li>{{ priceExtra.priceExtra.name | trans }}: {{ 'no' | trans }}</li>
+                                                                                                                                                                                                                                                                {% endif %}
+                                                                                                                                                                                                                                                            {% endfor %}
+                                                                                                                                                                                                                                                        </ul>
+                                                                                                                                                                                                                                                    {% endif %}
+                                                                                                                                                                                                                                                </div>
+                                                                                                                                                                                                                                            {% endfor %}
+            {#
+            <h3>{{ 'total_accommodation_rate' | trans }}</h3>
+            <div>
+                <p>{{ 'cleanliness' | trans }}: {{ accommodation.reviewRate.cleanliness }}</p>
+                <p>{{ 'comfort' | trans }}: {{ accommodation.reviewRate.comfort }}</p>
+                <p>{{ 'location' | trans }}: {{ accommodation.reviewRate.location }}</p>
+                <p>{{ 'facilities' | trans }}: {{ accommodation.reviewRate.facilities }}</p>
+                <p>{{ 'staff' | trans }}: {{ accommodation.reviewRate.staff }}</p>
+                <p>{{ 'valueForMoney' | trans }}: {{ accommodation.reviewRate.valueForMoney }}</p>
+            </div>
+            #}
+        </div>
+    </div>
+    <div class="review-container">
+        <h3 class="title-units">{{ 'reviews' | trans }}</h3>
+        {% for review in reviews %}
+            <div class="review review-odd">
+                {% if loop.index % 2 == 0 %}
+                    <div class="review review-even">
+                    {% endif %}
+                    <p class="review-author">Admin</p>
+                    <p class="review-rate">{{ 'total_rate' | trans }}: {{ review.total }}</p>
+                    <p class="review-comment">{{ review.text }}</p>
+                </div>
+            {% endfor %}
+        </div>
+        {% for flashMessage in app.session.flashbag.get('reviewFormErrors') %}
+            <p>{{ flashMessage }}</p>
+        {% endfor %}
+        {# Review form #}
+        {% if reviewForm and permissionsService.reviewAllowed(accommodation, app.user) %}
+            {{ form_start(
+            reviewForm, {
+            'method': 'POST',
+            'action': path('app_accommodation_review_add', {'_locale': app.request.attributes.get('_locale'), 'id': accommodation.id }),
+            'attr': {'novalidate': 'novalidate', 'class':"large-6 columns large-centered", 'id':'reviewForm'}
+        }
+        ) }}
+        <div class="form-group">
+            {{ form_label(reviewForm.cleanliness, 'cleanliness' | trans, { 'label_attr': {} }) }}
+            {{ form_errors(reviewForm.cleanliness) }}
+            <div class="col-sm-5">
+                {{ form_widget(reviewForm.cleanliness, { 'attr': {'class': 'form-control'} }) }}
+            </div>
+        </div>
+        <div class="form-group">
+            {{ form_label(reviewForm.comfort, 'comfort' | trans, { 'label_attr': {} }) }}
+            {{ form_errors(reviewForm.comfort) }}
+            <div class="col-sm-5">
+                {{ form_widget(reviewForm.comfort, { 'attr': {'class': 'form-control'} }) }}
+            </div>
+        </div>
+        <div class="form-group">
+            {{ form_label(reviewForm.location, 'location' | trans, { 'label_attr': {} }) }}
+            {{ form_errors(reviewForm.location) }}
+            <div class="col-sm-5">
+                {{ form_widget(reviewForm.location, { 'attr': {'class': 'form-control'} }) }}
+            </div>
+        </div>
+        <div class="form-group">
+            {{ form_label(reviewForm.facilities, 'facilities' | trans, { 'label_attr': {} }) }}
+            {{ form_errors(reviewForm.facilities) }}
+            <div class="col-sm-5">
+                {{ form_widget(reviewForm.facilities, { 'attr': {'class': 'form-control'} }) }}
+            </div>
+        </div>
+        <div class="form-group">
+            {{ form_label(reviewForm.staff, 'staff' | trans, { 'label_attr': {} }) }}
+            {{ form_errors(reviewForm.staff) }}
+            <div class="col-sm-5">
+                {{ form_widget(reviewForm.staff, { 'attr': {'class': 'form-control'} }) }}
+            </div>
+        </div>
+        <div class="form-group">
+            {{ form_label(reviewForm.valueForMoney, 'valueForMoney' | trans, { 'label_attr': {} }) }}
+            {{ form_errors(reviewForm.valueForMoney) }}
+            <div class="col-sm-5">
+                {{ form_widget(reviewForm.valueForMoney, { 'attr': {'class': 'form-control'} }) }}
+            </div>
+        </div>
+        <div class="form-group">
+            {{ form_label(reviewForm.text, 'text' | trans, { 'label_attr': {} }) }}
+            {{ form_errors(reviewForm.text) }}
+            <div class="col-sm-5">
+                {{ form_widget(reviewForm.text, { 'attr': {'class': 'form-control'} }) }}
+            </div>
+        </div>
+        {{ form_rest(reviewForm) }}
+        <div class="form-group">
+            <div class="col-sm-5 col-sm-offset-3">
+                <button class="review-button" type="submit" id="reviewAction"
+                name="reviewAction">{{ 'add:review' | trans }}</button>
+            </div>
+        </div>
+        {{ form_end(reviewForm) }}
+    {% endif %}
+</div>
+</div>
+{# /Review form #}
+{% block foundation_footer %}
+    {% include 'includes/foundation-footer.html.twig' %}
+{% endblock %}
+{% endblock %}

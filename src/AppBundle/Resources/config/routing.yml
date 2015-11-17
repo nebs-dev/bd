@@ -1,0 +1,373 @@
+app_home:
+    path:     /
+    defaults: { _controller: AppBundle:Base:home }
+
+app_home_change_currency:
+    path:     /change_currency/{code}
+    defaults: { _controller: AppBundle:Base:changeCurrency }
+
+app_home_change_language:
+    path:     /change_language/{locale}
+    defaults: { _controller: AppBundle:Base:changeLanguage }
+
+app_home_discover_search:
+    path:     /destination/{location}
+    defaults: { _controller: AppBundle:Base:discoverSearch }
+
+app_mailchimp_subscribe:
+    path:     /newsletter/subscribe
+    defaults: { _controller: AppBundle:Base:mailchimpSubscribe }
+
+
+# Static pages
+app_partner:
+    path:     /partner
+    defaults: { _controller: AppBundle:Base:partner }
+
+app_contact:
+    path:     /contact
+    defaults: { _controller: AppBundle:Base:contact }
+
+app_about:
+    path:     /about
+    defaults: { _controller: AppBundle:Base:about }
+
+app_private:
+    path:     /private
+    defaults: { _controller: AppBundle:Base:private }
+
+app_terms:
+    path:     /terms
+    defaults: { _controller: AppBundle:Base:terms }
+
+app_faq:
+    path:     /faq
+    defaults: { _controller: AppBundle:Base:faq }
+
+# Profile
+app_profile:
+    path:     /profile
+    defaults: { _controller: AppBundle:Profile:index }
+
+app_profile_edit:
+    path:     /profile/edit
+    defaults: { _controller: AppBundle:Profile:edit }
+
+app_profile_change_password:
+    path:     /profile/passwordChange
+    defaults: { _controller: AppBundle:Profile:passwordChange }
+
+app_profile_wishlist:
+    path: /wishlist
+    defaults: { _controller: AppBundle:Profile:wishlist }
+
+# Profile steps
+app_profile_step_1:
+    path:     /profile/step/1
+    defaults: { _controller: AppBundle:Profile:step1 }
+
+app_profile_step_2:
+    path:     /profile/step/2
+    defaults: { _controller: AppBundle:Profile:step2 }
+
+app_profile_step_3:
+    path:     /profile/step/3/{id}
+    defaults: { _controller: AppBundle:Profile:step3 }
+
+app_profile_step_4:
+    path:     /profile/step/4/{id}
+    defaults: { _controller: AppBundle:Profile:step4 }
+
+app_profile_step_4a:
+    path:     /profile/step/4a/{id}
+    defaults: { _controller: AppBundle:Profile:step4a }
+
+app_profile_step_5:
+    path:     /profile/step/5/{id}
+    defaults: { _controller: AppBundle:Profile:step5 }
+
+app_profile_step_5_period_new:
+    path:     /profile/step/5/period/new
+    defaults: { _controller: AppBundle:Profile:step5PeriodNew }
+
+app_profile_step_5_period_delete:
+    path:     /profile/step/5/period/delete
+    defaults: { _controller: AppBundle:Profile:step5PeriodDelete }
+
+app_profile_step_6:
+    path:     /profile/step/6/{id}
+    defaults: { _controller: AppBundle:Profile:step6 }
+
+app_profile_step_6_unit_gallery:
+    path:     /profile/step/6/unit/{id}
+    defaults: { _controller: AppBundle:Profile:step6UnitGallery }
+
+app_profile_delete_accommodation_photo:
+    path:     /profile/step/6/delete_a_photo/{id}
+    defaults: { _controller: AppBundle:Profile:deleteAccommodationPhoto }
+
+app_profile_delete_unit_photo:
+    path:     /profile/step/6/delete_u_photo/{id}
+    defaults: { _controller: AppBundle:Profile:deleteUnitPhoto }
+
+app_featuredImage_steps_accommodation:
+    path:     /profile/step/6/featured_a/{id}
+    defaults: { _controller: AppBundle:Gallery:setFeaturedImage }
+
+app_featuredImage_steps_unit:
+    path:     /profile/step/6/featured_u/{id}
+    defaults: { _controller: AppBundle:Gallery:setFeaturedImageUnit }
+
+app_profile_step_7:
+    path:     /profile/step/7/{id}
+    defaults: { _controller: AppBundle:Profile:step7 }
+
+
+# Accommodation
+app_accommodations:
+    path:     /accommodations
+    defaults: { _controller: AppBundle:Accommodation:listUser }
+
+#app_accommodation_new:
+#    path:     /accommodation/new
+#    defaults: { _controller: AppBundle:Accommodation:new }
+
+app_accommodation_edit:
+    path:     /accommodation/edit/{id}
+    defaults: { _controller: AppBundle:Accommodation:edit }
+
+app_accommodation_delete:
+    path:     /accommodation/delete/{id}
+    defaults: { _controller: AppBundle:Accommodation:delete }
+
+app_accommodation_single:
+    path:     /accommodation/single/{id}
+    defaults: { _controller: AppBundle:Accommodation:single }
+
+app_accommodation_checkout:
+    path:     /accommodation/checkout/{id}
+    defaults: { _controller: AppBundle:Accommodation:checkout }
+#    methods: [POST]
+
+app_accommodation_booking:
+    path:     /accommodation/booking/{id}
+    defaults: { _controller: AppBundle:Accommodation:booking }
+    methods: [POST]
+
+app_accommodation_review_add:
+    path:     /accommodation/review/add/{id}
+    defaults: { _controller: AppBundle:Accommodation:reviewAdd }
+    methods: [POST]
+
+app_accommodation_fees:
+    path:     /accommodation/fees/{id}
+    defaults: { _controller: AppBundle:Accommodation:fees }
+
+app_accommodation_fee_new:
+    path:     /accommodation/fee/new/{id}
+    defaults: { _controller: AppBundle:Accommodation:newFee }
+
+app_accommodation_advertising_packages:
+    path:     /accommodation/advertisingPackages/{id}
+    defaults: { _controller: AppBundle:Accommodation:advertisingPackages }
+
+app_accommodation_advertising_package_new:
+    path:     /accommodation/advertisingPackage/new/{id}
+    defaults: { _controller: AppBundle:Accommodation:newAdvertisingPackage }
+
+
+# Booking
+app_bookings:
+    path:     /bookings
+    defaults: { _controller: AppBundle:Booking:index }
+
+app_bookings_pending:
+    path:     /bookings/pending
+    defaults: { _controller: AppBundle:Booking:pending }
+
+app_bookings_old:
+    path:     /bookings/old
+    defaults: { _controller: AppBundle:Booking:old }
+
+app_booking_confirm:
+    path:     /booking/confirm/{id}
+    defaults: { _controller: AppBundle:Booking:confirm }
+
+app_booking_delete:
+    path:     /booking/delete/{id}
+    defaults: { _controller: AppBundle:Booking:delete }
+
+app_booking_new:
+    path:     /booking/new
+    defaults: { _controller: AppBundle:Booking:new }
+
+# Search
+app_search_action:
+    path:     /search
+    defaults: { _controller: AppBundle:Search:search }
+
+app_search_page:
+    path:     /searchpage
+    defaults: { _controller: AppBundle:Search:searchPage }
+
+app_search_autocomplete_location:
+    path:     /search/autocomplete/location
+    defaults: { _controller: AppBundle:Search:searchAutocompleteLocation }
+
+app_search_autocomplete_country:
+    path:     /search/autocomplete/country
+    defaults: { _controller: AppBundle:Search:searchAutocompleteCountries }
+
+app_search_autocomplete_region:
+    path:     /search/autocomplete/region
+    defaults: { _controller: AppBundle:Search:searchAutocompleteRegions }
+
+app_search_autocomplete_subregion:
+    path:     /search/autocomplete/subregion
+    defaults: { _controller: AppBundle:Search:searchAutocompleteSubregions }
+
+app_search_autocomplete_city:
+    path:     /search/autocomplete/city
+    defaults: { _controller: AppBundle:Search:searchAutocompleteCities }
+
+# Unit
+app_units:
+    path:     /unit/list/{accommodationId}
+    defaults: { _controller: AppBundle:Unit:index }
+
+app_unit_new:
+    path:     /unit/new/{accommodationId}
+    defaults: { _controller: AppBundle:Unit:new }
+
+app_unit_edit:
+    path:     /unit/edit/{id}
+    defaults: { _controller: AppBundle:Unit:edit }
+
+app_unit_delete:
+    path:     /unit/delete/{id}
+    defaults: { _controller: AppBundle:Unit:delete }
+
+# Period
+app_period_new:
+    path:     /period/new/{unitId}
+    defaults: { _controller: AppBundle:UnitPeriod:new }
+
+app_period_delete:
+    path:     /period/delete/{id}
+    defaults: { _controller: AppBundle:UnitPeriod:delete }
+
+# Gallery
+app_gallery_new:
+    path:     /gallery/new/{accommodationId}
+    defaults: { _controller: AppBundle:Gallery:new }
+
+app_gallery_delete:
+    path:     /gallery/delete/{id}
+    defaults: { _controller: AppBundle:Gallery:delete }
+
+app_featuredImage_accommodation:
+    path:     /gallery/setFeaturedImage/{id}
+    defaults: { _controller: AppBundle:Gallery:setFeaturedImage }
+
+app_gallery_unit_new:
+    path:     /gallery/newUnit/{id}
+    defaults: { _controller: AppBundle:Gallery:newUnit }
+
+app_gallery_unit_delete:
+    path:     /gallery/deleteUnit/{id}
+    defaults: { _controller: AppBundle:Gallery:deleteUnit }
+
+app_featuredImage_unit:
+    path:     /gallery/setFeaturedImageUnit/{id}
+    defaults: { _controller: AppBundle:Gallery:setFeaturedImageUnit }
+
+# Video
+app_video_new:
+    path:     /video/new/{id}
+    defaults: { _controller: AppBundle:Gallery:videoNew }
+
+app_video_delete:
+    path:     /video/delete/{id}
+    defaults: { _controller: AppBundle:Gallery:videoDelete }
+
+app_video_step6_new:
+    path:     /video/step6/new/{id}
+    defaults: { _controller: AppBundle:Gallery:videoNew }
+
+app_video_step6_delete:
+    path:     /video/step6/delete/{id}
+    defaults: { _controller: AppBundle:Gallery:videoDelete }
+
+# Special/Additional offers
+app_additional_offers:
+    path:     /specialOffers/{category}
+    defaults: { _controller: AppBundle:AdditionalOffer:index, category: null }
+    methods: [POST, GET]
+
+app_additional_offer_single:
+    path:     /specialOffer/single/{id}
+    defaults: { _controller: AppBundle:AdditionalOffer:single }
+
+app_additional_offer_host_list:
+    path:     /specialOffer/list
+    defaults: { _controller: AppBundle:AdditionalOffer:list }
+
+app_additional_offer_host_new:
+    path:     /specialOffer/new
+    defaults: { _controller: AppBundle:AdditionalOffer:new }
+
+app_additional_offer_host_edit:
+    path:     /specialOffer/edit/{id}
+    defaults: { _controller: AppBundle:AdditionalOffer:edit }
+
+app_additional_offer_delete_photo:
+    path:     /specialOffer/delete/photo/{id}/{additionalOfferId}
+    defaults: { _controller: AppBundle:AdditionalOffer:deletePhoto }
+
+# Messages
+app_messages:
+    path:     /messages
+    defaults: { _controller: AppBundle:Message:index }
+
+app_conversation:
+    path:     /messages/conversation/{id}
+    defaults: { _controller: AppBundle:Message:conversation }
+
+app_message_send:
+    path:     /messages/send/{id}
+    defaults: { _controller: AppBundle:Message:send }
+
+# Blog
+app_blog:
+    path:     /blog
+    defaults: { _controller: AppBundle:Blog:index }
+
+app_blog_single:
+    path:     /post/{id}
+    defaults: { _controller: AppBundle:Blog:single }
+
+app_blog_comment_new:
+    path:     /blog/comment/new
+    defaults: { _controller: AppBundle:Blog:newComment }
+    methods: [POST]
+
+# Location AJAX
+app_location_get_regions:
+    path:     /location/get_regions
+    defaults: { _controller: AppBundle:Location:getRegionsByCountry }
+    methods: [POST]
+
+app_location_get_subregions:
+    path:     /location/get_subregions
+    defaults: { _controller: AppBundle:Location:getSubegionsByRegion }
+    methods: [POST]
+
+app_location_get_cities:
+    path:     /location/get_cities
+    defaults: { _controller: AppBundle:Location:getCitiesBySubregion }
+    methods: [POST]
+
+app_location_get_cities_region:
+    path:     /location/get_cities_region
+    defaults: { _controller: AppBundle:Location:getCitiesByRegion }
+    methods: [POST]

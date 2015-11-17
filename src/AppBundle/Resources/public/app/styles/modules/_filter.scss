@@ -1,0 +1,131 @@
+.filter-header {
+	position: relative;
+	@include e(resultImage) {
+		max-width: 100%;
+		height: 365px;
+	}
+	@include e(searchBar) {
+		@media #{
+			$large-up
+		}
+		{
+			position: absolute;
+			bottom: 0;
+			left: 0;
+			right: 0;
+		}
+		background: rgba($darkblue4, 0.9);
+		padding-top: 15px;
+		padding-bottom: 20px;
+	}
+}
+.filter-divider-top {
+	cursor: pointer;
+	position: relative;
+	margin-top: 20px;
+	margin-bottom: 30px;
+	border-bottom: 1px solid $filter-divider;
+	@include e(title) {
+		@extend %divider-middle;
+		top: -12px; left: 47%; bottom: 0;
+		@media #{$small-only} {
+			left: 38%;
+		}
+	}
+}
+.filter-divider-down {
+	cursor: pointer;
+	display: none;
+	position: relative;
+	margin-top: 20px;
+	border-bottom: 1px solid $filter-divider;
+	@include e(title) {
+		@extend %divider-middle;
+		top: -12px; left: 47%; bottom: 0;
+@media #{$small-only} {
+			left: 38%;
+		}
+	}
+}
+
+.filter-divider-bottom {
+
+	padding-top: 5px;
+	position: relative;
+	border-bottom: 1px solid $filter-divider;
+}
+
+.filter-heading {
+	@include e(title) {
+		@extend %filter-heading;
+		@include m(dark) {
+			@extend %filter-heading-dark;
+			
+		}
+	}
+}
+.filter-head {
+	@include e(crumbs) {
+		@include crumb-container;
+		li {
+			@include crumbs;
+			font-family: $sans-light;
+		}
+	}
+	@include e(sub-nav) {
+		@extend %subnav;
+		dd, dt {
+			padding-top: 7px;
+		}
+		dd.active {
+			height: 30px;
+			a {
+				border: 1px solid rgba($subnav-grey, 0.7);
+				-webkit-border-radius: 0;
+				border-radius: 0;
+			}
+		}
+		dd.show-map {
+			height: 30px;
+			background: $skyblue-forms;
+			a {
+				color: $white;
+				font-family: $sans-bold;
+				-webkit-border-radius: 0;
+				border-radius: 0;
+			}
+		}
+	}
+}
+.filter-body {
+	display: none;
+	label {
+		@extend %filter-label;
+	}
+	@include e(title) {
+		@extend %filter-title;
+	}
+	
+}
+
+.ratings-container {
+	margin-bottom: 20px;
+}
+
+.bb-container {
+	margin-top: 10px;
+	margin-bottom: 20px;
+
+}
+.amenities-title {
+	display: block;
+	text-align: center;
+	text-transform: uppercase;
+	font-family: $sans-bold;
+	font-size: rem-calc(15);
+	color: #58a9f7;
+	text-align: center;
+}
+.amenities-filter-container {
+	display: block;
+}

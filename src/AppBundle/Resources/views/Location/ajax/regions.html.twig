@@ -1,0 +1,11 @@
+<div class="form-group">
+    <label class="col-sm-3 control-label">{{ 'region' | trans }}</label>
+    <div class="col-sm-5">
+        <select name="{{ type }}[region]" class="regionsSelect {{ typeClass }}">
+            <option value="">{{ 'choose_option' | trans }}</option>
+            {% for region in regions %}
+                <option value="{{ region.id }}">{{ attribute(region, app.request.locale) ?: region.en }}</option>
+            {% endfor %}
+        </select>
+    </div>
+</div>

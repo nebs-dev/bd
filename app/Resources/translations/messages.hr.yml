@@ -1,0 +1,81 @@
+username: 'Korisničko ime'
+email: Email
+user_type: 'Tip korisnika'
+user_name: Ime
+user_surename: Prezime
+phone: Telefon
+address: Adresa
+password: Lozinka
+password_repeat: 'Ponovite lozinku'
+user_new: 'Novi korisnik'
+user_status: Status
+user_role: Ovlast
+guest: Gost
+host: Vlasnik
+is_active: Aktivan
+user_create_success: 'Korisnik uspješno kreiran'
+edit: Uredi
+delete: Obriši
+active: Aktivan
+inactive: Neaktivan
+user_edit_success: 'Korisnik uspješno editiran'
+back: Natrag
+save: Spremi
+create: Kreiraj
+are_you_sure_delete: 'Da li ste sigurni da želite obrisati?'
+user_delete_success: 'Korisnik uspješno obrisan'
+users: Korisnici
+locations: Lokacije
+countries: Zemlje
+regions: Regije
+cities: Gradovi
+name: Naziv
+create_success: 'Kreiranje uspješno'
+delete_success: 'Brisanje uspješno'
+edit_success: 'Editiranje uspješno'
+country: Država
+region: Regija
+tv: TV
+air_condition: Klima
+microwave: Mikrovalna
+radio: Radio
+crib: 'Dječji krevetić'
+wifi: Wifi
+washing_machine: 'Perilica rublja'
+sat_tv: 'Satelitska TV'
+fridge: Hladnjak
+computer: Računalo
+heating: Grijanje
+safe: Sef
+dvd: DVD
+eletric_kettle: 'Kuhalo za vodu'
+game_console: 'Igrača konzola'
+towels: Ručnici
+sea_view: 'Pogled na more'
+familiy_suitable: 'Primjereno obiteljima'
+breakfast_making: 'Priprema doručka'
+bathroom: Kupaonica
+pets: 'Kučni ljubimci'
+kitchen: Kuhinja
+smoking_allowed: 'Dozvoljeno pušenje'
+terrace: Balkon
+grill: Roštilj
+parking: Parking
+pool: Bazen
+garage: Garaža
+access_disabled: 'Pristup invalidima'
+kitchen_use: 'Korištenje kuhinje'
+hostels: Hosteli
+hotels: Hoteli
+motels: Moteli
+bed_breakfast: 'Bed and Breakfast'
+apartments: Apartmani
+accommodation: 'Smještajni objekt'
+accommodation_category: 'Kategorija smještaja'
+category: Kategorija
+user: Korisnik
+unit: 'Smještajna jedinica'
+choose_option: 'Odaberite opciju'
+restaurants: Restorani
+diving: Ronjenje
+apartment: Apartman

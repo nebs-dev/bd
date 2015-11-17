@@ -1,0 +1,62 @@
+.green-box {
+	display: block;
+	position: relative;
+	height: 70px;
+	background: $greenbox;
+	&:hover {
+		background: darken($greenbox, 10%);
+		-webkit-transition: background-color 300ms ease-out;
+		   -moz-transition: background-color 300ms ease-out;
+		    -ms-transition: background-color 300ms ease-out;
+		     -o-transition: background-color 300ms ease-out;
+		        transition: background-color 300ms ease-out;
+	}
+	@media #{$small-up} {
+		margin-bottom: 20px;
+	}
+	@media #{$large-up} {
+		margin-top: 82px;
+	}
+
+	.text-container {
+		display: inline-block;
+		margin-left: 15px;
+		margin-top: 5px;
+		@media #{$small-only} {
+		margin-left: 5px;
+	}
+	}
+	.subheading {
+		font-family: $raleway;
+		margin-bottom: 2px;
+		font-size: rem-calc(18);
+		color: $white;
+		display: inline-block;
+	}
+	span {
+		font-family: $raleway-bold;
+		font-size: rem-calc(22);
+		line-height: rem-calc(20);
+		color: $white;
+		display: block;
+
+	}
+	.green-box-logo{
+		@include background-image-retina(dollar-sign, png, 42px, 37px);
+		width: 42px;
+		height: 37px;
+		display: inline-block;
+		margin-left: 15px;
+		@media #{$small-only} {
+		margin-left: 5px;
+	}
+	}
+	.fa-caret-right {
+		@include vertical-align;
+		position: absolute;
+		right: 2%;
+		font-size: rem-calc(30);
+	}
+
+}
+

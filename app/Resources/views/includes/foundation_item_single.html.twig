@@ -1,0 +1,122 @@
+{% if accommodations is defined %}
+{% if accommodations is not empty %}
+{% set resPage = 22 %}
+{% if currentPage == numPages %}
+{% if accommodations | length < 22 %}
+{% set resPage = accommodations | length %}
+{% else %}
+{% set resPage = accommodations | length - 22 %}
+{% endif %}
+{% endif %}
+{#{{ resPage }}#}
+{% for accommodation in accommodations %}
+{% set col_width = 3 %}
+{% if loop.index == 5 or loop.index == 6 or loop.index == 7 or loop.index == 16 or loop.index == 17 or loop.index == 18 %}
+{% set col_width = 4 %}
+{% endif %}
+{% if (loop.first or loop.index == 5 or loop.index == 8 or loop.index == 12 or loop.index == 16 or loop.index == 19) %}
+<div class="row">
+    {% endif %}
+    <section id="accommodation" class="large-{{ col_width }} medium-6 columns">
+        {#{{ loop.index }}#}
+        <a href="{{ path('app_accommodation_single',
+        {'_locale': app.request.attributes.get('_locale'), 'id': accommodation.id }) }}" class="">
+        <figure class="accommodation-item-filter"
+            style="background-image: url('{{ accommodation.featuredImage | imagine_filter('my_thumb') }}')">
+            <figcaption class="accommodation-item-filter__description">
+                {{ 'from' | trans }}
+                {{ currencyService.fromEuro( accommodationService.getLowPrice(accommodation), app.session.get('currency') ) }}
+                {{ app.session.get('currency') }} {{ 'per_night' | trans }}
+            </figcaption>
+        </figure>
+        </a>
+        <span class="accommodation-item-name">
+        {{ accommodation.name }},
+        <span class="accommodation-item-name-city">
+        {{ attribute(accommodation.city, app.request.locale) ?: accommodation.city.en }}
+        </span>
+        </span>
+        <p class="accommodation-description">
+        {% if accommodation.description is defined and accommodation.description is not null %}
+        {% if attribute(accommodation.description, app.request.locale) is not null %}
+        {{ attribute(accommodation.description, app.request.locale)[:50] ~ '...' }}
+        {% else %}
+        {{ accommodation.description.en[:30] ~ '...' }}
+        {% endif %}
+        {% endif %}
+        </p>
+        <span class="accommodation-icons-home">
+        {% for icon in accommodationService.getIcons(accommodation) %}
+        <img width="20" height="20" src="{{ app.request.getSchemeAndHttpHost() }}{{ asset('bundles/app/app/images/icons/' ~icon~ '.png') }}" />
+        {% endfor %}
+        </span>
+    </section>
+    {% if loop.index == 4 or loop.index == 7 or loop.index == 11 or loop.index == 15 or loop.index == 18 or loop.index == 22 or loop.index == resPage %}
+</div>
+{% endif %}
+{% if loop.index == 11 or (loop.index == resPage and resPage < 22 ) %}
+
+    <div class="row">
+        {% if banners is defined %}
+        {% if banners is not empty %}
+        {% for banner in banners|slice(0, 3) %}
+        <section id="accommodation" class="large-3 medium-6 columns">
+            <figure class="accommodation-item.accommodation-banner"
+                style="background-image: url('{{ banner.webPath | imagine_filter('my_thumb') }}">
+            </figure>
+        </section>
+        {% endfor %}
+        {% endif %}
+        {% endif %}
+    </div>
+</div>
+{# Banners #}
+{% endif %}
+{% endfor %}
+{% endif %}
+{% else %}
+{{ 'no_result' | trans }}
+{% endif %}
+{# PAGINATION #}
+<div class="row">
+    <div class="small-12 medium-12 large-6 large-centered columns">
+        <section class="main-pagination">
+            {% if currentPage is defined %}
+                <button class="pagination pagination-button" id="first">{{ 'first' | trans }}</button>
+                {% if currentPage > 1 %}
+                    <button class="pagination-button pagination"
+                            id="{{ currentPage - 1 }}">{{ currentPage - 1 }}</button>
+                {% endif %}
+                {# Current Page #}
+                <button class="disabled pagination pagination-button" id="{{ currentPage }}">{{ currentPage }}</button>
+                {% if numPages > currentPage %}
+                    <button class="pagination-button pagination"
+                            id="{{ currentPage + 1 }}">{{ currentPage + 1 }}</button>
+                {% endif %}
+                {#<button class="pagination pagination-button" id="last">{{ 'last' | trans }}</button>#}
+            {% endif %}
+        </section>
+    </div>
+</div>
+{# /PAGINATION #}
+<section class="filter-divider-bottom row"></section>
+<section class="filter-divider-bottom row"></section>
+{# Destinations #}
+{% if discover is defined %}
+    <div class="row">
+        {% for discoverItem in discover|slice(0, 4) %}
+            <a href="{{ path('app_home_discover_search',
+            {'_locale': app.request.attributes.get('_locale'), 'location': discoverItem.location }) }}"
+               class="">
+                <section id="accommodation" class="large-3 medium-6 columns">
+                    <figure class="discover-item"
+                            style="background: url('{{ discoverItem.webPath | imagine_filter('my_thumb') }}')">
+                        <figcaption class="discover-item__description">
+                            {{ discoverItem.location }}
+                        </figcaption>
+                    </figure>
+                </section>
+            </a>
+        {% endfor %}
+    </div>
+{% endif %}

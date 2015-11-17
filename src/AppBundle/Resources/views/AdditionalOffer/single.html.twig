@@ -1,0 +1,91 @@
+{% extends 'base.html.twig' %}
+
+{% block content %}
+	{% block foundation_header %}
+		{% include 'includes/foundation-header.html.twig'  %}
+	{% endblock %}
+
+	<div class="blog-bg-featured">
+		<div class="blogSaveMoneyAndTime">
+			<div class="row">
+				<div class="logoGreenSingle"></div>
+				<div class="text-container">
+					<h2 class="subheading">{{ 'Save money and time!' | trans }}</h2>
+					<span>{{ 'Publish Your property' | trans }}</span>
+				</div>
+			</div>
+		</div>
+	</div>
+	<div class="row" style="padding-top: 30px;"></div>
+<div class="row">
+	<p>{{ 'country' | trans }}
+		: {{ additionalOffer.country ? attribute(additionalOffer.country, 'en') : '-' }}</p>
+	<p>{{ 'region' | trans }}
+		: {{ additionalOffer.region ? attribute(additionalOffer.region, 'en') : '-' }}</p>
+	<p>{{ 'subregion' | trans }}
+		: {{ additionalOffer.subregion ? attribute(additionalOffer.subregion, 'en') : '-' }}</p>
+	<p>{{ 'city' | trans }}: {{ additionalOffer.city ? attribute(additionalOffer.city, 'en') : '-' }}</p>
+
+	{# Gallery #}
+	<h3>{{ 'gallery' | trans }}</h3>
+	{% if additionalOffer.gallery %}
+		{% for photo in additionalOffer.gallery %}
+			{# Full image #}
+			{#<img src="{{ app.request.getSchemeAndHttpHost() }}{{ asset(photo.webPath) }}" />#}
+
+			{# Thumb #}
+			<img src="{{ photo.webPath | imagine_filter('my_thumb') }}">
+		{% endfor %}
+	{% endif %}
+
+	{# Category #}
+	<h3>{{ 'category' | trans }}</h3>
+	{% if additionalOffer.category %}
+		<p>{{ 'category' | trans }}: {{ additionalOffer.category.name | trans }}</p>
+	{% endif %}
+
+	{# Details #}
+	<h3>{{ 'details' | trans }}</h3>
+	{% if additionalOffer.details %}
+		<p>{{ 'title' | trans }}: {{ additionalOffer.details.title }}</p>
+		<p>{{ 'address' | trans }}: {{ additionalOffer.details.address }}</p>
+		<p>{{ 'x' | trans }}: {{ additionalOffer.details.x }}</p>
+		<p>{{ 'y' | trans }}: {{ additionalOffer.details.y }}</p>
+		<p>{{ 'email' | trans }}: {{ additionalOffer.details.email }}</p>
+		<p>{{ 'phone' | trans }}: {{ additionalOffer.details.phone }}</p>
+		<p>{{ 'web' | trans }}: {{ additionalOffer.details.web }}</p>
+		<p>{{ 'facebook' | trans }}: {{ additionalOffer.details.facebook }}</p>
+		<p>{{ 'twitter' | trans }}: {{ additionalOffer.details.twitter }}</p>
+		<p>{{ 'google' | trans }}: {{ additionalOffer.details.google }}</p>
+		<p>{{ 'video' | trans }}: {{ additionalOffer.details.video }}</p>
+	{% endif %}
+
+	<div class="bg-white pad-forty panel box">
+	{# Description #}
+	<h3>{{ 'description' | trans }}</h3>
+	<p>{{ 'description' | trans }}
+		: {{ additionalOffer.descriptions ? attribute(additionalOffer.descriptions, app.request.locale) : '-' }}</p>
+	</div>
+
+	{# User #}
+	{% if additionalOffer.host %}
+		<h3>{{ 'user_details' | trans }}</h3>
+		<p>{{ 'title' | trans }}: {{ additionalOffer.host.title }}</p>
+		<p>{{ 'name' | trans }}: {{ additionalOffer.host.name }}</p>
+		<p>{{ 'surename' | trans }}: {{ additionalOffer.host.surename }}</p>
+		<p>{{ 'address' | trans }}: {{ additionalOffer.host.address }}</p>
+		<p>{{ 'phone' | trans }}: {{ additionalOffer.host.phone }}</p>
+		<p>{{ 'email' | trans }}: {{ additionalOffer.host.email }}</p>
+
+		{% if additionalOffer.host.type == 'company' %}
+			<p>{{ 'companyName' | trans }}: {{ additionalOffer.host.companyName }}</p>
+			<p>{{ 'companyVAT' | trans }}: {{ additionalOffer.host.companyVAT }}</p>
+			<p>{{ 'zip' | trans }}: {{ additionalOffer.host.zip }}</p>
+		{% endif %}
+	{% endif %}
+</div>
+<div class="row" style="padding-top: 50px;"></div>
+	{% block foundation_footer %}
+		{% include 'includes/foundation-footer.html.twig'  %}
+	{% endblock %}
+{% endblock %}

@@ -1,0 +1,71 @@
+
+<!-- top nav -->
+		<div class="top-bar-nest">
+			<nav class="top-bar" data-topbar role="navigation" data-options="is_hover: false">
+				<ul class="title-area left">
+
+
+					<!-- Remove the class "menu-icon" to get rid of menu icon. Take out "Menu" to just have icon alone -->
+					<li class="toggle-topbar menu-icon"><a href="#"><span></span></a>
+					</li>
+				</ul>
+
+				<section class="top-bar-section ">
+					<!-- Right Nav Section -->
+					<ul class="right">
+						<li class="has-dropdown bg-transparent">
+							<a href="#" class="bg-transparent has-dropdown">
+								{{ 'Currency' | trans }} <strong class="text-white">{{ app.session.get('currency') }}</strong>
+							</a>
+
+							 <ul class="dropdown dropdown-nest profile-dropdown" style="min-width: 300px !important;">
+								{% for currency in currencyService.getCurrencies()  %}
+									 <li class="bg-transparent text-white" style="width: 25%; margin: 0%;">
+										<a class="bg-transparent" href="{{ path('app_home_change_currency', {'code': currency.code} ) }}">{{ currency.code }}</a>
+									</li>
+								{% endfor %}
+							</ul>
+						</li>
+
+						<li class="has-dropdown bg-transparent">
+							<a href="#" class="bg-transparent has-dropdown">
+								{{ 'Language' | trans }} <strong class="text-white">{{ languageService.getLanguage(app.request.locale).name }}</strong>
+							</a>
+							 <ul class="dropdown dropdown-nest profile-dropdown" style="min-width: 300px !important;">
+								{% for lang in languageService.getLanguages()  %}
+									<li class="bg-transparent text-white" style="width: 25%; margin: 0%;">
+										<a class="bg-transparent" href="{{ path('app_home_change_language', {'locale': lang.code} ) }}">
+											{{ lang.code }}
+											<img src="{{ asset('bundles/app/app/images/flags/' ~ lang.code ~ '.png') }}" />
+										</a>
+									</li>
+								{% endfor %}
+							</ul>
+						</li>
+						<li class=" has-dropdown bg-transparent">
+							 <a class="bg-transparent" href="#">
+								<img alt="" class="admin-pic img-circle" src="http://api.randomuser.me/portraits/thumb/men/28.jpg"><span class="admin-pic-text text-white">{{ 'Welcome' | trans }}, {{ app.user ? app.user.getUserName() : 'guest' | trans }} </span>
+							</a>
+
+							<ul class="dropdown dropdown-nest profile-dropdown">
+								{% if is_granted('ROLE_HOST') and is_granted('ROLE_ADMIN') == FALSE %}
+									<li>
+										<i class="icon-user"></i>
+										<a href="{{ path('app_profile_edit', {'_locale': app.request.attributes.get('_locale')}) }}">
+											<h4>Edit profle</h4>
+										</a>
+									</li>
+								{% endif %}
+								<li>
+									<i class="icon-upload"></i>
+									<a href="{{ path('logout', {'_locale': app.request.attributes.get('_locale')}) }}">
+										<h4>Logout</h4>
+									</a>
+								</li>
+							</ul>
+						</li>
+					</ul>
+				</section>
+			</nav>
+		</div>
+		<!-- end of top nav -->

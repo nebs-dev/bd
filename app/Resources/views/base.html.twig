@@ -1,0 +1,122 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="UTF-8"/>
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>{% block title %}Best Destination{% endblock %}</title>
+    {% block stylesheets %}
+        <link href="{{ asset('bundles/app/dist/css/main.css') }}" rel='stylesheet'>
+                <link href="{{ asset('bundles/app/dist/css/theme.css') }}" rel='stylesheet'>
+
+    {% endblock %}
+    <link rel="icon" type="image/x-icon" href="{{ asset('favicon.ico') }}"/>
+</head>
+<body>
+    {% block menu %}{% endblock %}
+        {% block content %}{% endblock %}
+            {% block js %}
+                <script type="text/javascript">
+                    if('{{ app.request.locale }}' == 'en') {
+                        rootPath = '{{ app.request.getBaseURL() }}';
+                    } else {
+                        rootPath = '{{ app.request.getBaseURL() }}' + '/' + '{{ app.request.locale }}';
+                    }
+                    var appVar = {
+                        rootPath: rootPath,
+                        locale: '{{ app.request.locale }}'
+                    };
+                </script>
+                <script src="http://maps.google.cn/maps/api/js?region=EN&language=zh-EN&key=AIzaSyAAyPnnL252fAXIRpzl9p3sq0iZwQXw6wU"
+                type="text/javascript"></script>
+                <script src="{{ asset('bundles/app/dist/js/vendor.min.js') }}"></script>
+                <script src="{{ asset('bundles/app/map/markerclusterer.js') }}"></script>
+                <script src="{{ asset('bundles/app/map/List.js') }}"></script>
+                <script src="{{ asset('bundles/app/map/Mapster.js') }}"></script>
+                <script src="{{ asset('bundles/app/dist/js/main.min.js') }}"></script>
+                <script src="//cdnjs.cloudflare.com/ajax/libs/jquery-form-validator/2.2.43/jquery.form-validator.min.js"></script>
+                <script src="{{ asset('bundles/app/js/main.js') }}"></script>
+                <script>
+                    $(document).foundation();
+                </script>
+                {% if mapJSON is defined %}
+                    <script>
+                        (function (window, google, mapster) {
+                            var marker1 = {{ mapJSON | raw }};
+                            var i = 0;
+                            var lng = 0;
+                            var lat = 0;
+                            while(i <= marker1.length) {
+                                if(marker1[i].lng > 0 && marker1[i].lat > 0) {
+                                    lng = marker1[i].lng;
+                                    lat = marker1[i].lat;
+                                    break;
+                                }
+                                i++;
+                            }
+                          
+                            mapster.MAP_OPTIONS = {
+                                center: {
+                                    lat: parseFloat(lat),
+                                    lng: parseFloat(lng)
+                                },
+                                zoom: 8,
+                                disableDefaultUI: false,
+                                scrollwheel: false,
+                                draggable: true,
+                                mapTypeId: google.maps.MapTypeId.ROADMAP,
+                                zoomControlOptions: {
+                                    position: google.maps.ControlPosition.LEFT_BOTTOM,
+                                    style: google.maps.ZoomControlStyle.DEFAULT
+                                },
+                                panControlOptions: {
+                                    position: google.maps.ControlPosition.LEFT_BOTTOM
+                                },
+                                cluster: {
+                                    options: {}
+                                }
+                            };
+                        }(window, google, window.Mapster || (window.Mapster = {})));
+(function (window, mapster) {
+    var options = mapster.MAP_OPTIONS;
+    var element = document.getElementById('map-canvas2');
+    var map = new mapster.create(element, options);
+    var marker2 = {{ mapJSON | raw }};
+    $.each(marker2, function (key, data) {
+    var json1 = map.addMarker({
+            lng: parseFloat(data.lng),
+            lat: parseFloat(data.lat),
+
+            content: data.description
+        });
+    });
+
+    $(".showmap-button").on('click', function(event) {
+        event.preventDefault();
+
+        /* Act on the event */
+        $("#map-canvas2").toggle();
+    });
+}(window, window.Mapster || (window.Mapster = {})));
+
+var loaded = false;
+var time = 3000;
+function hideMapCanvas2(){
+  $("#map-canvas2").hide();
+}
+setTimeout(hideMapCanvas2, 2000);
+
+</script>
+{% endif %}
+
+
+{% endblock %}
+{% block inline_calendar %}
+
+    {% endblock %}
+    <script>   
+    $.validate({
+    modules : 'location, date, security, file'
+  });</script>
+
+</body>
+</html>

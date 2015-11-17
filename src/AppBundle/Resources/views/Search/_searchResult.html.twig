@@ -1,0 +1,191 @@
+{% block title %}{{ 'search' | trans }}{% endblock %}
+    {% for flashMessage in app.session.flashbag.get('formErrors') %}
+        <p>{{ flashMessage }}</p>
+    {% endfor %}
+
+    {% if location is defined and location %}
+        <h1>{{ 'location' | trans }}: {{ attribute(location, app.request.locale) }}</h1> 
+        {# h1 je search Dubrovnik #}
+        {#<img src="{{ location.webPath | imagine_filter('my_thumb') }}" >#}
+        <img src="{{ app.request.getSchemeAndHttpHost() }}{{ asset(location.webPath) }}" />
+    {% endif %}
+
+    {# Search form #}
+    {{ form_start(
+        searchForm, {
+            'method': 'POST',
+            'action': path('app_search_action', {'_locale': app.request.attributes.get('_locale') }),
+            'attr': {'novalidate': 'novalidate', 'class':"form-horizontal", 'id':'searchForm'}
+        }
+        ) }}
+
+        <div class="form-group">
+            {{ form_label(searchForm.location, 'location' | trans, { 'label_attr': {'class': 'col-sm-3 control-label'} }) }}
+            {{ form_errors(searchForm.location) }}
+            <div class="col-sm-5">
+                {{ form_widget(searchForm.location, { 'attr': {'class': 'form-control locationAutocomplete'} }) }}
+            </div>
+        </div>
+
+
+        <input type="hidden" name="page" id="page" value="1">
+
+        {{ form_rest(searchForm) }}
+
+        <div class="form-group">
+            <div class="col-sm-5 col-sm-offset-3">
+                <input type="submit" id="searchActionSubmit" name="searchAction" class="btn btn-default" value="{{ 'search' | trans }}" />
+            </div>
+        </div>
+
+    {{ form_end(searchForm) }}
+
+    {# Search results #}
+    <h1>{{ 'accommodations' | trans }}</h1>
+
+    {#{{ app.locale }}#}
+
+    {% if accommodations is defined %}
+        {% if accommodations is not empty %}
+            <div id="accommodations">
+                <ul>
+                    {% for accommodation in accommodations %}
+                        <li>
+                            <div class="title">
+                                <a href="{{
+                                    path('app_accommodation_single',
+                                    {'_locale': app.request.attributes.get('_locale'), 'id': accommodation.id }) }}" class="" >
+                                    {{ accommodation.name }}
+                                </a>
+                            </div>
+                            <div class="a_city">
+                                {{ attribute(accommodation.city, app.request.locale) }}
+                            </div>
+                            <div class="a_description">
+                                {% if accommodation.description is defined and accommodation.description is not null %}
+                                    {% if attribute(accommodation.description, app.request.locale) is not null %}
+                                        {{ attribute(accommodation.description, app.request.locale)[:50] ~ '...' }}
+                                    {% else %}
+                                        {{ accommodation.description.en[:50] ~ '...' }}
+                                    {% endif %}
+                                {% endif %}
+                            </div>
+                            <div class="lowestPrice">
+                                {{ 'from' | trans }} {{ accommodationService.getLowPrice(accommodation) }} {{ app.session.get('currency') }} {{ 'per_night' | trans }}
+                            </div>
+                            <div class="featuredImage">
+                                <img src="{{ accommodation.featuredImage | imagine_filter('my_thumb') }}" >
+                            </div>
+                        </li>
+                    {% endfor %}
+                </ul>
+            </div>
+
+        {% else %}
+            {{ 'no_result' | trans }}
+        {% endif %}
+    {% endif %}
+
+
+    {# PAGINATION #}
+    {% if currentPage is defined %}
+        <button class="pagination" id="first">{{ 'first' | trans }}</button>
+
+        {% if currentPage > 1 %}
+            <button class="pagination" id="{{ currentPage - 1 }}">{{ currentPage - 1 }}</button>
+        {% endif %}
+
+        {# Current Page #}
+        <button class="disabled pagination" id="{{ currentPage }}">{{ currentPage }}</button>
+
+        {% if numPages > currentPage %}
+            <button class="pagination" id="{{ currentPage + 1 }}">{{ currentPage + 1 }}</button>
+        {% endif %}
+
+        <button class="pagination" id="last">{{ 'last' | trans }}</button>
+    {% endif %}
+    {# /PAGINATION #}
+
+
+    <h2>{{ 'additionalOffers' | trans }}</h2>
+    {% if additionalOffers is defined %}
+        {% if additionalOffers is not empty %}
+            <ul>
+                {% for ao in additionalOffers %}
+                    <li>
+                        <div class="title">
+                            <a href="{{
+                            path('app_additional_offer_single',
+                            {'_locale': app.request.attributes.get('_locale'), 'id': ao.id }) }}" class="" >
+                                {{ ao.details.title }}
+                            </a>
+                        </div>
+                        <div class="ao_title">
+                            {{ ao.details.title }}
+                        </div>
+                        {% if ao.featuredImage %}
+                            <img src="{{ ao.featuredImage | imagine_filter('my_thumb') }}" >
+                        {% else %}
+                            -
+                        {% endif %}
+                    </li>
+                {% endfor %}
+            </ul>
+
+        {% else %}
+            {{ 'no_result' | trans }}
+        {% endif %}
+    {% endif %}
+
+
+    <h2>Banners side</h2>
+    {% if bannersSide is defined %}
+        {% if bannersSide is not empty %}
+            <ul>
+                {% for banner in bannersSide %}
+                    <li>
+                        <img src="{{ banner.webPath | imagine_filter('my_thumb') }}" >
+                    </li>
+                {% endfor %}
+            </ul>
+        {% endif %}
+    {% endif %}
+
+    <h2>Banners head</h2>
+    {% if bannersHead is defined %}
+        {% if bannersHead is not empty %}
+            <ul>
+                {% for banner in bannersHead %}
+                    <li>
+                        <img src="{{ banner.webPath | imagine_filter('my_thumb') }}" >
+                    </li>
+                {% endfor %}
+            </ul>
+        {% endif %}
+    {% endif %}
+
+   
+
+
+    {% block js %}
+    {{ parent() }}
+
+    <script type="text/javascript">
+        $(document).ready(function() {
+
+            if($('accommodations')) {
+                $('html, body').animate({
+                    scrollTop: $("#accommodations").offset().top
+                }, 2000);
+            }
+
+            // PAGINATION
+            $('.pagination').on('click', function(e) {
+                $('#page').val($(this).attr('id'));
+                $('#searchForm').submit();
+            });
+        });
+
+    </script>
+
+{% endblock %}

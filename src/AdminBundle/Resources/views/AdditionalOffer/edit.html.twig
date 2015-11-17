@@ -1,0 +1,462 @@
+{% extends 'admin.html.twig' %}
+
+
+{% block stylesheets %}
+	{{ parent() }}
+	<link href="http://cdn.datatables.net/1.10.5/css/jquery.dataTables.min.css" rel="stylesheet" type="text/css" />
+
+	<link href="{{asset('bundles/admin/js/footable/css/footable.core.css?v=2-0-1')}}" rel="stylesheet" type="text/css" />
+	<link href="{{asset('bundles/admin/js/footable/css/footable.standalone.css')}}" rel="stylesheet" type="text/css" />
+	<link href="{{asset('bundles/admin/js/footable/css/footable-demos.css')}}" rel="stylesheet" type="text/css" />
+
+{% endblock %}
+
+
+
+{% block content %}
+
+	{% for flashMessage in app.session.flashbag.get('msgSuccess') %}
+	<div class="box bg-light-green">
+		<div class="box-header bg-light-green ">
+			<!-- tools box -->
+			<div class="pull-right box-tools">
+				<span class="box-btn" data-widget="remove">
+					<i class="icon-cross"></i>
+				</span>
+			</div>
+			<h3 class="box-title "><i class="text-white  icon-thumbs-up"></i>
+				<span class="text-white">SUCCESS</span>
+			</h3>
+		</div>
+		<!-- /.box-header -->
+		<div class="box-body " style="display: block;">
+			<p class="text-white"><strong>Well done!</strong> {{ flashMessage }}</p>
+		</div>
+	</div>
+	{% endfor %}
+	{% for flashMessage in app.session.flashbag.get('msgError') %}
+	<div class="box bg-red">
+		<div class="box-header bg-red ">
+			<!-- tools box -->
+			<div class="pull-right box-tools">
+				<span class="box-btn" data-widget="remove">
+					<i class="icon-cross"></i>
+				</span>
+			</div>
+			<h3 class="box-title "><i class="text-white  icon-thumbs-up"></i>
+				<span class="text-white">Error</span>
+			</h3>
+		</div>
+		<!-- /.box-header -->
+		<div class="box-body " style="display: block;">
+			<p class="text-white"><strong>Sorry!</strong> {{ flashMessage }}</p>
+		</div>
+	</div>
+	{% endfor %}
+<div class="row no-pad">
+	<div class="large-12 columns">
+		<div class="box bg-white">
+			<div class="box-body pad-forty" style="display: block;">
+					{{ form_start(form, {'attr': {'novalidate': 'novalidate', 'class':"form-horizontal", 'id':'additionalOfferEdit' }}) }}
+					{{ form_errors(form) }}
+				<div class="large-6 columns">
+					<h3>Gallery</h3>
+
+					<ul>
+						{% for gallery in additionalOffer.gallery %}
+							{#{% if gallery.id is not null %}#}
+								<li class="galleryPhotoNumber">
+									<img src="{{ gallery.webPath | imagine_filter('my_thumb') }}" >
+									<a class="btn bg-red" href="{{ path('admin_additional_offer_delete_photo',
+										{'_locale': app.request.attributes.get('_locale'),
+										'id': gallery.id, 'additionalOfferId': additionalOffer.id
+										}) }}"
+										onclick="return confirm('{{ 'are_you_sure_delete' | trans }}')"
+									>
+										{{ 'delete' | trans }}
+									</a>
+								</li>
+							{#{% endif %}#}
+						{% endfor %}
+					</ul>
+				</div>
+				<div class="large-6 columns">
+					<ul class="tags" data-prototype="{{ form_widget(form.gallery.vars.prototype)|e }}">
+						{# iterate over each existing gallery and render its only field: photo #}
+						{% for gallery in form.gallery %}
+							<li>{{ form_row(gallery.file) }}</li>
+						{% endfor %}
+					</ul>
+				</div>
+				<div class="row"></div>
+                    <div class="large-6 columns">
+                        <div class="form-group">
+                            <label class="col-sm-3 control-label">{{ 'country' | trans }}</label>
+                            <div class="col-sm-5">
+                                <input type="text" name="country" class="countryAutocomplete form-control" value="{{ additionalOffer.country ? additionalOffer.country.en }}" >
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="large-6 columns">
+                        <div class="form-group">
+                            <label class="col-sm-3 control-label">{{ 'region' | trans }}</label>
+                            <div class="col-sm-5">
+                                <input type="text" name="region" class="regionAutocomplete form-control" value="{{ additionalOffer.region ? additionalOffer.region.en }}" >
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="large-6 columns">
+                        <div class="form-group">
+                            <label class="col-sm-3 control-label">{{ 'subregion' | trans }}</label>
+                            <div class="col-sm-5">
+                                <input type="text" name="subregion" class="subregionAutocomplete form-control" value="{{ additionalOffer.subregion ? additionalOffer.subregion.en }}" >
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="large-6 columns">
+                        <div class="form-group">
+                            <label class="col-sm-3 control-label">{{ 'city' | trans }}</label>
+                            <div class="col-sm-5">
+                                <input type="text" name="city" class="cityAutocomplete form-control" value="{{ additionalOffer.city ? additionalOffer.city.en }}" >
+                            </div>
+                        </div>
+                    </div>
+
+				{#<div class="large-6 columns">#}
+					{#&#123;&#35; Country &#35;&#125;#}
+					{#<div class="form-group">#}
+						{#{{ form_label(form.country, 'country' | trans , { 'label_attr': {'class': 'col-sm-3 control-label'} }) }}#}
+						{#{{ form_errors(form.country) }}#}
+						{#<div class="col-sm-5">#}
+							{#{{ form_widget(form.country, { 'attr': {'class': 'form-control validate[required]'} }) }}#}
+						{#</div>#}
+					{#</div>#}
+				{#</div>#}
+				{#<div class="large-6 columns">#}
+					{#&#123;&#35; Region &#35;&#125;#}
+					{#<div class="form-group">#}
+						{#{{ form_label(form.region, 'region' | trans , { 'label_attr': {'class': 'col-sm-3 control-label'} }) }}#}
+						{#{{ form_errors(form.region) }}#}
+						{#<div class="col-sm-5">#}
+							{#{{ form_widget(form.region, { 'attr': {'class': 'form-control validate[required]'} }) }}#}
+						{#</div>#}
+					{#</div>#}
+				{#</div>#}
+				{#<div class="large-6 columns">#}
+					{#&#123;&#35; Subregion &#35;&#125;#}
+					{#<div class="form-group">#}
+						{#{{ form_label(form.subregion, 'subregion' | trans , { 'label_attr': {'class': 'col-sm-3 control-label'} }) }}#}
+						{#{{ form_errors(form.subregion) }}#}
+						{#<div class="col-sm-5">#}
+							{#{{ form_widget(form.subregion, { 'attr': {'class': 'form-control validate[required]'} }) }}#}
+						{#</div>#}
+					{#</div>#}
+				{#</div>#}
+				{#<div class="large-6 columns">#}
+					{#&#123;&#35; City &#35;&#125;#}
+					{#<div class="form-group">#}
+						{#{{ form_label(form.city, 'city' | trans , { 'label_attr': {'class': 'col-sm-3 control-label'} }) }}#}
+						{#{{ form_errors(form.city) }}#}
+						{#<div class="col-sm-5">#}
+							{#{{ form_widget(form.city, { 'attr': {'class': 'form-control validate[required]'} }) }}#}
+						{#</div>#}
+					{#</div>#}
+				{#</div>#}
+				<div class="large-6 columns">
+					{# Category #}
+					<div class="form-group">
+						{{ form_label(form.category, 'category' | trans , { 'label_attr': {'class': 'col-sm-3 control-label'} }) }}
+						{{ form_errors(form.category) }}
+						<div class="col-sm-5">
+							{{ form_widget(form.category, { 'attr': {'class': 'form-control validate[required]'} }) }}
+						</div>
+					</div>
+				</div>
+				<div class="row"></div>
+				<div class="large-6 columns">
+					{# Details #}
+					<div class="form-group">
+						{{ form_label(form.details.title, 'title' | trans , { 'label_attr': {'class': 'col-sm-3 control-label'} }) }}
+						{{ form_errors(form.details.title) }}
+						<div class="col-sm-5">
+							{{ form_widget(form.details.title, { 'attr': {'class': 'form-control validate[required]'} }) }}
+						</div>
+					</div>
+				</div>
+				<div class="large-6 columns">
+					<div class="form-group">
+						{{ form_label(form.details.email, 'email' | trans , { 'label_attr': {'class': 'col-sm-3 control-label'} }) }}
+						{{ form_errors(form.details.email) }}
+						<div class="col-sm-5">
+							{{ form_widget(form.details.email, { 'attr': {'class': 'form-control validate[required]'} }) }}
+						</div>
+					</div>
+				</div>
+				<div class="large-6 columns">
+					<div class="form-group">
+						{{ form_label(form.details.address, 'address' | trans , { 'label_attr': {'class': 'col-sm-3 control-label'} }) }}
+						{{ form_errors(form.details.address) }}
+						<div class="col-sm-5">
+							{{ form_widget(form.details.address, { 'attr': {'class': 'form-control validate[required]'} }) }}
+						</div>
+					</div>
+				</div>
+
+				<div class="large-6 columns">
+					<div class="form-group">
+						{{ form_label(form.validUntil, 'Valid_until' | trans , { 'label_attr': {'class': 'col-sm-3 control-label'} }) }}
+						{{ form_errors(form.validUntil) }}
+						<div class="col-sm-5">
+							{{ form_widget(form.validUntil, { 'attr': {'class': 'form-control validate[required]'} }) }}
+						</div>
+					</div>
+				</div>
+				<div class="large-6 columns">
+					<div class="form-group">
+						{{ form_label(form.details.phone, 'phone' | trans , { 'label_attr': {'class': 'col-sm-3 control-label'} }) }}
+						{{ form_errors(form.details.phone) }}
+						<div class="col-sm-5">
+							{{ form_widget(form.details.phone, { 'attr': {'class': 'form-control validate[required]'} }) }}
+						</div>
+					</div>
+				</div>
+				<div class="large-6 columns">
+					<div class="form-group">
+						{{ form_label(form.details.web, 'web' | trans , { 'label_attr': {'class': 'col-sm-3 control-label'} }) }}
+						{{ form_errors(form.details.web) }}
+						<div class="col-sm-5">
+							{{ form_widget(form.details.web, { 'attr': {'class': 'form-control validate[required]'} }) }}
+						</div>
+					</div>
+				</div>
+
+				<div class="large-12 columns address">
+					<fieldset class="gllpLatlonPicker">
+						<legend>Your location</legend>
+						<div class="row">
+							<div class="large-12 columns">
+								<input type="text" class="gllpSearchField" placeholder="Enter your address here..."/>
+							</div>
+						</div>
+						<div class="row">
+							<div class="large-6 columns">
+								<div class="gllpMap" style="max-width: 100%;">Google Maps</div>
+							</div>
+							<div class="large-6 columns">
+								{{ form_label(form.details.x, 'Latitude(x)' | trans , { 'label_attr': {'class': 'col-sm-3 control-label'} }) }} {{ form_widget(form.details.x, { 'attr': {'class': 'form-control validate[required] gllpLatitude'} }) }} {{ form_errors(form.details.x) }}
+								{{ form_label(form.details.y, 'Longitude(y)' | trans , { 'label_attr': {'class': 'col-sm-3 control-label'} }) }}{{ form_widget(form.details.y, { 'attr': {'class': 'form-control validate[required] gllpLongitude'} }) }} {{ form_errors(form.details.y) }}
+								<label class="col-sm-3 control-label" for="gllpZoom">Zoom</label><input type="text" class="gllpZoom" value="3"/>
+								<input type="button" class="gllpUpdateButton bg-blue btn" value="update map" />
+								<input type="button" class="gllpSearchButton btn bg-blue" value="search">
+							</div>
+						</div>
+					</fieldset>
+				</div>
+
+				<div class="large-6 columns">
+					<div class="form-group">
+						{{ form_label(form.details.facebook, 'facebook' | trans , { 'label_attr': {'class': 'col-sm-3 control-label'} }) }}
+						{{ form_errors(form.details.facebook) }}
+						<div class="col-sm-5">
+							{{ form_widget(form.details.facebook, { 'attr': {'class': 'form-control validate[required]'} }) }}
+						</div>
+					</div>
+				</div>
+
+				<div class="large-6 columns">
+					<div class="form-group">
+						{{ form_label(form.details.google, 'google' | trans , { 'label_attr': {'class': 'col-sm-3 control-label'} }) }}
+						{{ form_errors(form.details.google) }}
+						<div class="col-sm-5">
+							{{ form_widget(form.details.google, { 'attr': {'class': 'form-control validate[required]'} }) }}
+						</div>
+					</div>
+				</div>
+				<div class="large-6 columns">
+					<div class="form-group">
+						{{ form_label(form.details.twitter, 'twitter' | trans , { 'label_attr': {'class': 'col-sm-3 control-label'} }) }}
+						{{ form_errors(form.details.twitter) }}
+						<div class="col-sm-5">
+							{{ form_widget(form.details.twitter, { 'attr': {'class': 'form-control validate[required]'} }) }}
+						</div>
+					</div>
+				</div>
+				<div class="large-6 columns">
+					<div class="form-group">
+						{{ form_label(form.details.video, 'video' | trans , { 'label_attr': {'class': 'col-sm-3 control-label'} }) }}
+						{{ form_errors(form.details.video) }}
+						<div class="col-sm-5">
+							{{ form_widget(form.details.video, { 'attr': {'class': 'form-control validate[required]'} }) }}
+						</div>
+					</div>
+				</div>
+				<div class="large-12 columns">
+					<fieldset>
+						<legend>{{'description' | trans}}</legend>
+						<div class="form-group">
+							{{ form_errors(form.descriptions) }}
+							<div class="col-sm-5">
+								{{ form_widget(form.descriptions, { 'attr': {'class': 'gridDescription form-control validate[required]'} }) }}
+							</div>
+						</div>
+					</fieldset>
+				</div>
+
+				<div class="large-12 columns">
+					{{ form_rest(form) }}
+				</div>
+				<div class="large-6 columns">
+					<div class="form-group">
+						<div class="col-sm-5 col-sm-offset-3">
+							<input type="submit" name="create" class="btn bg-blue" value="{{ 'save' | trans }}"/>
+						</div>
+					</div>
+				</div>
+				<div class="row"></div>
+				{{ form_end(form) }}
+				<div class="row"></div>
+			</div>
+		</div>
+	</div>
+</div>
+	<a href="{{ path('admin_additional_offers', {'_locale': app.request.attributes.get('_locale')}) }}">{{ 'back' | trans }}</a>
+
+{% endblock %}
+
+{% block js %}
+	{{ parent() }}
+
+	<script type="text/javascript">
+		var $collectionHolder;
+
+		// setup an "add a tag" link
+		var $addTagLink = $('<a href="#" class="add_tag_link">Add a photo</a>');
+		var $newLinkLi = $('<li></li>').append($addTagLink);
+
+		jQuery(document).ready(function () {
+			// Get the ul that holds the collection of tags
+			$collectionHolder = $('ul.tags');
+			// add a delete link to all of the existing tag form li elements
+			$collectionHolder.find('li').each(function () {
+//                addTagFormDeleteLink($(this));
+				$(this).remove();
+			});
+			// Get the ul that holds the collection of tags
+			$collectionHolder = $('ul.tags');
+			// add the "add a tag" anchor and li to the tags ul
+			$collectionHolder.append($newLinkLi);
+			// count the current form inputs we have (e.g. 2), use that as the new
+			// index when inserting a new item (e.g. 2)
+			$collectionHolder.data('index', $collectionHolder.find(':input').length);
+
+			$addTagLink.on('click', function (e) {
+				// prevent the link from creating a "#" on the URL
+				e.preventDefault();
+				// add a new tag form (see next code block)
+				var fileInputs = $('.additionalOfferPhoto');
+				console.log($('ul.tags').find('li :input'));
+
+				if ((fileInputs.length + $('.galleryPhotoNumber').length) < 5) {
+					addTagForm($collectionHolder, $newLinkLi);
+				} else {
+					alert('Max == 5 photos');
+				}
+			});
+		});
+
+
+		function addTagForm($collectionHolder, $newLinkLi) {
+			// Get the data-prototype explained earlier
+			var prototype = $collectionHolder.data('prototype');
+			// get the new index
+//            var index = $collectionHolder.data('index');
+			var index = $('.galleryPhotoNumber').length;
+			if(index == 0) index = $collectionHolder.data('index');
+			// Replace '__name__' in the prototype's HTML to
+			// instead be a number based on how many items we have
+			var newForm = prototype.replace(/__name__/g, index);
+			// increase the index with one for the next item
+			$collectionHolder.data('index', index + 1);
+			// Display the form in the page in an li, before the "Add a tag" link li
+			var $newFormLi = $('<li class="additionalOfferPhoto"></li>').append(newForm);
+			$newLinkLi.before($newFormLi);
+			// add a delete link to the new form
+			addTagFormDeleteLink($newFormLi);
+		}
+
+		function addTagFormDeleteLink($tagFormLi) {
+			var $removeFormA = $('<a href="#">delete this photo</a>');
+			$tagFormLi.append($removeFormA);
+
+			$removeFormA.on('click', function (e) {
+				// prevent the link from creating a "#" on the URL
+				e.preventDefault();
+				// remove the li for the tag form
+				$tagFormLi.remove();
+			});
+		}
+
+		// Remove empty file input fieds
+		$( "#additionalOfferEdit" ).submit(function(e) {
+			$('ul.tags').find('li :input').each(function () {
+				if($(this).val() == '') {
+					$(this).remove();
+				}
+			});
+		});
+
+	</script>
+
+	{#<script src="{{asset('bundles/app/js/location_ajax.js')}}"></script>#}
+    <script src="{{asset('bundles/app/js/location_autocomplete.js')}}"></script>
+	<script src="http://maps.googleapis.com/maps/api/js?sensor=false"></script>
+
+	<script type="text/javascript">
+		$(".gllpSearchField").bind("keypress", {}, keypressInBox);
+
+		function keypressInBox(e) {
+		    var code = (e.keyCode ? e.keyCode : e.which);
+		    if (code == 13) { //Enter keycode
+		        e.preventDefault();
+
+		        $(".gllpSearchButton").click();
+		    }
+		};
+
+		$(".gllpLatitude").bind("keypress", {}, keypressInBox4);
+
+		function keypressInBox4(e) {
+		    var code = (e.keyCode ? e.keyCode : e.which);
+		    if (code == 13) { //Enter keycode
+		        e.preventDefault();
+
+		        $(".gllpUpdateButton").click();
+		    }
+		};
+
+		$(".gllpLongitude").bind("keypress", {}, keypressInBox2);
+
+		function keypressInBox2(e) {
+		    var code = (e.keyCode ? e.keyCode : e.which);
+		    if (code == 13) { //Enter keycode
+		        e.preventDefault();
+
+		        $(".gllpUpdateButton").click();
+		    }
+		};
+
+		$(".gllpZoom").bind("keypress", {}, keypressInBox3);
+
+		function keypressInBox3(e) {
+		    var code = (e.keyCode ? e.keyCode : e.which);
+		    if (code == 13) { //Enter keycode
+		        e.preventDefault();
+
+		        $(".gllpUpdateButton").click();
+		    }
+		};
+	</script>
+{% endblock %}

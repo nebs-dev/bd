@@ -1,0 +1,7 @@
+@mixin cw($argument) {
+	max-width: $argument;
+}
+
+.showItem {
+	display: block;
+}

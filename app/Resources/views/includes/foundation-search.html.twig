@@ -1,0 +1,450 @@
+<section class="search">
+    <div class="marker-icon">
+        <?xml version="1.0" encoding="utf-8"?>
+        <!DOCTYPE svg PUBLIC "-//W3C//DTD SVG 1.1//EN" "http://www.w3.org/Graphics/SVG/1.1/DTD/svg11.dtd">
+        <svg version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" x="0px" y="0px"
+        width="512px" height="512px" viewBox="0 0 512 512" enable-background="new 0 0 512 512" xml:space="preserve">
+        <path id="location-2-icon" d="M256,90c49.902,0,90.5,40.598,90.5,90.5c0,57.579-60.042,151.583-90.5,202.867
+        c-51.55-86.8-90.5-153.13-90.5-202.867C165.5,130.598,206.098,90,256,90 M256,50c-72.072,0-130.5,58.427-130.5,130.5
+        c0,72.073,57.113,155.833,130.5,281.5c73.387-125.666,130.5-209.427,130.5-281.5C386.5,108.427,328.074,50,256,50L256,50z
+        M256,133.938c-25.072,0-45.397,20.325-45.397,45.396s20.325,45.396,45.397,45.396s45.396-20.324,45.396-45.396
+        S281.072,133.938,256,133.938L256,133.938z"/>
+        </svg>
+    </div>
+    <div class="large-11 large-offset-1 medium-11  medium-offset-1 small-11 columns small-offset-1 search-moto">
+        <h1 class="search-moto-head">{{ 'Find_Your' | trans }}
+        <span class="search-moto-nologo hide-for-large-up">
+        {{ 'Best_Destination' | trans }}
+        </span>
+        <span class="main-logo-small show-for-large-up">
+        </span>
+        </h1>
+    </div>
+</section>
+<section class="search-input1">
+    {# Search form #}
+    {{ form_start(
+    searchForm, {
+    'method': 'POST',
+    'action': path('app_search_action',
+    {'_locale': app.request.attributes.get('_locale') }),
+    'attr': {'novalidate': 'novalidate', 'id':'searchForm'}
+    }
+    ) }}
+    <div class="form-part-1">
+        <div class="row">
+            <div class="large-12 columns">
+                {{ form_label(searchForm.location,
+                'Where_do_you_want_to_go' | trans) }}
+                {{ form_errors(searchForm.location) }}
+                {{ form_widget(searchForm.location,
+                {
+                'attr': {
+                'class': 'locationAutocomplete',
+                'placeholder': 'eg, Istria, Croatia'}
+                }) }}
+            </div>
+        </div>
+        <div class="row">
+            <div class="large-4 columns">
+                <div class="row collapse">
+                    <label for="search_fromDate">{{ 'Check_in' | trans }}
+                        <span class="label-text-lighten">{{ 'date' | trans }}</span>
+                    </label>
+                    <div class="small-10 columns">
+                        {{ form_errors(searchForm.fromDate) }}
+                        {{ form_widget(searchForm.fromDate,
+                        {
+                        'attr' : {
+                        'size'     : '16',
+                        'readonly' : 'true',
+                        'class'    : 'datepicker'
+                        }
+                        }) }}
+                    </div>
+                    <div class="small-2 columns calendar-input1">
+                        <span class="postfix">
+                        <i class="input-calendar fa fa-calendar"></i>
+                        </span>
+                    </div>
+                </div>
+            </div>
+            <div class="large-4 columns">
+                <div class="row collapse">
+                    <label for="search_toDate">{{ 'Check_out' | trans }}
+                        <span class="label-text-lighten">{{ 'date' | trans }}</span>
+                    </label>
+                    <div class="small-10 columns">
+                        <div class="input-append date"
+                            data-date="" data-date-format="dd-mm-yyyy">
+                            {{ form_errors(searchForm.toDate) }}
+                            {{ form_widget(searchForm.toDate,
+                            {
+                            'attr' : {
+                            'size'     : '16',
+                            'readonly' : 'true',
+                            'class'    : 'datepicker'
+                            }
+                            }) }}
+                        </div>
+                    </div>
+                    <div class="small-2 columns calendar-input1">
+                        <span class="postfix">
+                        <i class="input-calendar fa fa-calendar"></i>
+                        </span>
+                    </div>
+                </div>
+            </div>
+            <div class="large-4 columns">
+                <div class="row collapse">
+                    <label for="search_capacity">{{ 'No.' | trans }}
+                    <span class="label-text-lighten">{{ 'of_guests' | trans }}</span></label>
+                    {{ form_errors(searchForm.capacity) }}
+                    {{ form_widget(searchForm.capacity) }}
+                </div>
+            </div>
+        </div>
+        <div class="row">
+            <div class="large-6 columns">
+                <label class="blue-regular" for="checkbox1">
+                    <input type="checkbox">
+                    {{ 'Dont_have_specific_dates_yet' | trans }}
+                </label>
+            </div>
+        </div>
+        <div class="row">
+            <div class="large-12 columns accomodation-type">
+                <label for="search_accommodationCategory"
+                    ><span class="label-text-lighten">
+                    {{ 'Accomodation' | trans }}
+                    </span>{{ 'type' | trans }}
+                </label>
+                <div class="row">
+                    <div class="large-8 columns">
+                        {{ form_errors(searchForm.accommodationCategory) }}
+                        {{ form_widget(searchForm.accommodationCategory,
+                        {
+                        'attr' : {
+                        'class'    : 'styled-select'
+                        }
+                        }) }}
+                    </div>
+                    <div class="large-4 columns">
+                        <button type="submit" class="search-button">                  {{ 'Search' | trans }}
+                        </button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="form-part-2">
+        <div class="advanced-search-label row">
+            <div class="large-12 columns">
+                <a id="custom-accordion-show">
+                <span id="rotate-arrow" class="advanced-search__label-main" for="">
+                {{ 'Advanced_search' | trans }}
+                <i class="fa fa-caret-down"></i>
+                </span>
+                </a>
+            </div>
+        </div>
+        <div id="custom-accordion">
+            <div class="row">
+                {#
+                <div class="large-4 columns">
+                    <div class="row collapse">
+                        <label for="search_checkIn">
+                            <span class="label-text-lighten">{{'Check_in' | trans }}</span> {{'time' | trans }}
+                        </label>
+                        {{ form_errors(searchForm.checkIn) }}
+                        {{ form_widget(searchForm.checkIn,
+                        {
+                        'attr' : {
+                        'class'    : 'timepicker',
+                        'readonly' : 'true'
+                        }
+                        }) }}
+                    </div>
+                </div>
+                #}
+                {#
+                <div class="large-4 large-pull-4 columns">
+                    <div class="row collapse">
+                        <label for="search_checkOut">
+                            <span class="label-text-lighten">{{'Check_out' | trans }}</span> {{'time' | trans }}
+                        </label>
+                        {{ form_errors(searchForm.checkOut) }}
+                        {{ form_widget(searchForm.checkOut,
+                        {
+                        'attr' : {
+                        'class'    : 'timepicker',
+                        'readonly' : 'true'
+                        }
+                        }) }}
+                    </div>
+                </div>
+                #}
+            </div>
+            <div class="row">
+                <div class="large-4 columns">
+                    <div class="row collapse">
+                        <label for="search_priceMin">
+                            <span class="label-text-lighten">{{'Price' | trans }}</span> {{ 'min' | trans }}
+                        </label>
+                        {{ form_errors(searchForm.priceMin) }}
+                        {{ form_widget(searchForm.priceMin,
+                        {
+                        'attr' : {
+                        'class'    : 'styled-select',
+                        'value'    : '0'
+                        }
+                        }) }}
+                    </div>
+                </div>
+                <div class="large-4 large-pull-4 columns">
+                    <div class="row collapse">
+                        <label for="search_priceMax">
+                            <span class="label-text-lighten">{{'Price' | trans }}</span> {{'max' | trans }}
+                        </label>
+                        {{ form_errors(searchForm.priceMax) }}
+                        {{ form_widget(searchForm.priceMax,
+                        {
+                        'attr' : {
+                        'class'    : 'styled-select'
+                        }
+                        }) }}
+                    </div>
+                </div>
+            </div>
+            <div class="row">
+                <div class="large-4 columns">
+                    <div class="row collapse">
+                        <label for="search_bedroomNumber">{{'No.' | trans }}
+                        <span class="label-text-lighten">{{ 'of' | trans }} </span>{{'bedrooms' | trans }}</label>
+                        {{ form_errors(searchForm.bedroomNumber) }}
+                        {{ form_widget(searchForm.bedroomNumber) }}
+                    </div>
+                </div>
+                <div class="large-4 large-pull-4 columns">
+                    <div class="row collapse">
+                        <label for="search_bathroomNumber">{{'No.' | trans }}
+                        <span class="label-text-lighten">{{'of' | trans }} </span>{{'bathrooms' | trans }}</label>
+                        {{ form_errors(searchForm.bathroomNumber) }}
+                        {{ form_widget(searchForm.bathroomNumber) }}
+                    </div>
+                </div>
+            </div>
+            <span class="advanced-search__label-main">
+            {{'Categorization' | trans }}
+            <div class="border-divider"></div>
+            </span>
+            <ul class="large-block-grid-7 medium-block-grid-7">
+                <li>
+                    <input id="search_categorization_0" type="checkbox">
+                    <label class="advanced-search__label-cb" for="search_categorization_0">
+                        <span>1</span> {{'star' | trans }}
+                    </label>
+                </li>
+                <li>
+                    <input id="search_categorization_1" type="checkbox">
+                    <label class="advanced-search__label-cb" for="search_categorization_1">
+                        <span>2</span> {{'star' | trans }}
+                    </label>
+                </li>
+                <li>
+                    <input id="search_categorization_2" type="checkbox">
+                    <label class="advanced-search__label-cb" for="search_categorization_2">
+                        <span>3</span> {{'star' | trans }}
+                    </label>
+                </li>
+                <li>
+                    <input id="search_categorization_3" type="checkbox">
+                    <label class="advanced-search__label-cb" for="search_categorization_3">
+                        <span>4</span> {{'star' | trans }}
+                    </label>
+                </li>
+                <li>
+                    <input id="search_categorization_4" type="checkbox">
+                    <label class="advanced-search__label-cb" for="search_categorization_4">
+                        <span>5</span> {{'star' | trans }}
+                    </label>
+                </li>
+                <li class="not-rated">
+                    <input id="search_categorization_5" type="checkbox" name="search[categorization][]" value="6">
+                    <label class="advanced-search__label-cb" for="search_categorization_5">
+                        <span>{{ 'Not' | trans }}</span> {{'rated' | trans }}
+                    </label>
+                </li>
+            </ul>
+            <span class="advanced-search__label-main">
+            {{'Ammenities' | trans }}
+            <div class="border-divider"></div>
+            </span>
+            <ul class="advanced-boxes large-block-grid-3 medium-block-grid-3 small-block-grid-2">
+                <li>
+                    {{ form_errors(searchForm.animal_welcome) }}
+                    {{ form_widget(searchForm.animal_welcome) }}
+                    <label class="advanced-search__label-cb" for="search_animal_welcome">
+                        {{ 'Animal_welcome' | trans }}
+                    </label>
+                </li>
+                <li>
+                    {{ form_errors(searchForm.airCondition) }}
+                    {{ form_widget(searchForm.airCondition) }}
+                    <label class="advanced-search__label-cb" for="search_airCondition">
+                        {{ 'Air_conditioning' | trans }}
+                    </label>
+                </li>
+                <li>
+                    {{ form_errors(searchForm.parking) }}
+                    {{ form_widget(searchForm.parking) }}
+                    <label class="advanced-search__label-cb" for="search_parking">
+                        {{ 'Parking' | trans }}
+                    </label>
+                </li>
+                <li>
+                    {{ form_errors(searchForm.internet) }}
+                    {{ form_widget(searchForm.internet) }}
+                    <label class="advanced-search__label-cb" for="search_internet">
+                        {{ 'Internet' | trans }}
+                    </label>
+                </li>
+                <li>
+                    {{ form_errors(searchForm.satTv) }}
+                    {{ form_widget(searchForm.satTv) }}
+                    <label class="advanced-search__label-cb" for="search_satTV">
+                        {{ 'Sat_TV' | trans }}
+                    </label>
+                </li>
+                <li>
+                    {{ form_errors(searchForm.heating) }}
+                    {{ form_widget(searchForm.heating) }}
+                    <label class="advanced-search__label-cb" for="search_heating">
+                        {{'Heating' | trans }}
+                    </label>
+                </li>
+                <li>
+                    {{ form_errors(searchForm.washingMachine) }}
+                    {{ form_widget(searchForm.washingMachine) }}
+                    <label class="advanced-search__label-cb"
+                        for="search_washingMachine">
+                        {{'Washing_Machine' | trans }}
+                    </label>
+                </li>
+                <li>
+                    {{ form_errors(searchForm.dishwasher) }}
+                    {{ form_widget(searchForm.dishwasher) }}
+                    <label class="advanced-search__label-cb" for="search_dishwasher">
+                        {{'Dishwasher' | trans }}
+                    </label>
+                </li>
+                <li>
+                    {{ form_errors(searchForm.grill) }}
+                    {{ form_widget(searchForm.grill) }}
+                    <label class="advanced-search__label-cb" for="search_grill">
+                        {{'Grill' | trans }}
+                    </label>
+                </li>
+                <li>
+                    {{ form_errors(searchForm.pool) }}
+                    {{ form_widget(searchForm.pool) }}
+                    <label class="advanced-search__label-cb" for="search_pool">
+                        {{'Pool' | trans }}
+                    </label>
+                </li>
+                <li>
+                    {{ form_errors(searchForm.restaurant) }}
+                    {{ form_widget(searchForm.restaurant) }}
+                    <label class="advanced-search__label-cb" for="search_restaurant">
+                        {{'Restaurant' | trans }}
+                    </label>
+                </li>
+                <li>
+                    <input type="checkbox" id="search_breakfast" name="search[breakfast]" value="1">
+                    <label class="advanced-search__label-cb" for="search_breakfast">
+                        {{'Breakfast_included' | trans }}
+                    </label>
+                </li>
+            </ul>
+            <div class="row">
+
+                <button type="submit" class="large-4 large-push-8 columns search-button-down">
+                {{ 'Search' | trans }}
+                </button>
+            </div>
+
+            {#<span class="advanced-search__label-main">#}
+            {#{{'Distances' | trans }}#}
+            {#</span>#}
+            {#<div class="row">#}
+                {#<div class="large-4 medium-4 columns">#}
+                    {#<div class="row collapse">#}
+                        {#<label for="search_center">#}
+                        {#<span class="label-text-lighten">{{'Center' | trans }}</span></label>#}
+                        {#{{ form_errors(searchForm.center) }}#}
+                        {#{{ form_widget(searchForm.center) }}#}
+                    {#</div>#}
+                {#</div>#}
+                {#<div class="large-4 medium-4 columns">#}
+                    {#<div class="row collapse">#}
+                        {#<label for="search_beach">#}
+                        {#<span class="label-text-lighten">{{'Beach' | trans}}</span></label>#}
+                        {#{{ form_errors(searchForm.beach) }}#}
+                        {#{{ form_widget(searchForm.beach) }}#}
+                    {#</div>#}
+                {#</div>#}
+                {#<div class="large-4 medium-4 columns">#}
+                    {#<div class="row collapse">#}
+                        {#<label for="search_sea">#}
+                        {#<span class="label-text-lighten">{{'Sea' | trans }}</span></label>#}
+                        {#{{ form_errors(searchForm.sea) }}#}
+                        {#{{ form_widget(searchForm.sea) }}#}
+                    {#</div>#}
+                {#</div>#}
+            {#</div>#}
+            {#<div class="row">#}
+                {#<div class="large-4 medium-4 columns">#}
+                    {#<div class="row collapse">#}
+                        {#<label for="search_restaurantDistance">#}
+                        {#<span class="label-text-lighten">{{'Restaurant' | trans }}</span></label>#}
+                        {#{{ form_errors(searchForm.restaurantDistance) }}#}
+                        {#{{ form_widget(searchForm.restaurantDistance) }}#}
+                    {#</div>#}
+                {#</div>#}
+                {#<div class="large-4 medium-4 columns">#}
+                    {#<div class="row collapse">#}
+                        {#<div class="row collapse">#}
+                            {#<label for="search_airport">#}
+                            {#<span class="label-text-lighten">{{'Airport' | trans }}</span></label>#}
+                            {#{{ form_errors(searchForm.airport) }}#}
+                            {#{{ form_widget(searchForm.airport) }}#}
+                        {#</div>#}
+                    {#</div>#}
+                {#</div>#}
+                {#<div class="large-4 medium-4 columns">#}
+                    {#<div class="row collapse">#}
+                        {#<div class="row collapse">#}
+                            {#<label for="search_shoppingMall">#}
+                            {#<span class="label-text-lighten">{{ 'Shopping_mall' | trans }}</span></label>#}
+                            {#{{ form_errors(searchForm.shoppingMall) }}#}
+                            {#{{ form_widget(searchForm.shoppingMall) }}#}
+                        {#</div>#}
+                    {#</div>#}
+                {#</div>#}
+            {#</div>#}
+
+            <input type="hidden" name="page" id="page" value="1">
+            <div id="selction-ajax"></div>
+            {{ form_end(searchForm) }}
+        </div>
+    </section>
+    {#
+    <ul class="accordion" data-accordion>
+        <li class="accordion-navigation">
+            <a href="#panel1a">Accordion 1</a>
+            <div id="panel1a" class="content">
+                Panel 1. Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat.
+            </div>
+        </li>
+    </ul>
+    #}

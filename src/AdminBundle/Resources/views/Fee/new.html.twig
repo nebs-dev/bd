@@ -1,0 +1,41 @@
+{% extends 'admin.html.twig' %}
+
+{% block stylesheets %}
+    {{ parent() }}
+    <link href="http://cdn.datatables.net/1.10.5/css/jquery.dataTables.min.css" rel="stylesheet" type="text/css" />
+
+    <link href="{{asset('bundles/admin/js/footable/css/footable.core.css?v=2-0-1')}}" rel="stylesheet" type="text/css" />
+    <link href="{{asset('bundles/admin/js/footable/css/footable.standalone.css')}}" rel="stylesheet" type="text/css" />
+    <link href="{{asset('bundles/admin/js/footable/css/footable-demos.css')}}" rel="stylesheet" type="text/css" />
+
+{% endblock %}
+
+
+{% block content %}
+
+    {# New fee form #}
+    <div class="box">
+        {{ form_start(
+            form, {
+                'method': 'POST',
+                'attr': {'novalidate': 'novalidate', 'class':"form-horizontal", 'id':'newFee'}
+            }
+        ) }}
+
+
+        {{ form_start(form, {'attr': {'novalidate': 'novalidate', 'class':"form-horizontal", 'id':'newFeeForm' }}) }}
+        {{ form_errors(form) }}
+
+
+        {{ form_rest(form) }}
+
+        <div class="form-group">
+            <div class="col-sm-5 col-sm-offset-3">
+                <button type="submit" id="newFeeSubmit" name="newFeeSubmit" class="btn btn-default" value="Spremi">{{ 'save' | trans }}</button>
+            </div>
+        </div>
+
+        {{ form_end(form) }}
+    </div>
+
+{% endblock %}

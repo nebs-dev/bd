@@ -1,0 +1,80 @@
+{% extends 'guest.html.twig' %}
+
+{% block title %}{{ 'profile' | trans }}{% endblock %}
+
+{% block content %}
+
+	<h4 class="pageTitleAdmin" xmlns="http://www.w3.org/1999/html">{{ 'My_profile' | trans }}</h4>
+
+	{#{{ dump(user) }}#}
+	<div class="row profileTop">
+		<div class="large-3 columns">
+			<div class="placeHolderImageUser"></div>
+		</div>
+		<div class="large-9 columns">
+			<div class="row">
+				<div class="rowProfile titleName large-12 columns">
+					<span>{{ 'Private' | trans }}</span>
+					<div class="titleProfile">{{ user.name }}</div>
+				</div>
+				<div class="rowProfile titleAddress large-12 columns">
+					<span>{{ 'Address' | trans }}</span>
+					{{ user.address }}
+				</div>
+				<div>
+					<div class="rowProfile large-3 pull-left columns titleContact">
+						<span>{{ 'Email_address' | trans }}</span>
+						{{ user.email }}
+					</div>
+					<div class="rowProfile large-3 pull-left columns titleContact">
+						<span>{{ 'Phone_no' | trans }}</span>
+						{{ user.phone }}
+					</div>
+					<div class="rowProfile large-3 pull-left columns titleContact">
+						<span>{{ 'Skype_id' | trans }}</span>
+						{{ user.skype }}
+					</div>
+					<div class="rowProfile large-3 pull-left columns titleContact">
+						<span>{{ 'user_register' | trans }}</span>
+						{{ app.user.createdAt | date('d.m.Y.') }}
+					</div>
+				</div>
+				<div class="column large-12">
+					<a href="{{ path('app_profile_edit', {'_locale': app.request.attributes.get('_locale')}) }}">
+						{{ 'edit_informations' | trans }}
+					</a>
+				</div>
+			</div>
+		</div>
+	</div>
+
+	<div class="row">
+		<div class="resetPasswordProfile">
+			<span>{{ 'Security_settings ' | trans }}</span>
+			({{ 'reset your password for your Best Destination account here' | trans }})
+		</div>
+		<div class="resetPasswordProfileFields">
+			<div class="row">
+				{% for flashMessage in app.session.flashbag.get('msgSuccess') %}
+					{{ flashMessage }}
+				{% endfor %}
+				{% for flashMessage in app.session.flashbag.get('msgError') %}
+					{{ flashMessage }}
+				{% endfor %}
+				<form method="post" action="{{ path('app_profile_change_password', {'_locale': app.request.attributes.get('_locale')}) }}">
+					<div class="large-5 columns">
+						<input placeholder="{{ 'new_password ' | trans }}" type="password" id="user_password_first" name="user_password" required="required" class="form-control validate[required]">
+					</div>
+					<div class="row"></div>
+					<div class="large-5 columns">
+						<input placeholder="{{ 'confirm_new_password ' | trans }}" type="password" id="user_password_second" name="user_password_confirm" required="required" class="form-control validate[required]">
+					</div>
+					<div class="row"></div>
+					<div class="large-3 columns top20">
+						<button class="buttomSubmitNewAdmin">{{ 'countinue ' | trans }}</button>
+					</div>
+				</form>
+			</div>
+		</div>
+	</div>
+{% endblock %}

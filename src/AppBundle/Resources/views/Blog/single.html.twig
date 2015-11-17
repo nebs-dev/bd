@@ -1,0 +1,284 @@
+{% extends 'base.html.twig' %}
+{% block content %}
+	{% block foundation_header %}
+		{% include 'includes/foundation-header.html.twig'  %}
+	{% endblock %}
+	<div class="blog-bg-featured">
+		<div class="blog-featured-bottom"></div>
+	</div>
+	<div class="row" style="padding-top: 50px;"></div>
+	{% for flashMessage in app.session.flashbag.get('msgSuccess') %}
+		<div class="box bg-light-green">
+			<div class="box-header bg-light-green ">
+				<!-- tools box -->
+				<div class="pull-right box-tools">
+					<span class="box-btn" data-widget="remove">
+						<i class="icon-cross"></i>
+					</span>
+				</div>
+				<h3 class="box-title "><i class="text-white  icon-thumbs-up"></i>
+					<span class="text-white">SUCCESS</span>
+				</h3>
+			</div>
+			<!-- /.box-header -->
+			<div class="box-body " style="display: block;">
+				<p class="text-white"><strong>Well done!</strong> {{ flashMessage }}</p>
+			</div>
+		</div>
+	{% endfor %}
+	{% for flashMessage in app.session.flashbag.get('msgError') %}
+		<div class="box bg-red">
+			<div class="box-header bg-red ">
+				<!-- tools box -->
+				<div class="pull-right box-tools">
+					<span class="box-btn" data-widget="remove">
+						<i class="icon-cross"></i>
+					</span>
+				</div>
+				<h3 class="box-title "><i class="text-white  icon-thumbs-up"></i>
+					<span class="text-white">Error</span>
+				</h3>
+			</div>
+			<!-- /.box-header -->
+			<div class="box-body " style="display: block;">
+				<p class="text-white"><strong>Sorry!</strong> {{ flashMessage }}</p>
+			</div>
+		</div>
+	{% endfor %}
+	<div class="row">
+		<div class="large-5 large-offset-1 columns">
+			<h1 class="pn-article-header">{{ 'previous_article' | trans }}</h1><p class="pn-content">
+			Aenean sollicitudin, lorem quis bibendum auctor, nisi elit consequat ipsum, nec sagittis sem nibh id elit
+		</p>
+	</div>
+	<div class="large-5 large-offset-1 columns">
+		<h1 class="pn-article-header">{{ 'next_article' | trans }}</h1>
+		<p class="pn-content">
+			Aenean sollicitudin, lorem quis bibendum auctor, nisi elit consequat ipsum, nec sagittis sem nibh id elit
+		</p>
+	</div>
+</div>
+<div class="row">
+	<ul class="small-centered medium-8 large-5 large-uncentered columns filter-head__crumbs">
+		<li>
+			<a href="{{ path('app_home', {'_locale': app.request.attributes.get('_locale') }) }}">{{ 'home' | trans }}</a>
+		</li>
+		<li class="current">
+			<a href="#">
+				{% if location is defined and location %}
+					{{ attribute(location, app.request.locale) ?: location.en }}
+				{% endif %}
+			</a>
+		</li>
+	</ul>
+
+</div>	
+<div class="row">
+	{# {% block title %}{{ post.title }}{% endblock %} #}
+	<div class="large-9 columns">
+		<div id="post{{ post.id }}" class="post">
+			<div class="singleBlogFeatured">
+				{% if post.webPath %}
+					<img src="{{ app.request.getSchemeAndHttpHost() }}{{ asset(post.webPath) }}" />
+					{% elseif post.parent.webPath %}
+					<img src="{{ app.request.getSchemeAndHttpHost() }}{{ asset(post.parent.webPath) }}" />
+				{% endif %}
+				<h3>{{ post.title }}</h3>
+			</div>
+			<div class="postedOn">{{ 'Posted on' | trans }}: 20.06.2015.</div>
+			<div class="singleBlogText">
+				<div class="large-2 columns">
+					<span class="autor-avatar"></span>
+					<span class="autor-name">Autor</span>
+				</div>
+				<div class="large-10 columns">
+					<div class="shareSinglePost"></div>
+					{{ post.text }}
+					
+				</div>
+			</div>
+		</div>
+	</div>
+	<div class="large-3 columns">
+		<section class="row site-info singleBlog shapesList">
+			<div class="large-12 medium-12 columns">
+				<div class="green-banner-publish">
+					<a href="{{ path('user_registration', {'_locale': app.request.attributes.get('_locale'), 'role': 'tourist'}) }}">
+						<div class="saveYourTime"></div>
+					</a>
+				</div>
+			</div>
+			<div class="large-12 medium-12 columns">
+				<span class="shape shape1"></span>
+				<h4>{{ 'We speak your language' | trans }}</h4>
+				<p>{{ 'Website and customer service' | trans }}</p>
+				<p>{{ 'in 20 languages (and counting)' | trans }}</p>
+			</div>
+			<div class="large-12 medium-12 columns">
+				<span class="shape shape2"></span>
+				<h4>{{ 'Low rates' | trans }}</h4>
+				<p>{{ 'Low' | trans }}No booking fees, save your</p>
+				<p>{{ 'Low' | trans }}money and time</p>
+
+			</div>
+			<div class="large-12 medium-12 columns">
+				<span class="shape shape3"></span>
+				<h4>{{ 'Track your favorites' | trans }}</h4>
+				<p>{{ 'Manage your bookings' | trans }}</p>
+				<p>{{ 'and favorites online' | trans }}</p>
+			</div>
+			<div class="row"></div>
+		</section>
+	</div>
+	<div class="row"></div>
+	<div class="fullDubleBorder"></div>
+	
+	<div class="row discover-container">
+		{% for discoverItem in discover|slice(0, 4) %}
+			<a href="{{ path('app_home_discover_search',
+			{'_locale': app.request.attributes.get('_locale'), 'location': discoverItem.location }) }}">
+			<section id="accommodation" class="large-3 medium-6 columns">
+				<figure class="discover-item"
+				style="background: url('{{ discoverItem.webPath | imagine_filter('my_thumb') }}')">
+				<figcaption class="discover-item__description">
+					{{ discoverItem.location }}
+				</figcaption>
+			</figure>
+		</section>
+	</a>
+{% endfor %}
+</div>
+<div class="row">
+	<div class="large-12 columns">
+		<div class="fullDubleBorder"></div>
+	</div>
+	
+</div>
+{# <div id="comments{{ post.id }}" class="comments commentsSingleBlog">
+	<section class="search">
+		<div class="large-1 medium-1 small-1 columns marker-icon">
+			<i class="map-marker-icon fa fa-comment"></i>
+		</div>
+		<div class="large-11 medium-11 small-11 columns search-moto">
+			<h1 class="search-moto-head">{{ 'comments' | trans }}</h1>
+		</div>
+	</section>
+	{% if post.comments | length %}
+		{% for comment in post.comments %}
+			<div class="comment commentSingleBlog">
+				<div class="userPosting">
+					<div class="large-6 columns">
+						<i class="map-marker-icon fa fa-user"></i> {{ 'user' | trans }}: {{ comment.user.username }}
+					</div>
+					<div class="large-6 columns" style="text-align: right;">
+						<i class="map-marker-icon fa fa-calendar"></i> {{ 'createdAt' | trans }}: {{ comment.createdAt | date('d.m.Y. H:i') }}
+					</div>
+					<div class="row"></div>
+				</div>
+				<div class="commentText">
+					{{ comment.text }}
+				</div>
+			</div>
+		{% endfor %}
+	{% endif %}
+</div> #}
+
+{# <div id="errorMsg{{ post.id }}"></div>
+#}
+{# Comment form #}
+{# <form method="post" class="new_comment" novalidate="novalidate">
+<section class="search">
+<div class="large-1 medium-1 small-1 columns marker-icon">
+	<i class="map-marker-icon fa fa-pencil"></i>
+</div>
+<div class="large-11 medium-11 small-11 columns search-moto">
+	<h1 class="search-moto-head">{{ 'comment' | trans }} {% if post.comments | length %} {% else %} - <strong>{{ 'be_first' | trans }}! </strong>{% endif %} </h1>
+</div>
+</section>
+<section class="search-input1" style="padding: 0px 20px 0px 20px;">
+<div class="large-12 columns">
+	<div class="row">
+		<div class="row" style="padding-top: 15px;"></div>
+		<div class="large-8 columns">
+			<input name="text" id="text{{ post.id }}" required="required" class="commentInputUser">
+		</div>
+		<div class="large-4 columns">
+			<button type="submit" name="newComment{{ post.id }}" id="{{ post.id }}" class="search-button newComment" >{{ 'comment' | trans }}</button>
+		</div>
+
+
+	</div>
+</div>
+<div class="row"></div>
+</section>
+<div class="row"></div>
+</form> #}
+{# /Comment form #}
+
+{# <a href="{{ path('app_blog', {'_locale': app.request.attributes.get('_locale')}) }}">{{ 'blog' | trans }}</a> #}
+
+</div>
+
+<div class="row" style="padding-bottom: 50px;"></div>
+{% block foundation_footer %}
+	{% include 'includes/foundation-footer.html.twig'  %}
+{% endblock %}
+{% endblock %}
+
+{% block js %}
+	{{ parent() }}
+
+	<script type="text/javascript">
+		$(function() {
+
+			// New comment - SUBMIT
+			$('.newComment').on('click', function (e) {
+				e.preventDefault();
+
+				var postId = $(this).attr('id');
+				var form = $(this).parents('form:first');
+
+				if($('#text'+postId).val() != '') {
+					newComment(postId, form.serialize());
+					form[0].reset();
+				}
+			});
+
+		});
+
+		/**
+		 * New comment
+		 * @param postId
+		 * @param formData
+		 */
+		 function newComment(postId, formData) {
+		 	$.post('{{ app.request.getBaseURL() }}/blog/comment/new', {
+		 		postId: postId,
+		 		formData: formData
+
+		 	}, function (data) {
+		 		data = JSON.parse(data);
+
+		 		console.log(data);
+
+		 		if (data.error) {
+		 			var msg = '<div class="alert alert-danger alert-width"><button type="button" class="close" data-dismiss="alert">&times;</button>' + data.error + '</div>';
+		 			$('#errorMsg'+postId).html('');
+		 			$('#errorMsg'+postId).html(msg);
+
+		 		} else {
+		 			var html = '<div class="comment separator">' +
+		 			'<div>{{ 'createdAt' | trans }}: '+ data.comment.createdAt +'</div>'  +
+		 			'<div>{{ 'user' | trans }}: '+ data.comment.user.username +'</div>' +
+		 			'<div>{{ 'text' | trans }}: '+ data.comment.text +'</div>' +
+		 			'</div>';
+
+		 			$('#errorMsg'+postId).html('');
+		 			$('#comments' + postId).append(html);
+		 		}
+		 	});
+		 }
+
+		</script>
+
+	{% endblock %}

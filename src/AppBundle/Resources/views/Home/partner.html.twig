@@ -1,0 +1,163 @@
+{% extends 'base.html.twig' %}
+{% block title %}{{ 'home' | trans }}{% endblock %}
+    {% block content %}
+        {% block foundation_header %}
+            {% include 'includes/foundation-header.html.twig'  %}
+        {% endblock %}
+        <div class="blog-bg-featured">
+            <div class="blogSaveMoneyAndTime">
+                <div class="row">
+                    <div class="logoGreenSingle"></div>
+                    <div class="text-container">
+                        <h2 class="subheading">{{ 'Save_money_and_time!' | trans }}</h2>
+                        <span>{{ 'Publish_Your_property' | trans }}</span>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="row">
+            <h1 class="partner-heading large-12 columns">{{'become_a_trusted_partner_with_best_destination!' | trans }}</h1>
+            <ul class="small-centered medium-8 large-5 large-uncentered columns filter-head__crumbs">
+                <li>
+                    <a href="{{ path('app_home', {'_locale': app.request.attributes.get('_locale') }) }}">{{ 'home' | trans }}</a></li>
+                    <li class="current">
+                        <a href="#">
+                            {{'Partner' | trans }}
+                        </a>
+                    </li>
+                </ul>
+            </div>
+            <div class="row">
+                <div class="large-4 columns">
+                    <span class="bg-screen"></span>
+                </div>
+                <div class="large-8 columns partner-txt">
+                    <p>
+                        Lorem ipsum dolor sit amet, consectetur adipisicing elit. Saepe, magni, delectus, fugit eaque ad non sequi repudiandae dignissimos culpa voluptatum ex aliquid asperiores veniam a veritatis. Molestiae, fugiat dolorum iste.
+                    </p>
+                    <p>
+                        Lorem ipsum dolor sit amet, consectetur adipisicing elit. Saepe, magni, delectus, fugit eaque ad non sequi repudiandae dignissimos culpa voluptatum ex aliquid asperiores veniam a veritatis. Molestiae, fugiat dolorum iste.
+                    </p>
+                </div>
+            </div>
+            <div class="row">
+                <div class="large-8 columns">
+                    <h2 class="partner-info">{{'List_your_propery_yourself' | trans}}</h2>
+                    <p>{{'partner_info_text_1' | trans}}</p>
+                </div>
+                <div class="large-4 columns">
+                    <h2 class="partner-info">{{'Let_us_do_all_work' | trans}}</h2>
+                    <p>{{'partner_info_text_2' | trans}}</p>
+                </div> 
+            </div>
+
+            <div class="row pricetables">
+                <div class="large-4 columns">
+
+                    <ul class="booking-pricetable-1">
+                        <li>{{ 'starting_at' | trans}}</li>
+                        <li class="large-12 columns fee-numbers">
+
+                            <span>{{'$120'| trans}}</span>
+
+                            <span>{{'0%' | trans }}</span>
+                        </li>
+                        <li class="large-12 columns fee-description">
+                            <span>{{ 'anually' | trans }}</span>
+                            <span>{{ 'per_booking' | trans }}</span>
+                        </li>
+                        <li class="button-container">
+                            <a  href="{{ path('user_registration', {'_locale': app.request.attributes.get('_locale'), 'role': 'host'}) }}">
+                                <button class="login-screen-button" type="submit">{{ 'choose_annual_subscription' | trans }}</button>
+                            </a>
+                        </li>
+                        <li class="featured-deal">
+                            {{ 'Best_for_year_round_rentals' | trans }}
+                        </li>
+                        <li>
+                            {{ 'Highest_return_of_investment' | trans }}
+                        </li>
+                        <li>
+                            {{ 'Flat_free_unlimited' | trans }}
+
+                        </li>
+                        <li>
+                            {{ 'Improve_placement_in_search_result' | trans }}
+
+                        </li>
+                    </ul>
+
+                </div>
+                <div class="large-4 columns">
+                  <ul class="booking-pricetable-1">
+                    <li>{{ 'starting_at' | trans}}</li>
+                    <li class="large-12 columns fee-numbers">
+
+                        <span>{{'$0'| trans}}</span>
+
+                        <span>{{'10%' | trans }}</span>
+                    </li>
+                    <li class="large-12 columns fee-description">
+                        <span>{{ 'anually' | trans }}</span>
+                        <span>{{ 'per_booking' | trans }}</span>
+                    </li>
+                    <li class="button-container">
+                     <a  href="{{ path('user_registration', {'_locale': app.request.attributes.get('_locale'), 'role': 'host'}) }}">
+                        <button class="login-screen-button" type="submit">{{ 'choose_pay_per_booking' | trans }}</button>
+                    </a>
+                </li>
+                <li class="featured-deal">
+                    {{ 'Best_for_year_round_rentals' | trans }}
+                </li>
+                <li>
+                    {{ 'Highest_return_of_investment' | trans }}
+                </li>
+                <li>
+                    {{ 'Flat_free_unlimited' | trans }}
+
+                </li>
+                <li>
+                    {{ 'Improve_placement_in_search_result' | trans }}
+
+                </li>
+            </ul>
+        </div>
+        <div class="large-4 columns">
+            <ul class="booking-pricetable-2">
+                <li class="large-12 columns">
+
+                    <p>{{ 'get_help_from_proffesionals' | trans }}</p>
+                    <p>                    {{ 'have_done_all_nice_and_fast' | trans }}
+                    </p>
+
+                </li>
+
+                <li class="large-12 columns fee-description">
+                   <p>{{ 'give_us_your_contact_info' | trans }}</p>
+                   <p>                    {{ 'and_well_call_you_back' | trans }}
+                   </p>
+               </li>
+               <li class="button-container">
+                   <a  href="{{ path('user_registration', {'_locale': app.request.attributes.get('_locale'), 'role': 'host'}) }}">
+                    <button class="green login-screen-button" type="submit">{{ 'do_all_work_for_me' | trans }}</button>
+                </a>
+            </li>
+            <li class="featured-deal">
+                {{ 'One_time_fee' | trans }}
+            </li>
+            <li>
+                {{ 'Highest_return_of_investment' | trans }}
+            </li>
+            <li>
+                {{ 'Flat_free_unlimited' | trans }}
+
+            </li>
+
+        </ul>
+    </div>
+
+</div>
+{% block foundation_footer %}
+    {% include 'includes/foundation-footer.html.twig'  %}
+{% endblock %}
+{% endblock %}

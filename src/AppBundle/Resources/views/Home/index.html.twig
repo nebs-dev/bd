@@ -1,0 +1,182 @@
+{% extends 'base.html.twig' %}
+{% block title %}{{ 'home' | trans }}{% endblock %}
+{% block content %}
+{% block foundation_header %}
+{% include 'includes/foundation-header.html.twig' %}
+{% endblock %}
+<div class="bg-featured"></div>
+<main class="pull-main row">
+    <div class="large-push-6 large-6 columns">
+        <a href="{{ path('app_partner', {'_locale': app.request.attributes.get('_locale') }) }}"
+        class="green-box">
+        <span class="green-box-logo"></span>
+        <div class="text-container">
+            <h2 class="subheading">
+            {{ 'save_money_and_time' | trans  }}
+            <i class="fa fa-caret-right"></i>
+            </h2>
+            <span>
+            {{ 'publish_your_property' | trans  }}
+            </span>
+        </div>
+        </a>
+        <div class="row">
+            {% for accommodation in accommodations %}
+            <section id="accommodation" class="large-6 medium-6 columns">
+                {#{{ loop.index }}#}
+                <a href="{{ path('app_accommodation_single',
+                {'_locale': app.request.attributes.get('_locale'), 'id': accommodation.id }) }}" class="">
+                <figure class="accommodation-item"
+                    style="background-image: url('{{ accommodation.featuredImage | imagine_filter('my_thumb') }}')">
+                    <figcaption class="accommodation-item__description">
+                        {{ 'from' | trans }}
+                        {{ currencyService.fromEuro( accommodationService.getLowPrice(accommodation), app.session.get('currency') ) }}
+                        {{ app.session.get('currency') }} {{ 'per_night' | trans }}
+                    </figcaption>
+                    <i class="heart-fav fa fa-heart"></i>
+                </figure>
+                <span class="accommodation-item-name">
+                {{ accommodation.name }},
+                <span class="accommodation-item-name-city">
+                {{ attribute(accommodation.city, app.request.locale) ?: accommodation.city.en }}
+                </span>
+                </span>
+                <span class="accommodation-icons-home">
+                {% for icon in accommodationService.getIcons(accommodation) %}
+                <img  class="icon-svg-blue" width="20px" height="20px" src="{{ app.request.getSchemeAndHttpHost() }}{{ asset('bundles/app/dist/images/icons/' ~icon~ '.svg') }}" />
+                {% endfor %}
+                </span>
+                </a>
+            </section>
+            {% endfor %}
+        </div>
+
+        <div class="divider-offer">
+            <div class="divider-text">
+                <span>
+                {{ 'special_offers' | trans  }}
+                    </span>
+            </div>
+        </div>
+        <div class="discover-container row">
+            {% if additionalOffers is defined %}
+            {% if additionalOffers is not empty %}
+            {% for ao in additionalOffers|slice(0, 6) %}
+            <a href="{{ path('app_additional_offer_single',
+            {'_locale': app.request.attributes.get('_locale'), 'id': ao.id }) }}">
+            <section id="accommodation" class="large-4 medium-6 columns">
+                <figure class="accommodation-item-offer accommodation-item-special-offer"
+                    style="background: url('{{ ao.featuredImage | imagine_filter('my_thumb') }}')">
+                    <figcaption class="accommodation-item-offer__description">
+                        {{ ao.details.title }}
+                    </figcaption>
+                </figure>
+            </section>
+            </a>
+            {% endfor %}
+            {% endif %}
+            {% endif %}
+         
+        </div>
+        <div class="discover-nothumb-container">
+        <div class="discover-nothumb-text-right">
+        {% if additionalOffers is defined %}
+            {% if additionalOffers is not empty %}
+            {% for ao in additionalOffers|slice(6, 30) %}
+
+            <a class="no-thumb-location" href="{{ path('app_additional_offer_single',
+            {'_locale': app.request.attributes.get('_locale'), 'id': ao.id }) }}">
+            <span class="location-nofigure">
+            {{ ao.details.title }},
+            </span>
+            </a>
+        {% endfor %}
+            {% endif %}
+            {% endif %}
+        </div>
+    </div>
+    </div>
+</div>
+<div class="medium-12 large-pull-6 large-6 columns">
+    {% block foundation_search %}
+    {% include 'includes/foundation-search.html.twig' %}
+    {% endblock %}
+    <section class="row site-info">
+        <div class="large-4 medium-4 columns">
+            <span class="shape shape1"></span>
+            <h4>{{ 'We_speak_your' | trans }}</h4>
+            <p>{{ 'Website_and_customer_service' | trans }}</p>
+            <p>{{ 'in_20_languages' | trans }}</p>
+        </div>
+        <div class="large-4 medium-4 columns">
+            <span class="shape shape2"></span>
+            <h4>{{ 'Low_rates' | trans }}</h4>
+            <p>{{ 'No_booking_fees_save_your' | trans}}</p>
+            <p>{{ 'money_and_time' | trans }}</p>
+        </div>
+        <div class="large-4 medium-4 columns">
+            <span class="shape shape3"></span>
+            <h4>{{ 'Track_your_favorites' | trans }}</h4>
+            <p>{{ 'Manage_your_bookings' | trans }}</p>
+            <p>{{ 'and_favorites_online' | trans }}</p>
+        </div>
+    </section>
+    <div class="divider-offer">
+        <div class="divider-text">
+            <span>{{ 'discover' | trans }}</span>
+        </div>
+    </div>
+    <div class="row discover-container">
+        {% for discoverItem in discover|slice(0, 4) %}
+        <a href="{{ path('app_home_discover_search',
+        {'_locale': app.request.attributes.get('_locale'), 'location': discoverItem.location }) }}">
+        <section id="accommodation" class="large-6 medium-6 columns">
+            <figure class="discover-item"
+                style="background: url('{{ discoverItem.webPath | imagine_filter('my_thumb') }}')">
+                <figcaption class="discover-item__description">
+                    {{ discoverItem.location }}
+                </figcaption>
+            </figure>
+        </section>
+        </a>
+        {% endfor %}
+    </div>
+    <div class="discover-nothumb-container">
+        <div class="discover-nothumb-text">
+        {% for discoverItem in discover|slice(4, 30) %}
+
+            <a  class="no-thumb-location" href="{{ path('app_home_discover_search',
+            {'_locale': app.request.attributes.get('_locale'), 'location': discoverItem.location }) }}">
+            <span class="location-nofigure">
+            {{ discoverItem.location }},
+            </span>
+            </a>
+        {% endfor %}
+        </div>
+    </div>
+    <div class="divider-offer">
+        <div class="divider-text">
+            <span>{{ 'blog' | trans }}</span>
+        </div>
+    </div>
+    <div class="blog-container row">
+        {% for post in posts %}
+        <a href="{{ path('app_blog',
+        {'_locale': app.request.attributes.get('_locale') }) }}">
+        <section id="post{{ post.id }}" class="large-6 medium-6 columns">
+            <figure class="accommodation-item-blog"
+                style="background: url('{{ post.webPath | imagine_filter('my_thumb_blog') }}')">
+                <figcaption class="accommodation-item-blog__description">
+                    {{ post.title }}
+                </figcaption>
+            </figure>
+        </section>
+        </a>
+        {% endfor %}
+    </div>
+</div>
+</main>
+{% block foundation_footer %}
+{% include 'includes/foundation-footer.html.twig' %}
+{% endblock %}
+{% endblock %}

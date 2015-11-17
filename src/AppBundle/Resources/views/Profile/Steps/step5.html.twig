@@ -1,0 +1,230 @@
+{% extends 'admin.html.twig' %}
+{% block menu %}
+{% endblock %}
+{% block sidemenu %}
+{% include 'steps_menu.html.twig' %}
+{% endblock %}
+{% block stylesheets %}
+{{ parent() }}
+<link href="http://cdn.datatables.net/1.10.5/css/jquery.dataTables.min.css" rel="stylesheet" type="text/css" />
+<link href="{{asset('bundles/admin/js/footable/css/footable.core.css?v=2-0-1')}}" rel="stylesheet" type="text/css" />
+<link href="{{asset('bundles/admin/js/footable/css/footable.standalone.css')}}" rel="stylesheet" type="text/css" />
+<link href="{{asset('bundles/admin/js/footable/css/footable-demos.css')}}" rel="stylesheet" type="text/css" />
+<link href="{{asset('bundles/app/js/jquery.datetimepicker.css')}}" rel="stylesheet" type="text/css" />
+{% endblock %}
+
+
+{% block content %}
+<div class="row no-pad">
+	<div class="large-12 columns">
+		<div class="box-body" style="display: block;">
+			<h4>{{ 'Units' | trans }}</h4>
+			{# ne diraj ovu klasu #}
+			<div class="unitPeriods">
+				<ul>
+					{% for unit in accommodation.units %}
+					<li>
+						<h4>{{ unit.categorize }} / {{ unit.name }}</h4>
+						<div id="unitPeriods{{ unit.id }}">
+							<h5>{{ 'periods' | trans }}:</h5>
+							{% if unit.periods | length %}
+							<table class="demo table table-striped table-bordered bootstrap-datatable datatable responsive"
+								id="periodsUnit{{ unit.id }}" data-filter="#filter" data-filter-text-only="true">
+								<thead>
+									<tr>
+										<th>{{ 'from' | trans }}</th>
+										<th>{{ 'to' | trans }}</th>
+										{#<th>{{ 'sign' | trans }}</th>#}
+										<th>{{ 'amount' | trans }}</th>
+										<th>&nbsp;</th>
+									</tr>
+								</thead>
+								<tbody>
+									{% for period in unit.periods %}
+									<tr id="{{ period.id }}" class="{{ unit.id }}">
+										<td class="center">{{ period.fromDate | date('d.m.Y.') }}</td>
+										<td class="center">{{ period.toDate | date('d.m.Y.') }}</td>
+										{#<td class="center">{{ period.sign }}</td>#}
+										<td class="center">{{ period.amount }}</td>
+										<td class="center">
+											<button
+											class="status-metro status-suspended deletePeriod"
+											onclick="return confirm('{{ 'are_you_sure_delete' | trans }}')"
+											>
+											{{ 'delete' | trans }}
+											</button>
+										</td>
+									</tr>
+									{% endfor %}
+								</tbody>
+							</table>
+							{% endif %}
+						</div>
+					</li>
+					{% endfor %}
+				</ul>
+			</div>
+		</div>
+	</div> 
+</div>
+<div class="row no-pad">
+	<div class="large-12 columns">
+		<div class="box bg-white panel ">
+			<div class="box-body " style="display: block;">
+				{# New period form #}
+				<div class="newPeriod">
+					<h4>New period form</h4>
+					<div id="errorMsg"></div>
+					{{ form_start(
+					formPeriod, {
+					'method': 'POST',
+					'attr': {'novalidate': 'novalidate', 'class':"form-horizontal", 'id':'newPeriod'}
+					}
+					) }}
+
+					<div class="large-12 columns">
+						<div class="form-group">
+							{{ form_label(formPeriod.unit, 'Unit' | trans, { 'label_attr': {'class': 'col-sm-3 control-label'} }) }}
+							{{ form_errors(formPeriod.unit) }}
+							<div class="col-sm-5">
+								{{ form_widget(formPeriod.unit, { 'attr': {'class': 'form-control validate[required]'} }) }}
+							</div>
+						</div>
+					</div>
+					<div class="large-6 columns">
+						<div class="form-group">
+							{{ form_label(formPeriod.fromDate, 'from' | trans, { 'label_attr': {'class': 'col-sm-3 control-label'} }) }}
+							{{ form_errors(formPeriod.fromDate) }}
+							<div class="col-sm-5">
+								{{ form_widget(formPeriod.fromDate, { 'type':'text', 'attr': {'class': 'form-control validate[required]'} }) }}
+							</div>
+						</div>
+					</div>
+					<div class="large-6 columns">
+						<div class="form-group">
+							{{ form_label(formPeriod.toDate, 'to' | trans, { 'label_attr': {'class': 'col-sm-3 control-label'} }) }}
+							{{ form_errors(formPeriod.toDate) }}
+							<div class="col-sm-5">
+								{{ form_widget(formPeriod.toDate, { 'type':'text', 'attr': {'class': 'form-control validate[required]'} }) }}
+							</div>
+						</div>
+					</div>
+					<div class="large-6 columns">
+						<div class="form-group">
+							<label>{{ 'sign' | trans }}</label>
+							<select name="sign">
+								<option value="+">+</option>
+								<option value="-">-</option>
+							</select>
+						</div>
+					</div>
+					<div class="large-6 columns">
+						<div class="form-group">
+							{{ form_label(formPeriod.amount, 'amount' | trans, { 'label_attr': {'class': 'col-sm-3 control-label'} }) }}
+							{{ form_errors(formPeriod.amount) }}
+							<div class="col-sm-5">
+								{{ form_widget(formPeriod.amount, { 'attr': {'class': 'form-control validate[required] datepicker'} }) }}
+							</div>
+						</div>
+					</div>
+				</div>
+				{# /form #}
+				{{ form_rest(formPeriod) }}
+				<div class="row">
+					<div class="large-10 columns"></div>
+					<div class="large-2 columns">
+						<button type="submit" name="newPeriod" id="newPeriodSubmit" class="large-12 button small bg-light-green">
+							{{ 'add_period' | trans }}
+						</button>
+					</div>
+				</div>
+
+				<hr>
+
+				<div class="row">
+					<div class="large-12 columns">
+						<a class="large-12 button small secondary" href="{{ path('app_profile_step_6', {'_locale': app.request.attributes.get('_locale'), 'id' : accommodation.id }) }}">
+							{{ 'next' | trans }}
+						</a>
+					</div>
+				</div>
+
+				{{ form_end(formPeriod) }}
+			</div>
+		</div>
+	</div>
+</div>
+{% endblock %}
+{% block js %}
+{{ parent() }}
+
+<script type="text/javascript">
+$(document).ready(function () {
+
+
+// New period - SUBMIT
+$('#newPeriodSubmit').on('click', function (e) {
+e.preventDefault();
+var unitId = $('#period_unit').val();
+newPeriodAction(unitId);
+});
+// Period delete
+$('.unitPeriods').on('click', '.deletePeriod', function (e) {//
+var periodId = $(this).closest('tr').attr('id');
+var unitId = $(this).closest('tr').attr('class');
+deletePeriodAction(periodId, unitId);
+});
+});
+function newPeriodAction(unitId) {
+$.post('{{ app.request.getBaseURL() }}/profile/step/5/period/new', {
+period: $('#newPeriod').serialize(),
+unitId: unitId
+}, function (data) {
+data = JSON.parse(data);
+console.log(data);
+if (data.error) {
+var msg = '<div class="alert alert-danger alert-width"><button type="button" class="close" data-dismiss="alert">&times;</button>' + data.error + '</div>';
+$('#errorMsg').html('');
+$('#errorMsg').html(msg);
+} else {
+console.log(data);
+$('#unitPeriods' + unitId).html('');
+$('#unitPeriods' + unitId).html(data);
+}
+});
+}
+function deletePeriodAction(periodId, unitId) {
+$.post('{{ app.request.getBaseURL() }}/profile/step/5/period/delete', {
+periodId: periodId,
+unitId: unitId
+}, function (data) {
+data = JSON.parse(data);
+if (data.error) {
+var msg = '<div class="alert alert-danger alert-width"><button type="button" class="close" data-dismiss="alert">&times;</button>' + data.error + '</div>';
+$('#errorMsg').html('');
+$('#errorMsg').html(msg);
+} else {
+$('#unitPeriods' + unitId).html('');
+$('#unitPeriods' + unitId).html(data);
+}
+});
+}
+</script>
+
+
+
+<script src="{{asset('bundles/app/js/jquery.datetimepicker.js')}}"></script>
+<script type="text/javascript">
+	$(document).ready(function(){
+		$('#period_fromDate').datetimepicker({
+		  timepicker:false,
+		  format:'d.m.Y.' 
+		}); 
+		$('#period_toDate').datetimepicker({
+		  timepicker:false,
+		  format:'d.m.Y.'  
+		}); 
+	});
+</script>
+
+{% endblock %}

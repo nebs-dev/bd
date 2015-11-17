@@ -1,0 +1,31 @@
+// Colors
+
+$dark-blue1: #0084b4;
+$dark-blue2: #00aced;
+$verified-blue: #1dcaff;
+$background-blue: #c0deed;
+$white: #fff;
+
+$button-main: #009999;
+
+.bg-darkblue1 {
+	background-color: $dark-blue1 !important;
+}
+
+.bg-darkblue2 {
+	background-color: $dark-blue2 !important;
+}
+
+.bg-verifiedBlue {
+	background-color: $verified-blue !important;
+}
+
+.bg-backgroundBlue {
+	background-color: $background-blue !important;
+}
+
+.bg-buttonMain{
+
+background-color: $button-main;
+
+}

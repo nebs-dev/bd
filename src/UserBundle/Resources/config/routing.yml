@@ -1,0 +1,28 @@
+user_403:
+  path: /403
+  defaults: { _controller: UserBundle:Base:noAccess }
+
+user_registration:
+  path: /registration/{role}
+  defaults: { _controller: UserBundle:Base:registration }
+
+user_registration_tourist:
+  path: /registration/tourist
+  defaults: { _controller: UserBundle:Base:registrationTourist }
+
+user_validate_account:
+  path: /validateAccount/{username}/{hash}
+  defaults: { _controller: UserBundle:Base:validateAccount }
+
+user_forgot_password:
+  path: /forgotPassword
+  defaults: { _controller: UserBundle:Base:forgotPassword }
+
+user_resetForm_password:
+  path: /resetPasswordForm/{username}/{hash}
+  defaults: { _controller: UserBundle:Base:resetPasswordForm }
+
+user_reset_password:
+  path: /resetPassword/{id}
+  defaults: { _controller: UserBundle:Base:resetPassword }
+  methods: [POST]

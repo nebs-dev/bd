@@ -1,0 +1,141 @@
+.search-button {
+    @include button( // $padding - Used to build padding for buttons Default: $button-med or rem-calc(12)
+    $padding: rem-calc(8), // Background color. We can set $bg:false for a transparent background. Default: $primary-color.
+    $bg: $brightyellow, // If true, set to button radius which is $global-radius or explicitly set radius amount in px (ex. $radius:10px). Default:false.
+    // $radius,
+    // We can set $full-width:true to remove side padding extend width. Default:false
+    $full-width: true // We can set $disabled:true to create a disabled transparent button. Default:false
+    // $disabled
+    );
+    font-family: $raleway-extrabold;
+    text-transform: uppercase;
+    color: $buttoyellow;
+}
+
+.search-button-down {
+    $button-font-color: $buttoyellow;
+    $button-margin-bottom: rem-calc(30);
+    font-size: rem-calc(20);
+    @include button( // $padding - Used to build padding for buttons Default: $button-med or rem-calc(12)
+    $padding: rem-calc(6), // Background color. We can set $bg:false for a transparent background. Default: $primary-color.
+    $bg: $brightyellow, // If true, set to button radius which is $global-radius or explicitly set radius amount in px (ex. $radius:10px). Default:false.
+    // $radius,
+    // We can set $full-width:true to remove side padding extend width. Default:false
+    $full-width: false // We can set $disabled:true to create a disabled transparent button. Default:false
+    // $disabled
+    );
+    font-family: $raleway-extrabold;
+    text-transform: uppercase;
+    color: $buttoyellow;
+}
+
+.review-button {
+    @include button( // $padding - Used to build padding for buttons Default: $button-med or rem-calc(12)
+    $padding: rem-calc(6), // Background color. We can set $bg:false for a transparent background. Default: $primary-color.
+    $bg: $brightyellow, // If true, set to button radius which is $global-radius or explicitly set radius amount in px (ex. $radius:10px). Default:false.
+    // $radius,
+    // We can set $full-width:true to remove side padding extend width. Default:false
+    $full-width: true // We can set $disabled:true to create a disabled transparent button. Default:false
+    // $disabled
+    );
+    font-family: $raleway-extrabold;
+color: $buttoyellow;
+margin-bottom: rem-calc(20);
+font-size: rem-calc(15);
+
+}
+
+.submit-single-button {
+    @include button( // $padding - Used to build padding for buttons Default: $button-med or rem-calc(12)
+    $padding: rem-calc(5), // Background color. We can set $bg:false for a transparent background. Default: $primary-color.
+    $bg: $brightyellow, // If true, set to button radius which is $global-radius or explicitly set radius amount in px (ex. $radius:10px). Default:false.
+    // $radius,
+    // We can set $full-width:true to remove side padding extend width. Default:false
+    $full-width: true // We can set $disabled:true to create a disabled transparent button. Default:false
+    // $disabled
+    );
+    font-family: $raleway-extrabold;
+    color: $buttoyellow;
+    margin-bottom: rem-calc(20);
+    font-size: rem-calc(15);
+}
+
+.showmap-button {
+    @include button( // $padding - Used to build padding for buttons Default: $button-med or rem-calc(12)
+    $padding: rem-calc(5), // Background color. We can set $bg:false for a transparent background. Default: $primary-color.
+    $bg: #58a9f7 // If true, set to button radius which is $global-radius or explicitly set radius amount in px (ex. $radius:10px). Default:false.
+    // $radius,
+    // We can set $full-width:true to remove side padding extend width. Default:false
+    // We can set $disabled:true to create a disabled transparent button. Default:false
+    // $disabled
+    );
+    float: right;
+    $button-font-family: $sans;
+    $button-font-color: $white;
+    $button-margin-bottom: rem-calc(20);
+    font-size: rem-calc(13);
+}
+
+.search-button-filter {
+    @include button( // $padding - Used to build padding for buttons Default: $button-med or rem-calc(12)
+    $padding: rem-calc(6), // Background color. We can set $bg:false for a transparent background. Default: $primary-color.
+    $bg: $brightyellow, // If true, set to button radius which is $global-radius or explicitly set radius amount in px (ex. $radius:10px). Default:false.
+    // $radius,
+    // We can set $full-width:true to remove side padding extend width. Default:false
+    $full-width: true // We can set $disabled:true to create a disabled transparent button. Default:false
+    // $disabled
+    );
+    font-family: $raleway-extrabold;
+    color: $buttoyellow;
+    margin-bottom: rem-calc(0);
+    font-size: rem-calc(20);
+}
+
+.subscribe-button {
+    @include button( // $padding - Used to build padding for buttons Default: $button-med or rem-calc(12)
+    $padding: rem-calc(6), // Background color. We can set $bg:false for a transparent background. Default: $primary-color.
+    $bg: transparent, // If true, set to button radius which is $global-radius or explicitly set radius amount in px (ex. $radius:10px). Default:false.
+    // $radius,
+    // We can set $full-width:true to remove side padding extend width. Default:false
+    $full-width: true // We can set $disabled:true to create a disabled transparent button. Default:false
+    // $disabled
+    );
+    font-family: $raleway-extrabold;
+color: $white;
+margin-bottom: rem-calc(20);
+font-size: rem-calc(23);
+
+}
+
+.pagination-button {
+    @include button( // $padding - Used to build padding for buttons Default: $button-med or rem-calc(12)
+    $padding: rem-calc(6), // Background color. We can set $bg:false for a transparent background. Default: $primary-color.
+    $bg: transparent, // If true, set to button radius which is $global-radius or explicitly set radius amount in px (ex. $radius:10px). Default:false.
+    // $radius,
+    // We can set $full-width:true to remove side padding extend width. Default:false
+    $full-width: false // We can set $disabled:true to create a disabled transparent button. Default:false
+    // $disabled
+    );
+    text-transform: uppercase;
+    font-family: $sans;
+    color: #b9b9b9;
+    margin-bottom: rem-calc(0);
+    font-size: rem-calc(13);
+}
+
+.login-screen-button {
+    @include button( // $padding - Used to build padding for buttons Default: $button-med or rem-calc(12)
+    $padding: rem-calc(14), // Background color. We can set $bg:false for a transparent background. Default: $primary-color.
+    $bg: $login-blue, // If true, set to button radius which is $global-radius or explicitly set radius amount in px (ex. $radius:10px). Default:false.
+    // $radius,
+    // We can set $full-width:true to remove side padding extend width. Default:false
+    $full-width: true // We can set $disabled:true to create a disabled transparent button. Default:false
+    // $disabled
+    );
+    font-family: $raleway-bold;
+ olor: $white;
+ margin-bottom: rem-calc(20);
+ font-size: rem-calc(14);
+ text-transform: uppercase;
+
+}

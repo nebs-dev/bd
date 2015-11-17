@@ -1,0 +1,336 @@
+{% extends 'admin.html.twig' %}
+{% block menu %}
+
+{% endblock %}
+{% block sidemenu %}
+    {% include 'steps_menu.html.twig' %}
+{% endblock %}
+{% block content %}
+	<div class="row no-pad">
+		<div class="large-12 columns">
+			<div class="box bg-white">
+				<div class="box-body pad-forty" style="display: block;">
+					{% for flashMessage in app.session.flashbag.get('msgSuccess') %}
+					<div class="box bg-light-green">
+						<div class="box-header bg-light-green ">
+							<!-- tools box -->
+							<div class="pull-right box-tools">
+								<span class="box-btn" data-widget="remove">
+									<i class="icon-cross"></i>
+								</span>
+							</div>
+							<h3 class="box-title "><i class="text-white  icon-thumbs-up"></i>
+								<span class="text-white">SUCCESS</span>
+							</h3>
+						</div>
+						<!-- /.box-header -->
+						<div class="box-body " style="display: block;">
+							<p class="text-white"><strong>Well done!</strong> {{ flashMessage }}</p>
+						</div>
+					</div>
+					{% endfor %}
+					{% for flashMessage in app.session.flashbag.get('msgError') %}
+					<div class="box bg-red">
+						<div class="box-header bg-red ">
+							<!-- tools box -->
+							<div class="pull-right box-tools">
+								<span class="box-btn" data-widget="remove">
+									<i class="icon-cross"></i>
+								</span>
+							</div>
+							<h3 class="box-title "><i class="text-white  icon-thumbs-up"></i>
+								<span class="text-white">Error</span>
+							</h3>
+						</div>
+						<!-- /.box-header -->
+						<div class="box-body " style="display: block;">
+							<p class="text-white"><strong>Sorry!</strong> {{ flashMessage }}</p>
+						</div>
+					</div>
+					{% endfor %}
+					{{ form_start(form, {'attr': {'novalidate': 'novalidate', 'class':"form-horizontal", 'id':'unitNew' }}) }}
+					{{ form_errors(form) }}
+
+					<div class="large-12 columns">
+						<div class="row">
+							<fieldset>
+								<legend>{{ 'Unit_info' | trans }}</legend>
+								<div class="large-4 columns unitCategory">
+									{# unitCategory #}
+									{{ form_label(form.unitCategory, 'unitCategory' | trans , { 'label_attr': {'class': 'col-sm-3 control-label'} }) }}
+									{{ form_errors(form.unitCategory) }}
+									<div class="col-sm-5">
+										{{ form_widget(form.unitCategory, { 'attr': {'class': 'form-control validate[required]'} }) }}
+									</div><br />
+								</div>
+								<div class="large-8 columns name">
+									{{ form_label(form.name, 'name' | trans , { 'label_attr': {'class': 'col-sm-3 control-label'} }) }}
+									{{ form_errors(form.name) }}
+									<div class="col-sm-5">
+										{{ form_widget(form.name, { 'attr': {'class': 'form-control validate[required]'} }) }}
+									</div>
+								</div>
+								<div class="row"></div>
+								{#<div class="large-3 columns currency">#}
+									{#<label for="currency">{{ 'currency' | trans }}</label>#}
+									{#<select name="currency" id="currency">#}
+										{#{% for currency in currencies %}#}
+											{#<option value="{{ currency.code }}" {{ currency.code == 'EUR' ? 'selected="selected"' }}>{{ currency.code }}</option>#}
+										{#{% endfor %}#}
+									{#</select>#}
+								{#</div>#}
+
+								<div class="large-4 columns capacity">
+									{# capacity #}
+									{{ form_label(form.capacity, 'capacity' | trans , { 'label_attr': {'class': 'col-sm-3 control-label'} }) }}
+									{{ form_errors(form.capacity) }}
+									<div class="col-sm-5">
+										{{ form_widget(form.capacity, { 'attr': {'class': 'form-control validate[required]'} }) }}
+									</div>
+								</div>
+								<div class="large-4 columns surface">
+									{# surface #}
+									{{ form_label(form.surface, 'surface' | trans , { 'label_attr': {'class': 'col-sm-3 control-label'} }) }}
+									{{ form_errors(form.surface) }}
+									<div class="col-sm-5">
+										{{ form_widget(form.surface, { 'attr': {'class': 'form-control validate[required]'} }) }}
+									</div>
+								</div>
+								<div class="large-4 columns categorize">
+									{# categorize #}
+									{{ form_label(form.categorize, 'categorize' | trans , { 'label_attr': {'class': 'col-sm-3 control-label'} }) }}
+									{{ form_errors(form.categorize) }}
+									<div class="col-sm-5">
+										{{ form_widget(form.categorize, { 'attr': {'class': 'form-control validate[required]'} }) }}
+									</div>
+								</div>
+								<div class="row"></div>
+								<div class="large-4 columns position">
+									{# position #}
+									{{ form_label(form.position, 'position' | trans , { 'label_attr': {'class': 'col-sm-3 control-label'} }) }}
+									{{ form_errors(form.position) }}
+									<div class="col-sm-5">
+										{{ form_widget(form.position, { 'attr': {'class': 'form-control validate[required]'} }) }}
+									</div><br />
+								</div>
+								<div class="large-4 columns minimumStay">
+									{# minimumStay #}
+									{{ form_label(form.minimumStay, 'minimumStay' | trans , { 'label_attr': {'class': 'col-sm-3 control-label'} }) }}
+									{{ form_errors(form.minimumStay) }}
+									<div class="col-sm-5">
+										{{ form_widget(form.minimumStay, { 'attr': {'class': 'form-control validate[required]'} }) }}
+									</div>
+								</div>
+								
+								<div class="large-4 columns basicPrice">
+									{# basicPrice #}
+									{{ form_label(form.basicPrice, 'basicPrice' | trans , { 'label_attr': {'class': 'col-sm-3 control-label'} }) }}
+									{{ form_errors(form.basicPrice) }}
+									<div class="col-sm-5">
+										{{ form_widget(form.basicPrice, { 'attr': {'class': 'form-control validate[required]'} }) }}
+									</div>
+								</div>
+
+								<div class="row"></div>
+
+								<div class="large-12 columns views">
+									<fieldset>
+										<legend>{{ form_label(form.views, 'views' | trans , { 'label_attr': {'class': 'col-sm-3 control-label'} }) }}</legend>
+										<div class="large-12 columns bedroom">
+											{{ form_errors(form.views) }}
+											<div class="col-sm-5">
+												{{ form_widget(form.views, { 'attr': {'class': 'gridDescription form-control validate[required]'} }) }}
+											</div>
+										</div>
+									</fieldset>
+								</div>
+								<div class="large-12 columns details">
+									<fieldset>
+										<legend>{{ form_label(form.details, 'details' | trans , { 'label_attr': {'class': 'col-sm-3 control-label'} }) }}</legend>
+										<div class="large-12 columns details">
+											{# details #}
+											{{ form_errors(form.details) }}
+											<div class="col-sm-5">
+												{{ form_widget(form.details, { 'attr': {'class': 'gridDescription form-control validate[required]'} }) }}
+											</div>
+										</div>
+									</fieldset>
+								</div>
+							</fieldset>
+						</div>
+						<div class="row">
+							<fieldset>
+								<legend>{{ form_label(form.bedroom, 'bedroom' | trans , { 'label_attr': {'class': 'col-sm-3 control-label'} }) }}</legend>
+								<div class="large-12 columns bedroom">
+									{{ form_errors(form.bedroom) }}
+									<div class="col-sm-5">
+										{{ form_widget(form.bedroom, { 'attr': {'class': 'gridDescription form-control validate[required]'} }) }}
+									</div>
+								</div>
+							</fieldset><br />
+						</div>
+
+						<div class="row">
+							<fieldset>
+								<legend>{{ form_label(form.bathroom, 'bathroom' | trans , { 'label_attr': {'class': 'col-sm-3 control-label'} }) }}</legend>
+								<div class="large-12 columns bathroom">
+									{# bathroom #}
+									{{ form_errors(form.bathroom) }}
+									<div class="col-sm-5">
+										{{ form_widget(form.bathroom, { 'attr': {'class': 'gridDescription form-control validate[required]'} }) }}
+									</div>
+								</div>
+							</fieldset><br />
+						</div>
+						<div class="row">
+							<fieldset>
+								<legend>{{ form_label(form.livingroom, 'livingroom' | trans , { 'label_attr': {'class': 'col-sm-3 control-label'} }) }}</legend>
+								<div class="large-12 columns livingroom">
+									{# livingroom #}
+									{{ form_errors(form.livingroom) }}
+									<div class="col-sm-5">
+										{{ form_widget(form.livingroom, { 'attr': {'class': 'gridDescription form-control validate[required]'} }) }}
+									</div>
+								</div>
+							</fieldset><br />
+						</div>
+						<div class="row">
+							<fieldset>
+								<legend>{{ form_label(form.kitchen, 'kitchen' | trans , { 'label_attr': {'class': 'col-sm-3 control-label'} }) }}</legend>
+								<div class="large-12 columns kitchen">
+									{# kitchen #}
+									{{ form_errors(form.kitchen) }}
+									<div class="col-sm-5">
+										{{ form_widget(form.kitchen, { 'attr': {'class': 'gridDescription form-control validate[required]'} }) }}
+									</div>
+								</div>
+							</fieldset><br />
+						</div>
+ 
+
+						<div class="row">
+							<fieldset>
+								<legend>{{ 'Price extra' | trans }}</legend>
+								<div class="row">
+									{% for priceE in priceExtra %}
+										<div class="large-12 columns price">
+											<fieldset>
+												<legend>{{ priceE.name | trans }}</legend>
+												<div class="large-4 columns {{ priceE.name | trans }}">
+													<label>{{ 'availability' | trans }}</label>
+													<select name="priceExtra[{{ priceE.name }}][availability]" class="availabilitySelect">
+														<option value="2" >{{ 'yes_it_is_free' | trans }}</option>
+														<option value="1" >{{ 'yes_to_be_paid' | trans }}</option>
+														<option value="0" selected="selected">{{ 'no' | trans }}</option>
+													</select>
+												</div>
+												<div class="large-8 columns {{ priceE.name | trans }} priceDiv">
+													<div class="row">
+														<div class="large-2 columns">
+															<label>{{ 'currency' | trans }}</label>
+															{{ app.session.get('currency') }}
+														</div>
+														<div class="large-10 columns">  
+															<label>{{ 'Price_per_day' | trans }}</label>
+															<input class="priceInput" type="number" name="priceExtra[{{ priceE.name }}][price]" value="0">
+														</div>
+													</div>
+												</div>
+												<input type="hidden" name="priceExtra[{{ priceE.name }}][priceExtraId]" value="{{ priceE.id }}">
+											</fieldset>
+											<br />
+										</div>
+									{% endfor %}
+								</div>
+							</fieldset>
+						</div>
+
+								{# Price extra all fields #}
+								{#<div class="row">#}
+								{#{{ form_label(form.priceExtra, 'price_extra' | trans , { 'label_attr': {'class': 'col-sm-3 control-label'} }) }}#}
+								{#{{ form_errors(form.priceExtra) }}#}
+								{#<div class="col-sm-5">#}
+								{#{{ form_widget(form.priceExtra, { 'attr': {'class': 'form-control validate[required]'} }) }}#}
+								{#</div>#}
+								{#</div>#}
+
+							</fieldset>
+						</div>
+						<div class="row">
+							<fieldset>
+								<legend>Details</legend>
+								
+								<div class="large-12 columns description">
+									<fieldset>
+										<legend>{{ form_label(form.description, 'description' | trans , { 'label_attr': {'class': 'col-sm-3 control-label'} }) }}</legend>
+										<div class="large-12 columns description">
+											{# details #}
+											{{ form_errors(form.description) }}
+											<div class="col-sm-5">
+												{{ form_widget(form.description, { 'attr': {'class': 'gridDescription
+												form-control validate[required]'} }) }}
+											</div>
+										</div>
+									</fieldset><br />
+								</div>
+
+							</fieldset>
+
+
+						</div>
+					</div>
+					{{ form_rest(form) }}
+					<div class="row">
+						<div class="large-12large columns pad-forty">
+							<ul class="button-group radius even-2 ">
+								{#<a href="{{ path('app_profile_step_1', {'_locale': app.request.attributes.get('_locale')}) }}" class="button small secondary" >{{ 'back' | trans }}</a></li>#}
+								<li>
+									<button type="submit" name="create" class="button small bg-light-green">
+										{{ 'Next' | trans }}
+									</button>
+								</li>
+							</ul>
+						</div>
+					</div>
+					{{ form_end(form) }}
+				</div>
+			</div>
+		</div>
+	</div>
+
+
+{% endblock %}
+{% block js %}
+	{{ parent() }}
+
+	<script type="text/javascript">
+
+		$(function(){
+
+			$('.priceDiv').hide();
+			$('.selectAvailability').on('change', function(){
+				switch($(this).val()) {
+					// no
+					case '0':
+						$(this).parent().parent().find('.priceValue').val(null);
+						$(this).parent().parent().find('.priceDiv').hide();
+						break;
+					// paid
+					case '1':
+						$(this).parent().parent().find('.priceDiv').show();
+						$(this).parent().parent().find('.priceValue').val(1);
+						break;
+					// free
+					case '2':
+						$(this).parent().parent().find('.priceValue').val(0);
+						$(this).parent().parent().find('.priceDiv').hide();
+						break;
+				}
+			});
+
+		});
+
+	</script>
+
+{% endblock %}
+

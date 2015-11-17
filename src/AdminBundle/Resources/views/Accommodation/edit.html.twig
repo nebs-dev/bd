@@ -1,0 +1,520 @@
+{% extends 'admin.html.twig' %}
+{% block content %}
+    <div class="row no-pad">
+        <div class="large-12 columns">
+            <div class="box bg-white">
+                <div class="box-body pad-forty" style="display: block;">
+                    {% for flashMessage in app.session.flashbag.get('msgSuccess') %}
+                        {{ flashMessage }}
+                    {% endfor %}
+                    {% for flashMessage in app.session.flashbag.get('msgError') %}
+                        {{ flashMessage }}
+                    {% endfor %}
+
+                    {{ form_start(form, {'attr': {'novalidate': 'novalidate', 'class':"form-horizontal", 'id':'accommodationEdit' }}) }}
+                    {{ form_errors(form) }}
+                    <div class="row">
+                        <div class="large-6 columns">
+                            <div class="form-group">
+                                {{ form_label(form.name, 'name' | trans , { 'label_attr': {'class': 'col-sm-3 control-label'} }) }}
+                                {{ form_errors(form.name) }}
+                                <div class="col-sm-5">
+                                    {{ form_widget(form.name, { 'attr': {'class': 'form-control validate[required]'} }) }}
+                                </div>
+                            </div>
+                        </div>
+                        {# Free WiFi #}
+                        <div class="row">
+                            <fieldset>
+                                <legend>{{ 'wifi' | trans }}</legend>
+
+                                <div class="large-3 columns">
+                                    <label>{{ 'availability' | trans }}</label>
+                                    <select name="wifi" class="availabilitySelect">
+                                        <option value="2" {{ accommodation.wifi and accommodation.wifi == 0 ? 'selected="selected"' }}>{{ 'yes_it_is_free' | trans }}</option>
+                                        <option value="1" {{ accommodation.wifi and accommodation.wifi > 0 ? 'selected="selected"' }}>{{ 'yes_to_be_paid' | trans }}</option>
+                                        <option value="0" {{ accommodation.wifi is null ? 'selected="selected"' }}>{{ 'no' | trans }}</option>
+                                    </select>
+                                </div>
+
+                                <div class="large-6 columns">
+                                    <div class="form-group">
+                                        {{ form_label(form.accommodationCategory, 'accommodation_category' | trans , { 'label_attr': {'class': 'col-sm-3 control-label'} }) }}
+                                        {{ form_errors(form.accommodationCategory) }}
+                                        <div class="col-sm-5">
+                                            {{ form_widget(form.accommodationCategory, { 'attr': {'class': 'form-control validate[required]'} }) }}
+                                        </div>
+                                    </div>
+                                </div>
+
+                                <div class="large-3 columns priceDiv">
+                                    {{ form_label(form.wifi, 'wifi_price' | trans , { 'label_attr': {'class': 'col-sm-3 control-label'} }) }}
+                                    {{ form_errors(form.wifi) }}
+                                    <div class="col-sm-5">
+                                        {{ app.session.get('currency') }}
+                                        {{ form_widget(form.wifi, { 'attr': {'class': 'form-control priceInput'} }) }}
+                                    </div>
+                                </div>
+                            </fieldset>
+                            <br/>
+                        </div>
+                        <div class="large-6 columns">
+                            <div class="form-group">
+                                {{ form_label(form.user, 'user' | trans , { 'label_attr': {'class': 'col-sm-3 control-label'} }) }}
+                                {{ form_errors(form.user) }}
+                                <div class="col-sm-5">
+                                    {{ form_widget(form.user, { 'attr': {'class': 'form-control validate[required]'} }) }}
+                                </div>
+                            </div>
+                        </div>
+                        {# Location #}
+                        <div class="large-6 columns">
+                            <div class="form-group">
+                                <label class="col-sm-3 control-label">{{ 'country' | trans }}</label>
+
+                                <div class="col-sm-5">
+                                    <select name="country" id="country" class="countrySelect _accommodation">
+                                        <option value="">{{ 'choose_option' | trans }}</option>
+                                        {% for country in countries %}
+                                            <option
+                                                    value="{{ country.id }}"
+                                                    {{ accommodation.city is not null and accommodation.city.subregion.region.country.id == country.id ? 'selected="selected"' : '' }}
+                                                    >
+                                                {{ attribute(country, app.request.locale) }}
+                                            </option>
+                                        {% endfor %}
+                                    </select>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="large-6 columns">
+                            <div class="form-group regionsDiv">
+                                <label class="col-sm-3 control-label">{{ 'region' | trans }}</label>
+
+                                <div class="col-sm-5">
+                                    <select name="region" class="regionsSelect _accommodation"
+                                            id="region" {{ accommodation.city is null ? 'disabled="disabled"' : '' }}>
+                                        <option value="">{{ 'choose_option' | trans }}</option>
+                                        {% for region in regions %}
+                                            <option
+                                                    value="{{ region.id }}"
+                                                    {{ accommodation.city is not null and accommodation.city.subregion.region.id == region.id ? 'selected="selected"' : '' }}
+                                                    >
+                                                {{ attribute(region, app.request.locale) }}
+                                            </option>
+                                        {% endfor %}
+                                    </select>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="large-6 columns">
+                            <div class="form-group subregionsDiv">
+                                <label class="col-sm-3 control-label">{{ 'subregion' | trans }}</label>
+
+                                <div class="col-sm-5">
+                                    <select name="subregion" class="subregionsSelect _accommodation" id="subregion">
+                                        <option value="">{{ 'choose_option' | trans }}</option>
+                                        {% for subregion in subregions %}
+                                            <option
+                                                    value="{{ subregion.id }}"
+                                                    {{ accommodation.city is not null and accommodation.city.subregion.id == subregion.id ? 'selected="selected"' : '' }}
+                                                    >
+                                                {{ attribute(subregion, app.request.locale) }}
+                                            </option>
+                                        {% endfor %}
+                                    </select>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="large-6 columns">
+                            <div class="form-group citiesDiv">
+                                <label class="col-sm-3 control-label">{{ 'city' | trans }}</label>
+
+                                <div class="col-sm-5">
+                                    <select name="accommodation[city]" class="citiesSelect _accommodation" id="city">
+                                        <option value="">{{ 'choose_option' | trans }}</option>
+                                        {% for city in cities %}
+                                            <option
+                                                    value="{{ city.id }}"
+                                                    {{ accommodation.city is not null and accommodation.city.id == city.id ? 'selected="selected"' : '' }}
+                                                    >
+                                                {{ attribute(city, app.request.locale) }}
+                                            </option>
+                                        {% endfor %}
+                                    </select>
+                                </div>
+                            </div>
+                        </div>
+                        {#<div class="large-6 columns">#}
+                        {#<div class="form-group citiesDiv">#}
+                        {#{{ form_label(form.city, 'city' | trans , { 'label_attr': {'class': 'col-sm-3 control-label'} }) }}#}
+                        {#{{ form_errors(form.city) }}#}
+                        {#<div class="col-sm-5">#}
+                        {#{{ form_widget(form.city, { 'attr': {'class': 'citiesSelect _accommodation form-control'} }) }}#}
+                        {#</div>#}
+                        {#</div>#}
+                        {#</div>#}
+                        <div class="large-6 columns">
+                            <div class="form-group">
+                                {{ form_label(form.address, 'Address' | trans , { 'label_attr': {'class': 'col-sm-3 control-label'} }) }}
+                                {{ form_errors(form.address) }}
+                                <div class="col-sm-5">
+                                    {{ form_widget(form.address, { 'attr': {'class': 'form-control citiesSelect'} }) }}
+                                </div>
+                            </div>
+                        </div>
+                        <div class="large-12 columns address">
+                            <fieldset class="gllpLatlonPicker">
+                                <legend>Your location</legend>
+                                <div class="row">
+                                    <div class="large-12 columns">
+                                        <input type="text" class="gllpSearchField"
+                                               placeholder="Enter your address here..."/>
+                                    </div>
+                                </div>
+                                <div class="row">
+                                    <div class="large-6 columns">
+                                        <div class="gllpMap" style="max-width: 100%;">Google Maps</div>
+                                    </div>
+                                    <div class="large-6 columns">
+                                        {{ form_label(form.x, 'Longitude(x)' | trans , { 'label_attr': {'class': 'col-sm-3 control-label'} }) }} {{ form_widget(form.x, { 'attr': {'class': 'form-control validate[required] gllpLongitude','value':'0'} }) }} {{ form_errors(form.x) }}
+                                        {{ form_label(form.y, 'Latitude(y)' | trans , { 'label_attr': {'class': 'col-sm-3 control-label'} }) }}{{ form_widget(form.y, { 'attr': {'class': 'form-control validate[required] gllpLatitude','value':'0'} }) }} {{ form_errors(form.y) }}
+                                        <label class="col-sm-3 control-label" for="gllpZoom">Zoom</label><input
+                                                type="text" class="gllpZoom" value="3"/>
+                                        <input type="button" class="gllpUpdateButton bg-blue btn" value="update map"/>
+                                        <input type="button" class="gllpSearchButton btn bg-blue" value="search">
+                                    </div>
+                                </div>
+                            </fieldset>
+                        </div>
+
+                        <div class="large-6 columns">
+                            <div class="form-group">
+                                {{ form_label(form.checkIn, 'Check In' | trans , { 'label_attr': {'class': 'col-sm-3 control-label'} }) }}
+                                {{ form_errors(form.checkIn) }}
+                                <div class="col-sm-5">
+                                    {{ form_widget(form.checkIn, { 'attr': {'class': 'form-control citiesSelect'} }) }}
+                                </div>
+                            </div>
+                        </div>
+                        <div class="large-6 columns">
+                            <div class="form-group">
+                                {{ form_label(form.checkOut, 'Check Out' | trans , { 'label_attr': {'class': 'col-sm-3 control-label'} }) }}
+                                {{ form_errors(form.checkOut) }}
+                                <div class="col-sm-5">
+                                    {{ form_widget(form.checkOut, { 'attr': {'class': 'form-control citiesSelect'} }) }}
+                                </div>
+                            </div>
+                        </div>
+                        <div class="large-12 columns">
+                            <div class="form-group">
+                                {{ form_label(form.web, 'Web site' | trans , { 'label_attr': {'class': 'col-sm-3 control-label'} }) }}
+                                {{ form_errors(form.web) }}
+                                <div class="col-sm-5">
+                                    {{ form_widget(form.web, { 'attr': {'class': 'form-control citiesSelect'} }) }}
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="large-12 columns">
+                            <div class="form-group">
+                                <fieldset>
+                                    <legend>{{ form_label(form.distance, 'Distance from' | trans , { 'label_attr': {'class': 'col-sm-3 control-label'} }) }}</legend>
+                                    {{ form_errors(form.distance) }}
+                                    <div class="col-sm-5">
+                                        {{ form_widget(form.distance, { 'attr': {'class': 'form-control citiesSelect'} }) }}
+                                    </div>
+                                </fieldset>
+                            </div>
+                        </div>
+                        <div class="large-12 columns">
+                            <div class="form-group">
+                                <fieldset>
+                                    <legend>{{ form_label(form.activities, 'Activities' | trans , { 'label_attr': {'class': 'col-sm-3 control-label'} }) }}</legend>
+                                    {{ form_errors(form.activities) }}
+                                    <div class="col-sm-5">
+                                        {{ form_widget(form.activities, { 'attr': {'class': 'form-control citiesSelect'} }) }}
+                                    </div>
+                                </fieldset>
+                            </div>
+                        </div>
+                        <div class="large-12 columns">
+                            <div class="form-group">
+                                <fieldset>
+                                    <legend>{{ form_label(form.facilities, 'Facilities' | trans , { 'label_attr': {'class': 'col-sm-3 control-label'} }) }}</legend>
+                                    {{ form_errors(form.facilities) }}
+                                    <div class="col-sm-5">
+                                        {{ form_widget(form.facilities, { 'attr': {'class': 'form-control citiesSelect'} }) }}
+                                    </div>
+                                </fieldset>
+                            </div>
+                        </div>
+                        <div class="large-12 columns">
+                            <div class="form-group">
+                                <fieldset>
+                                    <legend>{{ form_label(form.beaches, 'Beaches' | trans , { 'label_attr': {'class': 'col-sm-3 control-label'} }) }}</legend>
+                                    {{ form_errors(form.beaches) }}
+                                    <div class="col-sm-5">
+                                        {{ form_widget(form.beaches, { 'attr': {'class': 'form-control citiesSelect'} }) }}
+                                    </div>
+                                </fieldset>
+                            </div>
+                        </div>
+                        <div class="large-12 columns">
+                            <div class="form-group">
+                                <fieldset>
+                                    <legend>{{ form_label(form.additionals, 'Additionals' | trans , { 'label_attr': {'class': 'col-sm-3 control-label'} }) }}</legend>
+                                    {{ form_errors(form.additionals) }}
+                                    <div class="col-sm-5">
+                                        {{ form_widget(form.additionals, { 'attr': {'class': 'form-control citiesSelect'} }) }}
+                                    </div>
+                                </fieldset>
+                            </div>
+                        </div>
+                        <div class="large-12 columns">
+                            <div class="form-group">
+                                <fieldset>
+                                    <legend>{{ form_label(form.payments, 'Payments' | trans , { 'label_attr': {'class': 'col-sm-3 control-label'} }) }}</legend>
+                                    {{ form_errors(form.payments) }}
+                                    <div class="col-sm-5">
+                                        {{ form_widget(form.payments, { 'attr': {'class': 'form-control citiesSelect'} }) }}
+                                    </div>
+                                </fieldset>
+                            </div>
+                        </div>
+
+                        <div class="large-6 columns">
+                            <div class="form-group">
+                                {{ form_label(form.prepay, 'Prepay' | trans , { 'label_attr': {'class': 'col-sm-3 control-label'} }) }}
+                                {{ form_errors(form.prepay) }}
+                                <div class="col-sm-5">
+                                    {{ form_widget(form.prepay, { 'attr': {'class': 'form-control citiesSelect'} }) }}
+                                </div>
+                            </div>
+                        </div>
+                        <div class="large-12 columns">
+                            <div class="form-group">
+                                <fieldset>
+                                    <legend>{{ form_label(form.description, 'Description' | trans , { 'label_attr': {'class': 'col-sm-3 control-label'} }) }}</legend>
+                                    {{ form_errors(form.description) }}
+                                    <div class="col-sm-5">
+                                        {{ form_widget(form.description, { 'attr': {'class': 'form-control gridDescription'} }) }}
+                                    </div>
+                                </fieldset>
+                            </div>
+                        </div>
+
+                        {{ form_rest(form) }}
+
+                        <div class="large-12 columns">
+                            <div class="form-group">
+                                <div class="col-sm-5 col-sm-offset-3">
+                                    <input type="submit" name="create" class="btn bg-blue"
+                                           value="{{ 'save' | trans }}"/>
+                                </div>
+                            </div>
+                        </div>
+                        {{ form_end(form) }}
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="row no-pad">
+        <div class="large-12 columns">
+            <div class="box-body">
+                <div class="large-12 columns">
+                    <div class="bg-white pad-forty panel box">
+                        <h4>Form Gallery</h4>
+                        {% for photo in accommodation.gallery %}
+                            <div class="row">
+                                <div class="{{ photo.featuredImage ? 'featuredImageClass' }}">
+                                    <img src="{{ photo.webPath | imagine_filter('my_thumb') }}">
+                                </div>
+                                {% if not photo.featuredImage %}
+                                    <a href="{{ path('admin_featuredImage_accommodation',
+                                    {'_locale': app.request.attributes.get('_locale'),
+                                        'id' : photo.id }) }}"
+                                            >
+                                        {{ 'set_featured_image' | trans }}
+                                    </a>
+                                {% endif %}
+                                <a href="{{ path('admin_gallery_delete',
+                                {'_locale': app.request.attributes.get('_locale'),
+                                    'id' : photo.id }) }}"
+                                   onclick="return confirm('{{ 'are_you_sure_delete' | trans }}')">
+                                    {{ 'delete' | trans }}
+                                </a>
+                            </div>
+                        {% endfor %}
+                        {{ form_start(
+                        formGallery, {
+                            'method': 'POST',
+                            'action': path('admin_gallery_new', {'_locale': app.request.attributes.get('_locale'), 'accommodationId' : accommodation.id}),
+                            'attr': {'novalidate': 'novalidate', 'class':"form-horizontal", 'id':'newGallery'}
+                        }
+                        ) }}
+                        <div class="form-group">
+                            {{ form_label(formGallery.file, 'file' | trans, { 'label_attr': {'class': 'col-sm-3 control-label'} }) }}
+                            {{ form_errors(formGallery.file) }}
+                            <div class="col-sm-5">
+                                {{ form_widget(formGallery.file, { 'attr': {'class': 'form-control', 'multiple': 'multiple', 'name': 'files' ~ '[]'} }) }}
+                            </div>
+                        </div>
+                        {{ form_rest(formGallery) }}
+                        <div class="form-group">
+                            <div class="col-sm-5 col-sm-offset-3">
+                                <input type="submit" id="newPeriod" name="newGallery" class="btn bg-blue"
+                                       value="{{ 'save' | trans }}"/>
+                            </div>
+                        </div>
+                        {{ form_end(formGallery) }}
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    {# Video #}
+    <div class="row no-pad">
+        <div class="large-12 columns">
+            <div class="box-body">
+                <div class="large-12 columns">
+                    <div class="bg-white pad-forty panel box">
+                        <h4>{{ 'videos'|trans }}</h4>
+                        {{ form_start(
+                        formVideo, {
+                            'method': 'POST',
+                            'action': path('admin_video_new', { 'id': accommodation.id }),
+                            'attr': {'novalidate': 'novalidate', 'class':"form-horizontal", 'id':'formVideo'}
+                        }
+                        ) }}
+                        {{ form_errors(formVideo) }}
+                        <div class="row pad-forty">
+                            <div class="form-group">
+                                {{ form_label(formVideo.link, 'Link', { 'label_attr': {'class': 'col-sm-3 control-label'} }) }}
+                                {{ form_errors(formVideo.link) }}
+                                <div class="col-sm-5">
+                                    {{ form_widget(formVideo.link, { 'attr': {'class': 'form-control validate[required]'} }) }}
+                                </div>
+                            </div>
+                            {{ form_rest(formVideo) }}
+                            <div class="form-group">
+                                <div class="col-sm-5 col-sm-offset-3">
+                                    <input type="submit" name="save" class="btn bg-blue"
+                                           value="{{ 'save_video' | trans }}"/>
+                                </div>
+                            </div>
+                            {{ form_end(formVideo) }}
+                        </div>
+
+                        <div class="row pad-forty">
+                            {% for video in accommodation.videos %}
+                                    <a href="{{ video.link }}" target="_blank">{{ video.link }}</a>
+                                    <a href="{{ path('admin_video_delete',
+                                            {'_locale': app.request.attributes.get('_locale'),
+                                            'id' : video.id }) }}"
+                                        class="status-metro status-suspended"
+                                        onclick="return confirm('{{ 'are_you_sure_delete' | trans }}')"
+                                        >
+                                        {{ 'delete'|trans }}
+                                    </a>
+                                </p>
+                            {% endfor %}
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    {# /Video #}
+
+
+    <div class="row">
+        <div class="large-12 columns">
+            <a class="btn bg-green"
+               href="{{ path('admin_accommodation', {'_locale': app.request.attributes.get('_locale')}) }}">{{ 'Back to Accommodations' | trans }}</a>
+        </div>
+    </div>
+
+{% endblock %}
+{% block js %}
+    {{ parent() }}
+    <script src="{{ asset('bundles/app/js/location_ajax.js') }}"></script>
+    <script src="http://maps.googleapis.com/maps/api/js?sensor=false"></script>
+    <script type="text/javascript">
+
+        $(document).ready(function () {
+            {% if accommodation.wifi is not null %}
+            var wifiVal = {{ accommodation.wifi }};
+            {% else %}
+
+            var wifiVal = null;
+
+            {% endif %}
+
+            if (wifiVal == null) {
+                $('.wifiDiv').hide();
+                $('.wifi_availability option[value="0"]').prop('selected', true);
+            }
+
+            var av = $('.wifi_availability').on('change', function (e) {
+                if ($(this).val() > 0) {
+                    $('#accommodation_wifi').val(0);
+                    $('.wifiDiv').show();
+                } else {
+                    $('.wifiDiv').hide();
+                }
+            });
+        });
+
+        $(".gllpSearchField").bind("keypress", {}, keypressInBox);
+
+        function keypressInBox(e) {
+            var code = (e.keyCode ? e.keyCode : e.which);
+            if (code == 13) { //Enter keycode
+                e.preventDefault();
+
+                $(".gllpSearchButton").click();
+            }
+        }
+        ;
+
+        $(".gllpLatitude").bind("keypress", {}, keypressInBox4);
+
+        function keypressInBox4(e) {
+            var code = (e.keyCode ? e.keyCode : e.which);
+            if (code == 13) { //Enter keycode
+                e.preventDefault();
+
+                $(".gllpUpdateButton").click();
+            }
+        }
+        ;
+
+        $(".gllpLongitude").bind("keypress", {}, keypressInBox2);
+
+        function keypressInBox2(e) {
+            var code = (e.keyCode ? e.keyCode : e.which);
+            if (code == 13) { //Enter keycode
+                e.preventDefault();
+
+                $(".gllpUpdateButton").click();
+            }
+        }
+        ;
+
+        $(".gllpZoom").bind("keypress", {}, keypressInBox3);
+
+        function keypressInBox3(e) {
+            var code = (e.keyCode ? e.keyCode : e.which);
+            if (code == 13) { //Enter keycode
+                e.preventDefault();
+
+                $(".gllpUpdateButton").click();
+            }
+        }
+        ;
+    </script>
+{% endblock %}

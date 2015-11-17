@@ -1,0 +1,33 @@
+{% if role == 'host' %}
+    You have a request for an accommodation unit
+
+    Request number: {{ booking.id }}
+    Accommodation unit:	{{ booking.unit.accommodation.name }} / {{ booking.unit.name }}
+    Period:		{{ booking.fromDate|date('d.m.Y.') }} - {{ booking.toDate|date('d.m.Y.') }}
+    Guest Name:	{{ booking.user.fullName }}
+    Guest Country:	{{ booking.user.country ? booking.user.country.en : '-' }}
+
+    Please login with your account and under booking requests confirm or reject this reservation request.
+    You can also send a message to Guest in case you would like to communicate with the guest.
+    Guest will receive your answer with your payment information and the booking conditions.
+
+    Kind regards,
+    Your Best-destination.com Team
+{% else %}
+
+    Dear {{ user.fullname }},
+
+    Your request has been sent to host for approval.
+
+    Reservation Request number: 	{{ booking.id }}
+    Your requested UNIT:		<a href="{{ url('app_accommodation_single', {'_locale': app.request.attributes.get('_locale'), 'id': booking.unit.accommodation.id }) }}" class="">{{ booking.unit.accommodation.name }} / {{ booking.unit.name }}</a>
+    Period: 			{{ booking.fromDate|date('d.m.Y.') }} - {{ booking.toDate|date('d.m.Y.') }}
+    Total price:			€ {{ booking.price }}
+
+    Host will approve the reservation request and will confirm the reservation.
+    To manage your booking please login on your profile and open the menu My Bookings
+
+    Kind regards,
+    Your Best-destination.com Team
+
+{% endif %}

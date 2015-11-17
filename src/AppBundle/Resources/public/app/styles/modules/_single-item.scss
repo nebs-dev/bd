@@ -1,0 +1,314 @@
+#accommodation {
+    margin-bottom: 35px;
+    margin-top: 20px;
+}
+.discover-container #accommodation {
+    margin-top: 10px;
+    margin-bottom: 10px;
+}
+.discover-nothumb-container {
+    margin-top: 25px;
+    padding-bottom: 25px;
+    border-bottom: 1px solid #e0e4e7;
+}
+.discover-nothumb-text {
+    width: 90%;
+    text-align: left;
+}
+.discover-nothumb-text-right {
+    width: 100%;
+    text-align: right;
+}
+.blog-container {
+    padding-top: 10px;
+    padding-bottom: 10px;
+}
+.blog-container .accommodation-item {
+    margin-top: 10px;
+    margin-bottom: 10px;
+}
+.accommodation-item {
+    margin: 0;
+    height: 150px;
+    @extend %img-thumb;
+    @include e(description) {
+        @extend %img-thumb-caption;
+    }
+}
+.accommodation-item-filter {
+    margin: 0;
+    height: 150px;
+    @extend %img-thumb;
+    @include e(description) {
+        @extend %img-thumb-caption;
+    }
+}
+.accommodation-item-blog {
+    margin: 0;
+    height: 200px;
+    margin-bottom: 10px;
+    @extend %img-thumb;
+    @include e(description) {
+        background: rgba(#002448, 0.8);
+        font-size: rem-calc(18);
+        color: $white;
+        font-family: $sans;
+        position: absolute;
+        bottom: 0;
+        left: 0;
+        display: inline-block;
+        padding: 5px 10px;
+    }
+}
+.accommodation-item-offer {
+    margin: 0;
+    height: 150px;
+    margin-bottom: 10px;
+    @extend %img-thumb;
+    @include e(description) {
+        background: rgba(#002448, 0.8);
+        font-size: rem-calc(14);
+        color: $white;
+        font-family: $sans;
+        position: absolute;
+        bottom: 0;
+        right: 0;
+        display: inline-block;
+        padding: 5px 10px;
+    }
+}
+.discover-item {
+    margin: 0;
+    @extend %img-thumb-discover;
+    @include e(description) {
+        @extend %img-thumb-caption-discover;
+    }
+}
+.accommodation-item-name {
+    display: block;
+    position: relative;
+    float: right;
+    font-family: $sans;
+    font-size: rem-calc(16);
+    color: #373737;
+    padding-top: 5px;
+    .accommodation-item-name-city {
+        color: #4b9ceb;
+    }
+}
+.accommodation-icons-home {
+    @extend %clearfix;
+    position: absolute;
+    display: block;
+    bottom: -30px;
+    right: 10px;
+    img {
+        margin-left: 10px;
+    }
+}
+.accommodation-description {
+    display: block;
+    margin-top: 40px;
+    height: 20px;
+    text-align: right;
+    color: #919191;
+    font-family: $sans;
+    font-size: rem-calc(12);
+}
+.padded-column {
+    padding: 10px;
+}
+.location-nofigure-container {
+    margin-bottom: 20px;
+    text-align: right;
+    padding-right: 10px;
+}
+.no-thumb-location {
+    font-family: $sans-light;
+    color: #2D84D9;
+    font-size: rem-calc(15);
+}
+.heart-fav {
+    position: absolute;
+    cursor: pointer;
+    color: rgba(#eee, 0.7);
+    font-size: rem-calc(25);
+    top: 5px;
+    right: 5px;
+}
+.toggle-heart-red {
+    color: rgba(#ed2828, 0.5);
+}
+.xdsoft_datetimepicker .xdsoft_calendar td.xdsoft_other_month, .xdsoft_datetimepicker .xdsoft_calendar td.xdsoft_disabled, .xdsoft_datetimepicker .xdsoft_time_box>div>div.xdsoft_disabled{
+	background: #FF7669;
+	color: white;
+}
+
+.xdsoft_datetimepicker .xdsoft_month {
+	z-index: 0;
+}
+
+.xdsoft_datetimepicker .xdsoft_year {
+	z-index: 0;
+}
+.acc-container-1 {
+    padding-left: 30px;
+}
+.acc-description {
+    font-family: $sans;
+    color: #313537;
+    font-size: rem-calc(14);
+    padding-top: 10px;
+}
+.owner-languages {
+    font-size: rem-calc(14);
+    color: #277fd9;
+    font-family: $sans;
+}
+.icon-big-container  {
+    padding-top: 20px;
+    text-align: center;
+}
+.wifi-big-icon {
+    display: inline-block;
+    @include background-image-retina(wifi-big, png, 66px, 39px);
+    background-repeat: no-repeat;
+    width: 66px;
+    height: 39px;
+}
+
+.wifi-big-icon-silver {
+    display: inline-block;
+    @include background-image-retina(wifi-big-silver, png, 66px, 39px);
+    background-repeat: no-repeat;
+    width: 66px;
+    height: 39px;
+}
+
+.pets-big-icon {
+    display: inline-block;
+    @include background-image-retina(pets-big, png, 66px, 39px);
+    background-repeat: no-repeat;
+    width: 66px;
+    height: 39px;
+}
+
+.pets-big-icon-silver {
+    display: inline-block;
+    @include background-image-retina(pets-big-silver, png, 66px, 39px);
+    background-repeat: no-repeat;
+    width: 66px;
+    height: 39px;
+}
+
+.big-icon-desc {
+    display: block;
+    text-align: center;
+    color: #4a5053;
+    font-family: $sans-light;
+    font-size: rem-calc(14);
+}
+
+.title-acc-info {
+    font-family: $sans-bold;
+    font-size: rem-calc(16);
+    color: #4A5053;
+    text-align: center;
+    padding-bottom: 10px;
+}
+.location-small-icon {
+    display: inline-block;
+    @include background-image-retina(map-small, png, 30px, 24px);
+    background-repeat: no-repeat;
+    width: 30px;
+    height: 24px;
+    vertical-align: middle;
+    margin-right: 10px;
+
+}
+
+.contact-small-icon {
+    display: inline-block;
+    @include background-image-retina(bubble-small, png, 27px, 26px);
+    background-repeat: no-repeat;
+    width: 27px;
+    height: 26px;
+    vertical-align: middle;
+    margin-right: 10px;
+
+}
+
+.payment-small-icon {
+    display: inline-block;
+    @include background-image-retina(payment-small, png, 30px, 18px);
+    background-repeat: no-repeat;
+    width: 30px;
+    height: 18px;
+    vertical-align: middle;
+    margin-right: 10px;
+}
+.acc-address, .acc-latlong {
+    margin-bottom: 5px;
+    font-size: rem-calc(14);
+    text-align: center;
+    color: #4A5053;
+    font-family: $sans;
+
+}
+
+.acc-info-container {
+    padding-bottom: 80px;
+}
+.acc-latlong {
+    font-family: $sans-bold;
+}
+
+.acc-user-fullname {
+    margin-bottom: 10px;
+    font-size: rem-calc(14);
+    text-align: center;
+    color: #4A5053;
+    font-family: $sans;
+}
+.acc-user-info {
+    font-size: rem-calc(14);
+    text-align: center;
+    color: #4A5053;
+    margin-bottom: 0;
+    font-family: $sans-bold;
+
+}
+
+.border-columns {
+    border-left: 1px solid #d1d1d1;
+    border-right: 1px solid #d1d1d1;
+    height: 250px;
+
+}
+.acc-prepay {
+ font-size: rem-calc(22);
+ text-align: center;
+ color: #4A5053;
+ margin-bottom: 0;
+ font-family: $sans-bold;
+}
+
+.acc-prepay-text {
+  font-size: rem-calc(14);
+  text-align: center;
+  color: #4A5053;
+  margin-bottom: 0;
+  font-family: $sans;
+}
+
+.acc-prepay-text-bold {
+  font-size: rem-calc(14);
+  text-align: center;
+  color: #418fde;
+  margin-bottom: 0;
+  margin-top: 10px;
+  margin-bottom: 10px;
+  font-family: $sans-bold;
+  text-transform: uppercase;
+}
+

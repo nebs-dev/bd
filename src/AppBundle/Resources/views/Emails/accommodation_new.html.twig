@@ -1,0 +1,39 @@
+{# Fee #}
+{% if fee.type.payment %}
+
+    Dear {{ accommodation.user.fullName }},
+
+    Your accommodation {{ accommodation.name }} has been registered.
+
+    Your selected package: {{ fee.type.name }}
+    Price for annual publishing: € {{ fee.type.price }}.-
+    Payment link or attachment
+
+    As soon as we have received your - PAYMENT – your accommodation will be immediately published in the listing.
+    Also you will receive an email about the publishing.
+
+    In your user profile you can edit your accommodation even it is not yet published.
+
+    Kind regards,
+    Your Best-destination.com Team
+
+{# Commision #}
+{% else %}
+
+    Dear {{ accommodation.user.fullName }},
+
+    Your accommodation {{ accommodation.name }} has been registered and need to be approved by admin.
+
+    Please review the text below and confirm by signing the attached contract that you agree with the terms and conditions:
+
+    Your selected package: 	Provision
+    Publishing price:		{{ fee.type.price }}% for every successful booking through the best-destination.com
+    Invoicing: 			The invoice will be sent to you after every successful reservation.
+
+    Please sign the attached contract and send it back to us per email.
+    As soon as we have received your confirmation that you agree with the terms and conditions, your accommodation will be published on best-destination.com listings.
+
+    Kind regards,
+    Your Best-destination.com Team
+
+{% endif %}

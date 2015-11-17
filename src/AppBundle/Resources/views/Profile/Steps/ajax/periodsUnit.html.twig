@@ -1,0 +1,28 @@
+<table class="table table-striped table-bordered bootstrap-datatable datatable responsive" id="periodsUnit{{ unitId }}">
+    <thead>
+        <tr>
+            <th>{{ 'from' | trans }}</th>
+            <th>{{ 'to' | trans }}</th>
+            <th>{{ 'amount' | trans }}</th>
+            <th>&nbsp;</th>
+        </tr>
+    </thead>
+
+    <tbody>
+    {% for period in periods %}
+        <tr id="{{ period.id }}" class="{{ unitId }}">
+            <td class="center">{{ period.fromDate | date('d.m.Y.') }}</td>
+            <td class="center">{{ period.toDate | date('d.m.Y.') }}</td>
+            <td class="center">{{ period.amount }}</td>
+            <td class="center">
+                <button
+                   class="btn btn-inverse btn-default btn-xs deletePeriod"
+                   onclick="return confirm('{{ 'are_you_sure_delete' | trans }}')"
+                        >
+                    {{ 'delete' | trans }}
+                </button>
+            </td>
+        </tr>
+    {% endfor %}
+    </tbody>
+</table>

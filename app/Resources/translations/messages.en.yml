@@ -1,0 +1,81 @@
+username: Username
+email: Email
+user_type: 'User type'
+user_name: Name
+user_surename: Surename
+phone: Phone
+address: Address
+password: Password
+password_repeat: 'Repeat password'
+user_new: 'New user'
+user_status: Status
+user_role: Role
+guest: Guest
+host: Host
+is_active: 'Is active'
+user_create_success: 'User created successfully'
+edit: Edit
+delete: Delete
+active: Active
+inactive: Inactive
+user_edit_success: 'User edited successfully'
+back: Back
+save: Save
+create: Create
+are_you_sure_delete: 'Are you sure that you want to delete?'
+user_delete_success: 'User deleted successfully'
+users: Users
+locations: Locations
+countries: Countries
+regions: Regions
+cities: Cities
+name: Name
+create_success: 'Create success'
+delete_success: 'Delete success'
+edit_success: 'Edit success'
+country: Country
+region: Region
+tv: TV
+air_condition: 'Air condition'
+microwave: Microwave
+radio: Radio
+crib: Crib
+wifi: Wifi
+washing_machine: 'Washing machine'
+sat_tv: 'Sat TV'
+fridge: Refrigerator
+computer: Computer
+heating: Heating
+safe: Safe
+dvd: DVD
+eletric_kettle: 'Eletric kettle'
+game_console: 'Gaming console'
+towels: Towels
+sea_view: 'Sea view'
+familiy_suitable: 'Suitable for families'
+breakfast_making: 'Breakfast making'
+bathroom: Bathroom
+pets: Pets
+kitchen: Kitchen
+smoking_allowed: 'Smoking allowed'
+terrace: Terrace
+grill: Grill
+parking: Parrking
+pool: Pool
+garage: Garage
+access_disabled: 'Access for disabled'
+kitchen_use: 'Kitchen use'
+hostels: Hostels
+hotels: Hotels
+motels: Motels
+bed_breakfast: 'Bed and Breakfast'
+apartments: Apartments
+accommodation: Accommodation
+accommodation_category: 'Accommodation category'
+category: Category
+user: User
+unit: Unit
+choose_option: 'Choose option'
+restaurants: Restaurants
+diving: Diving
+apartment: Apartment

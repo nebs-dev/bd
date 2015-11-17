@@ -1,0 +1,12 @@
+<div class="form-group">
+    <label class="col-sm-3 control-label">{{ 'subregion' | trans }}</label>
+    <div class="col-sm-5">
+        <select id="{{ type }}_subregion" name="{{ type }}[subregion]" class="subregionsSelect {{ typeClass }}">
+            <option value="">{{ 'choose_option' | trans }}</option>
+            {% for subregion in subregions %}
+                <option value="{{ subregion.id }}">{{ attribute(subregion, app.request.locale) ?: subregion.en }}</option>
+            {% endfor %}
+        </select>
+    </div>
+</div>
+

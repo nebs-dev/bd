@@ -1,0 +1,125 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}{{ 'home' | trans }}{% endblock %}
+
+{% block content %}
+
+    <h1>{{ 'home' | trans }}</h1>
+
+    {# Trenutni currency #}
+    {{ app.session.get('currency') }} 
+    {# Preračunavanje #}
+    {{ currencyService.fromEuro(100) }}
+
+
+    {# Destinationa #}
+    <h3>{{ 'destinations' | trans }}</h3>
+    {% for discoverItem in discover %}
+        {% if loop.index <= 6 %}
+            <p>
+                <a href="{{ path('app_home_discover_search',
+                {'_locale': app.request.attributes.get('_locale'), 'location': discoverItem.location }) }}" class="" >
+                    <img src="{{ discoverItem.webPath | imagine_filter('my_thumb') }}" >
+                    {{ discoverItem.location }}
+                </a>
+            </p>
+        {% endif %}
+    {% endfor %}
+
+    {# Additional offers #}
+    <h3>{{ 'additional_offers' | trans }}</h3>
+    <div>
+        {% for ao in additionalOffers %}
+            {% if loop.index <= 6 %}
+                <div>
+                    <a href="{{
+                    path('app_additional_offer_single',
+                    {'_locale': app.request.attributes.get('_locale'), 'id': ao.id }) }}" class="" >
+                        {% if ao.featuredImage %}
+                            <img src="{{ ao.featuredImage | imagine_filter('my_thumb') }}" >
+                        {% else %}
+                            -
+                        {% endif %}
+                        {{ ao.details.title }}
+                    </a>
+                </div>
+            {% endif %}
+        {% endfor %}
+    </div>
+    {# Additional offer categories #}
+    <div>
+        {% for aoCat in aoCategories %}
+            <a href="{{ path('app_additional_offers',
+            {'_locale': app.request.attributes.get('_locale'), 'category': aoCat.id }) }}" class="" >
+                {{ aoCat.name }}
+            </a>
+        {% endfor %}
+    </div>
+
+
+
+    {# Search form #}
+        {# 
+        // DONE
+    {{ form_start(
+        searchForm, {
+            'method': 'POST',
+            'action': path('app_search_action', {'_locale': app.request.attributes.get('_locale') }),
+            'attr': {'novalidate': 'novalidate', 'class':"form-horizontal", 'id':'searchHome'}
+        }
+        ) }}
+        <div class="form-group">
+            {{ form_label(searchForm.location, 'location' | trans, { 'label_attr': {'class': 'col-sm-3 control-label'} }) }}
+            {{ form_errors(searchForm.location) }}
+            <div class="col-sm-5">
+                {{ form_widget(searchForm.location, { 'attr': {'class': 'form-control locationAutocomplete'} }) }}
+            </div>
+        </div>
+        #}
+        <input type="hidden" name="page" id="page" value="1">
+
+    <div id="selction-ajax"></div>
+
+        {{ form_rest(searchForm) }}
+
+        <div class="form-group">
+            <div class="col-sm-5 col-sm-offset-3">
+                <input type="submit" id="newPeriod" name="searchAction" class="btn btn-default" value="{{ 'search' | trans }}" />
+            </div>
+        </div>
+
+    {{ form_end(searchForm) }}
+
+{% endblock %}
+
+
+{#{% block js %}#}
+    {#{{ parent() }}#}
+
+    {#<script type="text/javascript">#}
+        {#$(document).ready(function() {#}
+
+            {#$('.locationAutocomplete').autocomplete({#}
+                {#serviceUrl: '{{ app.request.getBaseURL() }}/search/autocomplete/location',#}
+                {#type: 'POST',#}
+                {#dataType: 'json',#}
+                {#lookupFilter: function(suggestion, originalQuery, queryLowerCase) {#}
+                    {#var re = new RegExp('\\b' + $.Autocomplete.utils.escapeRegExChars(queryLowerCase), 'gi');#}
+                    {#return re.test(suggestion.value);#}
+                {#},#}
+                {#onSelect: function(suggestion) {#}
+                    {#$('#selction-ajax').html('You selected: ' + suggestion.value + ' - ' + suggestion.data);#}
+                {#},#}
+                {#onHint: function (hint) {#}
+                    {#$('#autocomplete-ajax-x').val(hint);#}
+                {#},#}
+                {#onInvalidateSelection: function() {#}
+                    {#$('#selction-ajax').html('You selected: none');#}
+                {#}#}
+            {#});#}
+
+        {#});#}
+
+    {#</script>#}
+
+{#{% endblock %}#}

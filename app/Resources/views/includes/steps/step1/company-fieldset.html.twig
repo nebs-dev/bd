@@ -1,0 +1,42 @@
+<div class="row">
+	<div class="large-6 columns">
+		<label>{{ 'type' | trans }}
+			<small> {{ 'required' | trans }}</small>
+			{{ form_errors(form.type) }}
+			{{ form_widget(form.type, { 'attr': {'class': 'form-control validate[required]'} }) }}
+		</label>
+		<small class="error">
+			{{ 'Please selecet Company type input.' | trans }}
+		</small>
+	</div>
+</div>
+<div class="row companyRow" style="display: none;">
+	<div class="large-6 columns">
+		<label>{{ 'Company Name' | trans }}
+			{{ form_errors(form.companyName) }}
+			{{ form_widget(form.companyName) }}
+		</label>
+	</div>
+	<div class="large-6 columns">
+		<label>{{ 'Compa VAT Number' | trans }}
+			{{ form_errors(form.companyVAT) }}
+			{{ form_widget(form.companyVAT,
+			{ 'attr': {'pattern': '^[0-9]*$'} }) }}
+		</label>
+		<small class="error">
+			{{ 'VAT number input is invalid' | trans }}
+		</small>
+	</div>
+</div>
+ 
+<div class="row">
+	<div class="large-12 columns gridGrid5">
+		{% for languages in form.languages %}
+		   <div class="gridGrid5__box">
+		   {{ form_errors(languages) }}
+		   {{ form_widget(languages) }} 
+		   <span>{{ languages.vars.label }}</span>
+		   </div>
+		{% endfor %}
+	</div>
+</div> 

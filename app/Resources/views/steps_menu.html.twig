@@ -1,0 +1,62 @@
+<div id="skin-select">
+	<!--      Toggle sidemenu icon button -->
+	<a id="toggle">
+		<span class="fa icon-menu"></span>
+	</a>
+	<!--      End of Toggle sidemenu icon button -->
+	<div class="skin-part">
+		<div id="tree-wrap">
+			<!-- Profile -->
+			<div class="profile">
+				<a href="{{ path('app_home') }}" class="admin-logo" title="Best Destination"></a>
+			</div>
+			<!-- End of Profile -->
+			<!-- Menu sidebar begin-->
+			<div class="side-bar">
+				<div class="bg-transparent">
+					<div class="tooltip_admin_message"><strong>{{ 'Welcome' | trans }}</strong> {{ 'to your' | trans }} <strong>{{ 'BestDestination' | trans }}</strong> {{ 'for listing your accommodations' | trans }}</div>
+					<a class="back_to_site" href="{{ path('app_home') }}"></i>{{ 'back_to_site' | trans }}</a>
+					<div class="today_is" style="display: none">{{ 'today_is' | trans }}: <span>{{ "now"|date("d.m.Y.") }}</span></div>
+				</div>
+				<ul id="menu-showhide" class="topnav slicknav">
+					<li class="{{ app.request.get('_route') == 'app_profile_step_1' ? 'current' }} guest">
+						<a href="#" class="tooltip-tip"><span class="no">1</span><span>{{ 'Podaci_o_vlasniku' | trans }}</span></a>
+					</li>
+					<li class="{{ app.request.get('_route') == 'app_profile_step_2' ? 'current' }} guest">
+						<a href="#" class="tooltip-tip"><span class="no">2</span><span>{{ 'Podaci_o_objektu' | trans }}</span></a>
+					</li>
+					<li class="{{ app.request.get('_route') == 'app_profile_step_3' or app.request.get('_route') == 'app_profile_step_3a' ? 'current' }} guest">
+						<a href="#" class="tooltip-tip"><span class="no">3</span><span>{{ 'Detalji_i_opis_objekata' | trans }}</span></a>
+					</li>
+					<li class="{{ app.request.get('_route') == 'app_profile_step_4' ? 'current' }} guest">
+						<a href="#" class="tooltip-tip"><span class="no">4</span><span>{{ 'Smještajne_jedinice' | trans }}</span></a>
+					</li>
+					<li class="{{ app.request.get('_route') == 'app_profile_step_5' ? 'current' }} guest">
+						<a href="#" class="tooltip-tip"><span class="no">5</span><span>{{ 'Kalendar_i_cjenik' | trans }}</span></a>
+					</li>
+					<li class="{{ app.request.get('_route') == 'app_profile_step_6' ? 'current' }} guest">
+						<a href="#" class="tooltip-tip"><span class="no">6</span><span>{{ 'Multimedija' | trans }}</span></a>
+					</li>
+					<li class="{{ app.request.get('_route') == 'app_profile_step_7' ? 'current' }} guest">
+						<a href="#" class="tooltip-tip"><span class="no">7</span><span>{{ 'Dodatno_oglašavanje' | trans }}</span></a>
+					</li>
+					<li class="{{ app.request.get('_route') == 'app_profile' ? 'current' }} guest">
+						<a href="{{ path('app_profile') }}" class="tooltip-tip">
+							<span class="no">
+								<span class="icon-home" style="color: #666; font-size: 24px;"></span>
+							</span>
+							<span style="color: #666;"> {{ 'Back_to_Admin' | trans }}</span>
+						</a>
+					</li>
+				</ul>
+			</div>
+			<!-- end of Menu sidebar  -->
+			<a href="#" class="contactBestDestinationAdmin">
+				<span>{{'Contact' | trans }}</span>
+				{{'Best Destination' | trans }}
+			</a>
+
+		</div>
+	</div>
+</div>
+<!-- end of Rightsidemenu -->

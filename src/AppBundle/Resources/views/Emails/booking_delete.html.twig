@@ -1,0 +1,14 @@
+
+{{ role }} has canceled the reservation below:
+
+Request number: {{ booking.id }}
+Accommodation unit:	{{ booking.unit.accommodation.name }} / {{ booking.unit.name }}
+Period:		{{ booking.fromDate|date('d.m.Y.') }} - {{ booking.toDate|date('d.m.Y.') }}
+Guest Name:	{{ booking.user.fullName }}
+Guest Country:	{{ booking.user.country ? booking.user.country.en : '-' }}
+
+You can also send a message to {{ role }} in case you would like to communicate with the {{ role }}.
+{{ role }} will receive your answer with your payment information and the booking conditions.
+
+Kind regards,
+Your Best-destination.com Team

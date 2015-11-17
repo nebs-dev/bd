@@ -1,0 +1,90 @@
+{% extends 'base.html.twig' %}
+{% block content %}
+    {% for flashMessage in app.session.flashbag.get('msgSuccess') %}
+        <div data-alert class="alert-box success radius">
+            {{ flashMessage }}
+            <a href="#" class="close">&times;</a>
+        </div>
+    {% endfor %}
+    {% for flashMessage in app.session.flashbag.get('msgError') %}
+
+        <div data-alert class="alert-box warning radius">
+            {{ flashMessage }}
+            <a href="#" class="close">&times;</a>
+        </div>
+
+    {% endfor %}
+        {{ form_start(form, {'attr': {'novalidate': 'novalidate', 'class':"form-horizontal", 'id':'registration' }}) }}
+        {{ form_errors(form) }}
+    </div>
+    <div class="login-container small-centered columns">
+        <div class="large-12 columns">
+            <h1 class="login-heading">{{'SIGN_UP_TO_BOOK_WITH'| trans }}</h2>
+                            <span class="login-all-logo"></span>
+
+        </div>
+        <section class="login-form">
+            <div class="large-12 columns username-msg-style">
+                {{ form_widget(form.username, { 
+                'attr': {
+                'required':'required',
+                'class': 'form-control validate[required]', 
+                'placeholder': "Username" | trans } }) }}
+
+                {{ form_errors(form.username) }}
+
+            </div>
+            <div class="large-12 columns email-msg-style ">
+                {{ form_widget(form.email, { 'attr': {'required':'required', 'class': 'form-control validate[required]',
+                'placeholder': "Email_address"  | trans }}) }}
+                {{ form_errors(form.email) }}
+            </div>
+            <div class="row"></div>
+            {% for passwordField in form.password %}
+                <div class="large-12 columns password-msg-style">
+                    {{ form_widget(passwordField, { 'required':'required','type':'password', 'attr': {'class': 'form-control validate[required]',
+                    'placeholder': "Password" | trans } }) }}
+                    {{ form_errors(passwordField) }}
+                </div>
+
+                {#<div class="form-field">#}
+                {#{{ form_label(passwordField, null, { 'attr': {'class': 'form-label'} }) }}#}
+                {#{{ form_widget(passwordField, { 'attr': {'class': 'form-input'} }) }}#}
+                {#</div>#}
+            {% endfor %}
+            <div class="large-12 columns">
+
+                <label class="terms-checkbox" for="terms-checkbox">
+                    <input id="terms-checkbox" type="checkbox">
+                    <span>
+                        {{ 'I_have_read_terms_and_policies' | trans }}
+
+                    </span>
+                </label>
+
+            </div>
+            <div class="large-12 columns">
+            {{ form_rest(form) }}
+                <button class="login-screen-button" type="submit">{{ 'sign_up' | trans }}</button>
+            {{ form_end(form) }}
+            </div>
+
+        </section>
+        <section class="login-already">
+            <div class="large-12 columns">
+                {{ 'Already have account?' | trans }}
+                <a class="" href="{{ path('login', {'_locale': app.request.attributes.get('_locale')}) }}">{{ 'LOG_IN' | trans }}</a>
+            </div>
+        </section>
+        <section class="login-publish large-12 columns">
+            <span>{{ 'Please_check_your_inbox_for_email_from_us' | trans }}</span>
+            <span>{{ 'You_want_to_publish_your_accomodation?' | trans }}</span>
+            <span class=>
+                <a  href="{{ path('user_registration', {'_locale': app.request.attributes.get('_locale'), 'role': 'host'}) }}">{{ 'Do_it_here'| trans }}</a>
+
+            </span>
+
+        </section>
+
+    </div><!-- end row -->
+{% endblock %}

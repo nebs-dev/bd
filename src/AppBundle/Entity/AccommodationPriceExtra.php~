@@ -1,0 +1,158 @@
+<?php
+
+namespace AppBundle\Entity;
+
+use Doctrine\ORM\Mapping as ORM;
+
+/**
+ * @ORM\Table(name="accommodation_price_extra")
+ * @ORM\Entity(repositoryClass="AppBundle\Entity\Repository\AccommodationPriceExtraRepository")
+ */
+class AccommodationPriceExtra {
+	/**
+	 * @ORM\Column(name="id", type="integer")
+	 * @ORM\Id()
+	 * @ORM\GeneratedValue(strategy="AUTO")
+	 */
+	private $id;
+	/**
+	 * @ORM\OneToOne(targetEntity="Accommodation", mappedBy="priceExtra")
+	 */
+	private $accommodation;
+	/**
+	 * @ORM\Column(type="integer", length=3, nullable=true)
+	 */
+	private $localTax;
+	/**
+	 * @ORM\Column(type="integer", length=3, nullable=true)
+	 */
+	private $wifi;
+	/**
+	 * @ORM\Column(type="integer", length=3, nullable=true)
+	 */
+	private $parking;
+	/**
+	 * @ORM\Column(type="integer", length=3, nullable=true)
+	 */
+	private $pets;
+	/**
+	 * @ORM\Column(type="integer", length=3, nullable=true)
+	 */
+	private $airCondition;
+
+	/**
+	 * Get id
+	 * @return integer
+	 */
+	public function getId() {
+		return $this->id;
+	}
+
+	/**
+	 * Set localTax
+	 * @param integer $localTax
+	 * @return AccommodationPriceExtra
+	 */
+	public function setLocalTax($localTax) {
+		$this->localTax = $localTax;
+		return $this;
+	}
+
+	/**
+	 * Get localTax
+	 * @return integer
+	 */
+	public function getLocalTax() {
+		return $this->localTax;
+	}
+
+	/**
+	 * Set accommodation
+	 * @param \AppBundle\Entity\Accommodation $accommodation
+	 * @return AccommodationPriceExtra
+	 */
+	public function setAccommodation(\AppBundle\Entity\Accommodation $accommodation = null) {
+		$this->accommodation = $accommodation;
+		return $this;
+	}
+
+	/**
+	 * Get accommodation
+	 * @return \AppBundle\Entity\Accommodation
+	 */
+	public function getAccommodation() {
+		return $this->accommodation;
+	}
+
+	/**
+	 * Set wifi
+	 * @param integer $wifi
+	 * @return AccommodationPriceExtra
+	 */
+	public function setWifi($wifi) {
+		$this->wifi = $wifi;
+		return $this;
+	}
+
+	/**
+	 * Get wifi
+	 * @return integer
+	 */
+	public function getWifi() {
+		return $this->wifi;
+	}
+
+	/**
+	 * Set parking
+	 * @param integer $parking
+	 * @return AccommodationPriceExtra
+	 */
+	public function setParking($parking) {
+		$this->parking = $parking;
+		return $this;
+	}
+
+	/**
+	 * Get parking
+	 * @return integer
+	 */
+	public function getParking() {
+		return $this->parking;
+	}
+
+	/**
+	 * Set pets
+	 * @param integer $pets
+	 * @return AccommodationPriceExtra
+	 */
+	public function setPets($pets) {
+		$this->pets = $pets;
+		return $this;
+	}
+
+	/**
+	 * Get pets
+	 * @return integer
+	 */
+	public function getPets() {
+		return $this->pets;
+	}
+
+	/**
+	 * Set airCondition
+	 * @param integer $airCondition
+	 * @return AccommodationPriceExtra
+	 */
+	public function setAirCondition($airCondition) {
+		$this->airCondition = $airCondition;
+		return $this;
+	}
+
+	/**
+	 * Get airCondition
+	 * @return integer
+	 */
+	public function getAirCondition() {
+		return $this->airCondition;
+	}
+}

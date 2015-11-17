@@ -1,0 +1,116 @@
+.single-info-container {
+    background: $white;
+    padding-top: 20px;
+}
+.tabs-content {
+    padding-top: 20px;
+    min-height: 150px;
+    border-top: 1px solid $tab-nonactive;
+        border-bottom: 1px solid $tab-nonactive;
+
+    margin-top: -1px;
+
+}
+.tabs {
+    .tab-title a {
+        text-transform: uppercase;
+        color: $tab-nonactive;
+
+        span {
+            text-transform: lowercase;
+        }
+    }
+    .tab-title.active a {
+        color: $skyblue-forms;
+        border-bottom: 3px solid $skyblue-forms;
+    }
+}
+
+.single-info-items {
+    li {
+        font-size: rem-calc(10);
+        padding-bottom: 5px;
+        color: $tab-nonactive;
+
+        text-transform: uppercase;
+        font-family: $sans;
+    }
+}
+.door-time {
+    margin-top: 50px;
+}
+.door-icon-container {
+    text-align: center;
+}
+
+.time-container {
+    text-align: center;
+    span {
+        font-family: $sans-bold;
+        font-size: rem-calc(20);
+        color: $silver-time;
+    }
+.time-divider {
+    color: $tab-nonactive;
+}
+}
+
+.beach-info-container {
+    margin-top: 50px;
+    text-align: center;
+}
+.beach-icon {
+    display: inline-block;
+    @include background-image-retina(beach, png, 52px, 39px);
+    background-repeat: no-repeat;
+    width: 52px;
+    height: 39px;
+}
+.beach-item {
+    font-size: rem-calc(10);
+    text-transform: uppercase;
+    color: $tab-nonactive;
+}
+.l-door {
+    display: inline-block;
+    @include background-image-retina(l-door, png, 46px, 33px);
+    background-repeat: no-repeat;
+    width: 46px;
+    height: 36px;
+}
+
+.r-door {
+    display: inline-block;
+    @include background-image-retina(r-door, png, 42px, 36px);
+    background-repeat: no-repeat;
+    width: 42px;
+    height: 36px;
+}
+
+.silver-txt {
+    display: block;
+    font-family: $sans-bold;
+    text-transform: uppercase;
+    font-size: rem-calc(16);
+    color: $silver-txt;
+    text-align: center;
+}
+
+.title-units {
+    font-family: $sans-bold;
+    color: $skyblue-forms;
+    font-size: rem-calc(20);
+    text-align: center;
+    text-transform: uppercase;
+    margin-bottom: 20px;
+}
+
+.sticky-single {
+    position: fixed;
+    width: 100%;
+    z-index: 1000;
+}
+
+.pad-for-sticky {
+    padding-top: 200px;
+}

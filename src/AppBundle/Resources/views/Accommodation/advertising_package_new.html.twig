@@ -1,0 +1,44 @@
+{% extends 'admin.html.twig' %}
+{% block menu %}
+
+{% endblock %}
+{% block sidemenu %}
+    {% include 'includes/sidemenu-user.html.twig' %}
+{% endblock %}
+{% block content %}
+    <div class="box clearfix">
+
+        <div class="box-body">
+            <h1>{{ 'advertising_packages' | trans }}</h1>
+
+            {{ form_start(form, {'attr': {'novalidate': 'novalidate', 'class':"form-horizontal", 'id':'advertiingPackages' }}) }}
+            {{ form_errors(form) }}
+
+            <div class="form-group">
+                {{ form_label(form.type, 'Advertising package', { 'label_attr': {'class': 'col-sm-3 control-label'} }) }}
+                {{ form_errors(form.type) }}
+                <div class="col-sm-5">
+                    {{ form_widget(form.type, { 'attr': {'class': 'form-control'} }) }}
+                </div>
+            </div>
+
+            {#<div class="form-group">#}
+                {#<label>{{ 'home_page' | trans }}</label>#}
+                {#<div class="col-sm-5">#}
+                    {#<input type="checkbox" name="home" id="home">#}
+                {#</div>#}
+            {#</div>#}
+
+            {{ form_rest(form) }}
+
+            <div class="button-group radius even-2">
+                <div class="col-sm-5 col-sm-offset-3">
+                    <input type="submit" name="save" class="button small success" value="{{ 'save' | trans }}" />
+                </div>
+            </div>
+
+            {{ form_end(form) }}
+
+        </div>
+    </div>
+{% endblock %}

@@ -1,0 +1,33 @@
+{# Fee #}
+{% if fee.type.payment %}
+
+    Dear {{ accommodation.user.fullName }},
+
+    We have received your payment and have published your accommodation on best-destination.com
+    Your accommodation {{ accommodation.name }} has been published on Best-destination.com.
+
+    Your selected package: {{ fee.type.name }}
+    Price for annual publishing: € {{ fee.type.price }}.-
+    Valid 365 days after received payment
+
+    In your profile you can edit and change your accommodation information any time.
+
+    Kind regards,
+    Your Best-destination.com Team
+
+{# Commision #}
+{% else %}
+
+    Dear {{ accommodation.user.fullName }},
+
+    We have received your signed contract and have published your accommodation on best-destination.com
+
+    Your selected package: 	Provision
+    Publishing price:		{{ fee.yype.price }}% for every successful booking through the best-destination.com
+    Invoicing: 			The invoice will be sent to you after every successful reservation.
+
+
+    Kind regards,
+    Your Best-destination.com Team
+
+{% endif %}

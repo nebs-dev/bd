@@ -1,0 +1,61 @@
+{% extends 'admin.html.twig' %}
+{% block menu %}
+
+{% endblock %}
+{% block sidemenu %}
+    {% include 'steps_menu.html.twig' %}
+{% endblock %}
+{% block content %}
+    <div class="row no-pad">
+        <div class="large-12 columns">
+            {% for flashMessage in app.session.flashbag.get('msgError') %}
+                <div class="box bg-red">
+                    <div class="box-header bg-red ">
+                        <!-- tools box -->
+                        <div class="pull-right box-tools">
+            <span class="box-btn" data-widget="remove">
+                <i class="icon-cross"></i>
+            </span>
+                        </div>
+                        <h3 class="box-title "><i class="text-white  icon-thumbs-up"></i>
+                            <span class="text-white">Error</span>
+                        </h3>
+                    </div>
+                    <!-- /.box-header -->
+                    <div class="box-body " style="display: block;">
+                        <p class="text-white"><strong>Sorry!</strong> {{ flashMessage }}</p>
+                    </div>
+                </div>
+            {% endfor %}
+
+            <div class="box-body pad-forty" style="display: block;">
+                <h4>{{ 'Units' | trans }}</h4>
+                <ul>
+                    {% for unit in accommodation.units %}
+                        <li>
+                            <h5>{{ unit.categorize }} / {{ unit.name }}</h5>
+                        </li>
+                    {% endfor %}
+                </ul>
+
+                <div class="large-12 columns">
+                    <ul class="button-group radius even-2 ">
+                        {% if accommodationService.moreUnitAllowedSteps(accommodation) %}
+                            <li>
+                                <a class="button small bg-light-green"
+                                   href="{{ path('app_profile_step_4', {'_locale': app.request.attributes.get('_locale'), 'id' : accommodation.id }) }}">{{ 'unit_new' | trans }}</a>
+                            </li>
+                        {% endif %}
+                        <li>
+                            <a class="button small secondary"
+                               href="{{ path('app_profile_step_5', {'_locale': app.request.attributes.get('_locale'), 'id' : accommodation.id }) }}">{{ 'next' | trans }}</a>
+                        </li>
+
+                       
+                    </ul>
+                </div>
+            </div>
+        </div>
+    </div>
+    </div>
+{% endblock %}

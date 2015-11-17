@@ -1,0 +1,137 @@
+%clearfix {
+  &:after {
+    content: "";
+    display: table;
+    clear: both;
+  }
+}
+
+%label-light {
+	font-size: rem-calc(13);
+	font-family: $sans-light;
+	color: $darkblue;
+}
+
+%label-cb {
+	font-size: rem-calc(13);
+	font-family: $sans-light;
+	color: $white;
+}
+
+%crumbs-normal {
+	font-size: rem-calc(20);
+	font-family: $sans-light;
+	color: $skyblue-crumbs;
+}
+
+%filter-heading {
+	font-size: rem-calc(30);
+	font-family: $raleway;
+	color: $heading-grey;
+	text-transform: uppercase;
+}
+
+%filter-heading-dark {
+	font-size: rem-calc(41);
+	font-family: $raleway-extrabold;
+	color: $darkblueshape;
+	text-transform: uppercase;
+
+}
+
+%divider-middle {
+	text-align: center;
+	position: absolute;
+	display: block;
+	width: 80px;
+	height: 30px;
+	background: $body-bg;
+	font-family: $raleway-bold;
+	font-size: rem-calc(12px);
+	color: $filter-divider ;
+	text-transform: uppercase;
+}
+
+%logo-small {
+	@include background-image-retina(main-logo-small, png, 199px, 27px);
+	display: inline-block;
+	background-repeat: no-repeat;
+	width: 199px;
+	height: 27px;
+}
+
+%subnav {
+	font-family: $sans;
+	padding-top: 20px;
+	@include sub-nav(
+		$font-color: $subnav-main,
+		$font-size : rem-calc(12)
+		);
+}
+
+%filter-title {
+	text-transform: uppercase;
+	font-family: $sans-bold;
+	font-size: rem-calc(15);
+	color: #58a9f7;
+	margin-top: 20px;
+	margin-bottom: 20px;
+	text-align: center;
+}
+
+%filter-label {
+	font-family: $sans;
+	font-size: rem-calc(12);
+	color: $filter-checkbox;
+	display: inline;
+	padding-left: 10px;
+}
+
+%img-thumb {
+	background: $white;
+	-webkit-background-size: cover;
+	-o-background-size: cover;
+	background-size: cover;
+	background-position: center;
+	position: relative;
+		height: 150px;
+}
+%img-thumb-discover {
+	background: $white;
+	-webkit-background-size: cover;
+	-o-background-size: cover;
+	background-size: cover;
+	background-position: center;
+	position: relative;
+		height: 110px;
+}
+
+%img-thumb-caption {
+	background: rgba(#3a93ea, 0.9);
+		font-size: rem-calc(13);
+		color: $white;
+		font-family: $sans;
+		position: absolute;
+		bottom: 0;
+		right: 0;
+		display: inline-block;
+		padding: 5px 10px;
+}
+%img-thumb-caption-discover {
+		background: rgba(#163447, 0.8);
+		font-size: rem-calc(18);
+		color: #4b9ceb;
+		font-family: $sans;
+		position: absolute;
+		bottom: 0;
+		left: 0;
+		display: inline-block;
+		padding: 5px 10px;
+}
+
+
+
+%img-thumb-caption-place {
+	color: $description-place;
+	font-family: $sans-bold;
+}

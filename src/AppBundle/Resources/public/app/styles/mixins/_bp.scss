@@ -1,0 +1,27 @@
+//DEFINING BREAKPOINTS WITH @MIXIN
+@mixin bp($value) {
+    @media (min-width: $value) {
+        @content
+   }
+}
+
+//CALLING MIXIN
+// .column {
+//     width: 100%;
+//     @include bp(25em) {
+//         width: 50%;
+//    }
+// }
+//DEFINING BREAKPOINTS WITH @MIXIN
+@mixin bp-min-max($value-min, $value-max) {
+    @media (min-width: $value-min) and (max-width: $value-max) {
+        @content
+   }
+}
+//CALLING MIXIN
+// .column {
+//     width: 100%;
+//     @include bp-min-max(401px, 600px) {
+//         width: 50%;
+//    }
+// }

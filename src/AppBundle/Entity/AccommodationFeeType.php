@@ -1,0 +1,168 @@
+<?php
+
+namespace AppBundle\Entity;
+
+use Doctrine\ORM\Mapping as ORM;
+
+/**
+ * @ORM\Table(name="accommodation_fee_types")
+ * @ORM\Entity(repositoryClass="AppBundle\Entity\Repository\AccommodationFeeTypeRepository")
+ */
+class AccommodationFeeType {
+
+    /**
+     * @ORM\Column(name="id", type="integer")
+     * @ORM\Id()
+     * @ORM\GeneratedValue(strategy="AUTO")
+     */
+    private $id;
+    /**
+     * @ORM\Column(type="string", length=255)
+     */
+    private $name;
+    /**
+     * @ORM\OneToMany(targetEntity="AccommodationFee", mappedBy="type")
+     */
+    private $fees;
+    /**
+     * @ORM\Column(type="smallint")
+     */
+    private $price;
+    /**
+     * @ORM\Column(type="boolean", options={"comment":"0=commission 1=fee"})
+     */
+    private $payment;
+    /**
+     * @ORM\Column(type="smallint", nullable=true, options={"comment":"number of units available for this fee type"})
+     */
+    private $unitNumber;
+
+    /**
+     * Constructor
+     */
+    public function __construct() {
+        $this->fees = new \Doctrine\Common\Collections\ArrayCollection();
+    }
+
+
+    public function getLabel() {
+        $type = ($this->getPayment()) ? 'fee' : 'commision';
+        $number = (is_null($this->getUnitNumber())) ? 'unlimited' : $this->getUnitNumber().' units';
+        $duration = ($this->getPayment()) ? 365 . ' days' : 'unlimited';
+        $price = $this->getPrice().'EUR';
+        $label = $type.' / '.$number.' / '.$duration.' / '.$price;
+
+        return $label;
+    }
+
+    /**
+     * Get id
+     * @return integer
+     */
+    public function getId() {
+        return $this->id;
+    }
+
+    /**
+     * Set price
+     * @param integer $price
+     * @return AccommodationFeeType
+     */
+    public function setPrice($price) {
+        $this->price = $price;
+
+        return $this;
+    }
+
+    /**
+     * Get price
+     * @return integer
+     */
+    public function getPrice() {
+        return $this->price;
+    }
+
+    /**
+     * Set payment
+     * @param boolean $payment
+     * @return AccommodationFeeType
+     */
+    public function setPayment($payment) {
+        $this->payment = $payment;
+
+        return $this;
+    }
+
+    /**
+     * Get payment
+     * @return boolean
+     */
+    public function getPayment() {
+        return $this->payment;
+    }
+
+    /**
+     * Set unitNumber
+     * @param integer $unitNumber
+     * @return AccommodationFeeType
+     */
+    public function setUnitNumber($unitNumber) {
+        $this->unitNumber = $unitNumber;
+
+        return $this;
+    }
+
+    /**
+     * Get unitNumber
+     * @return integer
+     */
+    public function getUnitNumber() {
+        return $this->unitNumber;
+    }
+
+    /**
+     * Add fees
+     * @param \AppBundle\Entity\AccommodationFee $fees
+     * @return AccommodationFeeType
+     */
+    public function addFee(\AppBundle\Entity\AccommodationFee $fees) {
+        $this->fees[] = $fees;
+
+        return $this;
+    }
+
+    /**
+     * Remove fees
+     * @param \AppBundle\Entity\AccommodationFee $fees
+     */
+    public function removeFee(\AppBundle\Entity\AccommodationFee $fees) {
+        $this->fees->removeElement($fees);
+    }
+
+    /**
+     * Get fees
+     * @return \Doctrine\Common\Collections\Collection
+     */
+    public function getFees() {
+        return $this->fees;
+    }
+
+    /**
+     * Set name
+     * @param string $name
+     * @return AccommodationFeeType
+     */
+    public function setName($name) {
+        $this->name = $name;
+
+        return $this;
+    }
+
+    /**
+     * Get name
+     * @return string
+     */
+    public function getName() {
+        return $this->name;
+    }
+}

@@ -1,0 +1,43 @@
+{% extends 'admin.html.twig' %}
+{% block menu %}
+    {% include 'steps_menu.html.twig' %}
+{% endblock %}
+{% block sidemenu %}
+    {% include 'includes/sidemenu-user.html.twig' %}
+{% endblock %}
+{% block content %}
+    <div class="row no-pad">
+        <div class="large-12 columns">
+            <div class="box-body">
+                <div class="large-12 columns">
+                    <div class="bg-white pad-forty panel box">
+                        {{ form_start(form, {'attr': {'novalidate': 'novalidate', 'class':"form-horizontal", 'id':'newFee' }}) }}
+                        {{ form_errors(form) }}
+
+                        <div class="form-group">
+                            {{ form_label(form.type, 'name' | trans , { 'label_attr': {'class': 'col-sm-3 control-label'} }) }}
+                            {{ form_errors(form.type) }}
+                            <div class="col-sm-5">
+                                {{ form_widget(form.type, { 'attr': {'class': 'form-control validate[required]'} }) }}
+                            </div>
+                        </div>
+
+                        {{ form_rest(form) }}
+
+                        <div class="form-group">
+                            <div class="col-sm-5 col-sm-offset-3">
+                                <input type="submit" name="create" class="btn btn-default" value="{{ 'save' | trans }}" />
+                            </div>
+                        </div>
+
+                        {{ form_end(form) }}
+
+                        <a href="{{ path('app_accommodation_fees', {'_locale': app.request.attributes.get('_locale'), 'id': accommodation.id }) }}">{{ 'fees' | trans }}</a>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+
+{% endblock %}

@@ -1,0 +1,41 @@
+#myModal2 {
+	padding: 50px 80px 50px 80px;
+}
+
+.modal-title {
+	color: #0e73c2;
+	font-family: $sans-extrabold;
+	font-size: rem-calc(27);
+	text-align: center;
+	margin-bottom: 60px;
+}
+.modal-title-lan {
+	@extend .modal-title;
+	margin-bottom: 15px;
+}
+
+.currency-code {
+	font-family: $sans-bold;
+	font-size: rem-calc(16);
+	text-align: center;
+}
+
+.language-name {
+	font-family: $sans;
+	font-size: rem-calc(16);
+	> a{
+		padding-bottom: 5px;
+		color: #313537;
+	}
+}
+.language-description {
+	text-align: center;
+	font-family: $sans;
+	font-size: rem-calc(16);
+	color: #313537;
+	margin-bottom: 5px;
+	&:last-of-type {
+		margin-bottom: 45px;
+	}
+
+}

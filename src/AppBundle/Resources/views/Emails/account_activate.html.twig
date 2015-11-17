@@ -1,0 +1,23 @@
+{% if is_granted('ROLE_HOST') %}
+    Dear {{ user.fullName }},
+
+    Your account has been activated.
+    You can start registering your accommodation properties.
+    Your user account is: {{ user.username }} and the password you set during the
+    Should you need any help please send a message to support team. The answer follows latest within 6 hours.
+
+    Kind regards,
+    Your Best-destination.com Team
+{% else %}
+
+    Dear {{ user.fullname }},
+
+    Your account has been activated.
+
+    Your user account is: {{ user.username }} and the password you set during the registration
+    Should you need any help please send a message to support team. The answer follows latest within 8 hours.
+
+    Kind regards,
+    Your Best-destination.com Team
+
+{% endif %}
